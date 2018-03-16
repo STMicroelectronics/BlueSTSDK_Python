@@ -210,19 +210,25 @@ class Node(Peripheral, object):
 		self.updateNodeStatus(NodeStatus.IDLE)
 
 	#
-	# Manages a specific UUID using a feature class.
-	# The UUID will be managed by the node class only if it is known before
-	# opening the connection.
+	# Add available features to an already discovered device, prior to
+	# connecting to it.
 	# If a UUID is already known, it will be overwritten with the new list of
-	# features.
+	# available features.
 	#
 	# E.g.:
-	# map = UUIDToFeatureMap()
-	# map.put(uuid.UUID('00002a37-0000-1000-8000-00805f9b34fb'), BlueSTSDK.Features.StandardCharacteristics.FeatureHeartRate.FeatureHeartRate)
-	# node.addExternalFeatures(map)
-	# node.connect()
+    # # Adding a 'FeatureHeartRate' feature to a Nucleo device and mapping it to
+    # # the standard '00002a37-0000-1000-8000-00805f9b34fb' Heart Rate
+    # # Measurement characteristic.
+    # map = UUIDToFeatureMap()
+    # map.put(uuid.UUID('00002a37-0000-1000-8000-00805f9b34fb'), BlueSTSDK.Features.StandardCharacteristics.FeatureHeartRate.FeatureHeartRate)
+    # node.addExternalFeatures(map)
+    # # Connecting to the node.
+    # node.connect()
+    #
+    # Otherwise, it is possible to add available features before performing the
+    # discovery process (see Manager.addFeaturesToNode()).
 	#
-	# @param user_defined_features User-defined feature to be registered.
+	# @param user_defined_features User-defined feature to be added.
 	#
 	def addExternalFeatures(self, user_defined_features):
 		if user_defined_features != None:

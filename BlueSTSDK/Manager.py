@@ -372,8 +372,24 @@ class Manager(object):
 
 	#
 	# Register a new device identifier with the corresponding mask-to-features
-	# dictionary, or add features to an already registered device.
+	# dictionary summarizing its available features, or add available features
+	# to an already registered device, before performing the discovery process.
 	#
+	# E.g.:
+	# # Adding a 'MyFeature' feature to a Nucleo device and mapping it to a
+	# # custom '0x10000000-0001-11e1-ac36-0002a5d5c51b' characteristic.
+    # mask_to_features_dic = {}
+    # mask_to_features_dic[0x10000000] = BlueSTSDK.Features.MyFeature.MyFeature
+    # try:
+    #     Manager.addFeaturesToNode(0x80, mask_to_features_dic)
+    # except InvalidFeatureBitMaskException as e:
+    #     print e
+    # # Synchronous discovery of Bluetooth devices.
+	# manager.discover(False, SCANNING_TIME_s)
+	#
+    # Otherwise, it is possible to register the feature after discovering a node
+    # and before connecting to it (see Node.addExternalFeatures()).
+    #
 	# @param device_id Device identifier.
 	# @param features  Mask-to-features dictionary to be added to the features
 	#				   decoder dictionary, referenced by the device identifier.
