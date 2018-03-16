@@ -147,7 +147,8 @@ Available features can be retrieved from Features package.
     If you want to use BlueST's bitmask for features within the advertising data, please register the new feature before performing the discovery process, e.g.:
  
     ```Python
-    # Adding a 'MyFeature' feature to a Nucleo device and mapping it to a custom '0x10000000-0001-11e1-ac36-0002a5d5c51b' characteristic.
+    # Adding a 'MyFeature' feature to a Nucleo device and mapping it to a custom
+    # '0x10000000-0001-11e1-ac36-0002a5d5c51b' characteristic.
     mask_to_features_dic = {}
     mask_to_features_dic[0x10000000] = BlueSTSDK.Features.MyFeature.MyFeature
     try:
@@ -160,7 +161,9 @@ Available features can be retrieved from Features package.
 
     Otherwise, you can register the feature after discovering a node and before connecting to it:
     ```Python
-    # Adding a 'FeatureHeartRate' feature to a Nucleo device and mapping it to the standard '00002a37-0000-1000-8000-00805f9b34fb' Heart Rate Measurement characteristic.
+    # Adding a 'FeatureHeartRate' feature to a Nucleo device and mapping it to
+    # the standard '00002a37-0000-1000-8000-00805f9b34fb' Heart Rate Measurement
+    # characteristic.
     map = UUIDToFeatureMap()
     map.put(uuid.UUID('00002a37-0000-1000-8000-00805f9b34fb'), BlueSTSDK.Features.StandardCharacteristics.FeatureHeartRate.FeatureHeartRate)
     node.addExternalFeatures(map)
