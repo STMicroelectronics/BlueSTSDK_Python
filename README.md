@@ -31,9 +31,9 @@ To run the BlueST Example application please follow the steps below:
 ### Advertising data
 The library shows only the devices that have a vendor-specific field formatted in the following way:
 
-|Length|  1       |1           | 1                |1          | 4              | 6                    |
-|------|----------|------------|------------------|-----------|----------------|----------------------|
-|Name  | Length   | Field Type | Protocol Version | Device Id | Feature Mask   | Device MAC (optional)|
+|Length|  1        |1           | 1                |1          | 4              | 6                    |
+|------|-----------|------------|------------------|-----------|----------------|----------------------|
+|Name  | Length    | Field Type | Protocol Version | Device Id | Feature Mask   | Device MAC (optional)|
 |Value | 0x07/0x0D | 0xFF       | 0x01             | 0xXX      | 0xXXXXXXXX     | 0xXXXXXXXXXXXX       |
 
 
@@ -65,7 +65,7 @@ To understand the way the data are exported by predefined features, please refer
 
 
 ### Note
-Currently only a subset of the features is implemented: Temperature, Humidity, Pressure, Accelerometer, Gyroscope, and Magnetometer.
+Currently only a subset of the features is implemented: Switch, Proximity, Accelerometer, Gyroscope, Magnetometer, Pressure, Humidity, Temperature, Second Temperature, Stepper Motor, and Proximity Gesture.
 Future releases of the Python SDK will cover all the abovementioned features.
 
 
