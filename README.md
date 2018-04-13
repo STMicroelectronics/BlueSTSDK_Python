@@ -15,13 +15,13 @@ Please follow the official instructions to install the mentioned libraries.
 
 
 ## How to run the application examples
-To run the BlueST Example application please follow the steps below:
- 1. Download the BlueST SDK and the BlueST Example.
+To run the BlueST application examples please follow the steps below:
+ 1. Clone the repository containing the BlueST SDK and the BlueST examples.
  2. Add the parent folder of the "blue_st_sdk" package to the "PYTHONPATH" environment variable. On Linux:
     ```Shell
     $ export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
     ```
- 3. Run the main scripts:
+ 3. Enter the BlueST examples folder and run the main scripts:
     ```Shell
     $ python example_ble_x.py
     ```
