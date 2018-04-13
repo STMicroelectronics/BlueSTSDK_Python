@@ -14,16 +14,16 @@ Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/con
 Please follow the official instructions to install the mentioned libraries.
 
 
-## How to run the example application
+## How to run the application examples
 To run the BlueST Example application please follow the steps below:
  1. Download the BlueST SDK and the BlueST Example.
- 2. Add the parent folder of the "BlueSTSDK" package to the "PYTHONPATH" environment variable. On Linux:
+ 2. Add the parent folder of the "blue_st_sdk" package to the "PYTHONPATH" environment variable. On Linux:
     ```Shell
-    $ export PYTHONPATH=/home/<user>/.../<parent-of-BlueSTSDK>/
+    $ export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
     ```
- 3. Run the main script:
+ 3. Run the main scripts:
     ```Shell
-    $ python Test_BLE_1.py
+    $ python example_ble_x.py
     ```
 
 ## BlueST Protocol
