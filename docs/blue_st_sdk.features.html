@@ -1,0 +1,1969 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.features package &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="index.html"/>
+        <link rel="up" title="blue_st_sdk package" href="blue_st_sdk.html"/>
+        <link rel="next" title="blue_st_sdk.features.standard_characteristics package" href="blue_st_sdk.features.standard_characteristics.html"/>
+        <link rel="prev" title="blue_st_sdk package" href="blue_st_sdk.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="blue_st_sdk.html">blue_st_sdk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="blue_st_sdk.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">blue_st_sdk.features package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.device_timestamp_feature">blue_st_sdk.features.device_timestamp_feature module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_accelerometer">blue_st_sdk.features.feature_accelerometer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_gyroscope">blue_st_sdk.features.feature_gyroscope module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_humidity">blue_st_sdk.features.feature_humidity module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_magnetometer">blue_st_sdk.features.feature_magnetometer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_pressure">blue_st_sdk.features.feature_pressure module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_proximity">blue_st_sdk.features.feature_proximity module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_proximity_gesture">blue_st_sdk.features.feature_proximity_gesture module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_stepper_motor">blue_st_sdk.features.feature_stepper_motor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_switch">blue_st_sdk.features.feature_switch module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.feature_temperature">blue_st_sdk.features.feature_temperature module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features.field">blue_st_sdk.features.field module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.features">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.utils.html">blue_st_sdk.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.feature">blue_st_sdk.feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.manager">blue_st_sdk.manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.node">blue_st_sdk.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.python_utils">blue_st_sdk.python_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="blue_st_sdk.html">blue_st_sdk package</a> &raquo;</li>
+        
+      <li>blue_st_sdk.features package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/blue_st_sdk.features.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blue-st-sdk-features-package">
+<h1>blue_st_sdk.features package<a class="headerlink" href="#blue-st-sdk-features-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html">blue_st_sdk.features.standard_characteristics package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics.feature_heart_rate">blue_st_sdk.features.standard_characteristics.feature_heart_rate module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics.standard_characteristic_to_feature_map">blue_st_sdk.features.standard_characteristics.standard_characteristic_to_feature_map module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.features.device_timestamp_feature">
+<span id="blue-st-sdk-features-device-timestamp-feature-module"></span><h2>blue_st_sdk.features.device_timestamp_feature module<a class="headerlink" href="#module-blue_st_sdk.features.device_timestamp_feature" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.device_timestamp_feature.DeviceTimestampFeature">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.device_timestamp_feature.</code><code class="descname">DeviceTimestampFeature</code><span class="sig-paren">(</span><em>name</em>, <em>node</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/device_timestamp_feature.html#DeviceTimestampFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.device_timestamp_feature.DeviceTimestampFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>Class that a feature has to extend if it doesn’t have the timestamp field.
+The system time is used as timestamp.</p>
+<p>Refer to
+<a class="reference external" href="https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml">Heart Rate Measurement Specs</a>
+for more information.</p>
+<dl class="method">
+<dt id="blue_st_sdk.features.device_timestamp_feature.DeviceTimestampFeature.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>node</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/device_timestamp_feature.html#DeviceTimestampFeature.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.device_timestamp_feature.DeviceTimestampFeature.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the feature.</li>
+<li><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will update the
+feature.</li>
+<li><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Description of the data of the feature.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_accelerometer">
+<span id="blue-st-sdk-features-feature-accelerometer-module"></span><h2>blue_st_sdk.features.feature_accelerometer module<a class="headerlink" href="#module-blue_st_sdk.features.feature_accelerometer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_accelerometer.</code><code class="descname">FeatureAccelerometer</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from an accelerometer sensor.</p>
+<p>Data is six bytes long and has no decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 6</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 2000</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = -2000</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = ['X', 'Y', 'Z']</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Accelerometer'</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'mg'</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_X_FIELD">
+<code class="descname">FEATURE_X_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_X_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_Y_FIELD">
+<code class="descname">FEATURE_Y_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_Y_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_Z_FIELD">
+<code class="descname">FEATURE_Z_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.FEATURE_Z_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.X_INDEX">
+<code class="descname">X_INDEX</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.X_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.Y_INDEX">
+<code class="descname">Y_INDEX</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.Y_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.Z_INDEX">
+<code class="descname">Z_INDEX</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.Z_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_x">
+<em class="property">classmethod </em><code class="descname">get_acc_x</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer.get_acc_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the accererometer value on the X axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The accelerometer value on the X axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_y">
+<em class="property">classmethod </em><code class="descname">get_acc_y</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer.get_acc_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the accererometer value on the Y axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The accelerometer value on the Y axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_z">
+<em class="property">classmethod </em><code class="descname">get_acc_z</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_accelerometer.html#FeatureAccelerometer.get_acc_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer.get_acc_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the accererometer value on the Z axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The accelerometer value on the Z axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_gyroscope">
+<span id="blue-st-sdk-features-feature-gyroscope-module"></span><h2>blue_st_sdk.features.feature_gyroscope module<a class="headerlink" href="#module-blue_st_sdk.features.feature_gyroscope" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_gyroscope.</code><code class="descname">FeatureGyroscope</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a gyroscope sensor.</p>
+<p>Data is six bytes long and has one decimal digit.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 6</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 3276.8</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = -3276.8</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = ['X', 'Y', 'Z']</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Gyroscope'</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'dps'</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_X_FIELD">
+<code class="descname">FEATURE_X_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_X_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_Y_FIELD">
+<code class="descname">FEATURE_Y_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_Y_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_Z_FIELD">
+<code class="descname">FEATURE_Z_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.FEATURE_Z_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.SCALE_FACTOR">
+<code class="descname">SCALE_FACTOR</code><em class="property"> = 10.0</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.SCALE_FACTOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.X_INDEX">
+<code class="descname">X_INDEX</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.X_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.Y_INDEX">
+<code class="descname">Y_INDEX</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.Y_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.Z_INDEX">
+<code class="descname">Z_INDEX</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.Z_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_x">
+<em class="property">classmethod </em><code class="descname">get_gyr_x</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope.get_gyr_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the gyroscope value on the X axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The gyroscope value on the X axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_y">
+<em class="property">classmethod </em><code class="descname">get_gyr_y</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope.get_gyr_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the gyroscope value on the Y axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The gyroscope value on the Y axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_z">
+<em class="property">classmethod </em><code class="descname">get_gyr_z</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_gyroscope.html#FeatureGyroscope.get_gyr_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_gyroscope.FeatureGyroscope.get_gyr_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the gyroscope value on the Z axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The gyroscope value on the Z axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_humidity">
+<span id="blue-st-sdk-features-feature-humidity-module"></span><h2>blue_st_sdk.features.feature_humidity module<a class="headerlink" href="#module-blue_st_sdk.features.feature_humidity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_humidity.</code><code class="descname">FeatureHumidity</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_humidity.html#FeatureHumidity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a humidity sensor.</p>
+<p>Data is two bytes long and has one decimal digit.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 100</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Humidity'</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Humidity'</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = '%'</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.SCALE_FACTOR">
+<code class="descname">SCALE_FACTOR</code><em class="property"> = 10.0</em><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.SCALE_FACTOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_humidity.html#FeatureHumidity.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_humidity.html#FeatureHumidity.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_humidity.FeatureHumidity.get_humidity">
+<em class="property">classmethod </em><code class="descname">get_humidity</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_humidity.html#FeatureHumidity.get_humidity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_humidity.FeatureHumidity.get_humidity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the humidity value from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The humidity value if the data array is valid, &lt;nan&gt;
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_magnetometer">
+<span id="blue-st-sdk-features-feature-magnetometer-module"></span><h2>blue_st_sdk.features.feature_magnetometer module<a class="headerlink" href="#module-blue_st_sdk.features.feature_magnetometer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_magnetometer.</code><code class="descname">FeatureMagnetometer</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a magnetometer sensor.</p>
+<p>Data is six bytes long and has no decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 6</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 2000</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = -2000</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = ['X', 'Y', 'Z']</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Magnetometer'</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'mGa'</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_X_FIELD">
+<code class="descname">FEATURE_X_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_X_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_Y_FIELD">
+<code class="descname">FEATURE_Y_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_Y_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_Z_FIELD">
+<code class="descname">FEATURE_Z_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.FEATURE_Z_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.X_INDEX">
+<code class="descname">X_INDEX</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.X_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.Y_INDEX">
+<code class="descname">Y_INDEX</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.Y_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.Z_INDEX">
+<code class="descname">Z_INDEX</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.Z_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_x">
+<em class="property">classmethod </em><code class="descname">get_mag_x</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer.get_mag_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the magnetometer value on the X axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The magnetometer value on the X axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_y">
+<em class="property">classmethod </em><code class="descname">get_mag_y</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer.get_mag_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the magnetometer value on the Y axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The magnetometer value on the Y axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_z">
+<em class="property">classmethod </em><code class="descname">get_mag_z</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_magnetometer.html#FeatureMagnetometer.get_mag_z"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer.get_mag_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the magnetometer value on the Z axis from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The magnetometer value on the Z axis if the data array is
+valid, &lt;nan&gt; otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_pressure">
+<span id="blue-st-sdk-features-feature-pressure-module"></span><h2>blue_st_sdk.features.feature_pressure module<a class="headerlink" href="#module-blue_st_sdk.features.feature_pressure" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_pressure.</code><code class="descname">FeaturePressure</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_pressure.html#FeaturePressure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a pressure sensor.</p>
+<p>Data is four bytes long and has two decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 4</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 2000</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Pressure'</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Pressure'</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'mBar'</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.SCALE_FACTOR">
+<code class="descname">SCALE_FACTOR</code><em class="property"> = 100.0</em><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.SCALE_FACTOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_pressure.html#FeaturePressure.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_pressure.html#FeaturePressure.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_pressure.FeaturePressure.get_pressure">
+<em class="property">classmethod </em><code class="descname">get_pressure</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_pressure.html#FeaturePressure.get_pressure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_pressure.FeaturePressure.get_pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the pressure value from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The pressure value if the data array is valid, &lt;nan&gt;
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_proximity">
+<span id="blue-st-sdk-features-feature-proximity-module"></span><h2>blue_st_sdk.features.feature_proximity module<a class="headerlink" href="#module-blue_st_sdk.features.feature_proximity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_proximity.</code><code class="descname">FeatureProximity</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity.html#FeatureProximity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a proximity sensor.</p>
+<p>Data is two bytes long and has no decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Proximity'</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Proximity'</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'mm'</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.HIGH_RANGE_DATA_MAX">
+<code class="descname">HIGH_RANGE_DATA_MAX</code><em class="property"> = 32766</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.HIGH_RANGE_DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.HIGH_RANGE_FEATURE_FIELDS">
+<code class="descname">HIGH_RANGE_FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.HIGH_RANGE_FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.LOW_RANGE_DATA_MAX">
+<code class="descname">LOW_RANGE_DATA_MAX</code><em class="property"> = 254</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.LOW_RANGE_DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.LOW_RANGE_FEATURE_FIELDS">
+<code class="descname">LOW_RANGE_FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.LOW_RANGE_FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.OUT_OF_RANGE_VALUE">
+<code class="descname">OUT_OF_RANGE_VALUE</code><em class="property"> = 65535</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.OUT_OF_RANGE_VALUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity.html#FeatureProximity.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity.html#FeatureProximity.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.get_proximity_distance">
+<em class="property">classmethod </em><code class="descname">get_proximity_distance</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity.html#FeatureProximity.get_proximity_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.get_proximity_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The proximity distance value if the data array is valid, “-1”
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_proximity.FeatureProximity.is_out_of_range_distance">
+<em class="property">classmethod </em><code class="descname">is_out_of_range_distance</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity.html#FeatureProximity.is_out_of_range_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity.FeatureProximity.is_out_of_range_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the measure is out of range_value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the proximity distance is out of range_value, False
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_proximity_gesture">
+<span id="blue-st-sdk-features-feature-proximity-gesture-module"></span><h2>blue_st_sdk.features.feature_proximity_gesture module<a class="headerlink" href="#module-blue_st_sdk.features.feature_proximity_gesture" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_proximity_gesture.</code><code class="descname">FeatureProximityGesture</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity_gesture.html#FeatureProximityGesture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the detected gesture using proximity sensors.</p>
+<p>Data is one byte long and has no decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 4</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Gesture'</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Gesture'</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity_gesture.html#FeatureProximityGesture.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity_gesture.html#FeatureProximityGesture.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.get_gesture">
+<em class="property">classmethod </em><code class="descname">get_gesture</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity_gesture.html#FeatureProximityGesture.get_gesture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture.get_gesture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the gesture value from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The
+gesture value from a sample.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture" title="blue_st_sdk.features.feature_proximity_gesture.Gesture"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.feature_proximity_gesture.Gesture</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_proximity_gesture.</code><code class="descname">Gesture</code><a class="reference internal" href="_modules/blue_st_sdk/features/feature_proximity_gesture.html#Gesture"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>This class summarizes the types of gesture that can be recognized.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture.ERROR">
+<code class="descname">ERROR</code><em class="property"> = 4</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture.ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture.LEFT">
+<code class="descname">LEFT</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture.LEFT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture.RIGHT">
+<code class="descname">RIGHT</code><em class="property"> = 3</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture.RIGHT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture.TAP">
+<code class="descname">TAP</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture.TAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_proximity_gesture.Gesture.UNKNOWN">
+<code class="descname">UNKNOWN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_proximity_gesture.Gesture.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_stepper_motor">
+<span id="blue-st-sdk-features-feature-stepper-motor-module"></span><h2>blue_st_sdk.features.feature_stepper_motor module<a class="headerlink" href="#module-blue_st_sdk.features.feature_stepper_motor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_stepper_motor.</code><code class="descname">FeatureStepperMotor</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles a stepper motor.</p>
+<p>It can be read or written and behaves differently depending on this.
+When read, the data read is the status of the motor, and is one byte long.
+When written, the data written is the command to be executed, and can be
+either one or five bytes long (see
+<a class="reference internal" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.write_motor_command" title="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.write_motor_command"><code class="xref py py-meth docutils literal notranslate"><span class="pre">blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.write_motor_command()</span></code></a>
+method).</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.COMMAND_DATA_LENGTH_BYTES">
+<code class="descname">COMMAND_DATA_LENGTH_BYTES</code><em class="property"> = 5</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.COMMAND_DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.COMMAND_FEATURE_FIELDS">
+<code class="descname">COMMAND_FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.COMMAND_FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Stepper Motor'</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.STATUS_DATA_LENGTH_BYTES">
+<code class="descname">STATUS_DATA_LENGTH_BYTES</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.STATUS_DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.STATUS_FEATURE_FIELDS">
+<code class="descname">STATUS_FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.STATUS_FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.get_motor_status">
+<em class="property">classmethod </em><code class="descname">get_motor_status</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor.get_motor_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.get_motor_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the motor status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The motor status if the sample is valid, “-1” otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.read_motor_status">
+<code class="descname">read_motor_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor.read_motor_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.read_motor_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the motor status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The motor status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus" title="blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">StepperMotorStatus</span></code></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException" title="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException</span></code></a> – is raised if the feature is not enabled or the operation
+required is not supported.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.write_motor_command">
+<code class="descname">write_motor_command</code><span class="sig-paren">(</span><em>command</em>, <em>steps=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#FeatureStepperMotor.write_motor_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor.write_motor_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the motor command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>command</strong> (<a class="reference internal" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands" title="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands"><code class="xref py py-class docutils literal notranslate"><span class="pre">StepperMotorCommands</span></code></a>) – The command to be written.</li>
+<li><strong>steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – The number of steps to perform, if required by the
+command.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException" title="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException</span></code></a> – is raised if the feature is not enabled or the operation
+required is not supported.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_stepper_motor.</code><code class="descname">StepperMotorCommands</code><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#StepperMotorCommands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>This class lists the types of commands that can be given to a stepper
+motor.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_BACKWARD">
+<code class="descname">MOTOR_MOVE_STEPS_BACKWARD</code><em class="property"> = 5</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_BACKWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD">
+<code class="descname">MOTOR_MOVE_STEPS_FORWARD</code><em class="property"> = 4</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_RUN_BACKWARD">
+<code class="descname">MOTOR_RUN_BACKWARD</code><em class="property"> = 3</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_RUN_BACKWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_RUN_FORWARD">
+<code class="descname">MOTOR_RUN_FORWARD</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_RUN_FORWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE">
+<code class="descname">MOTOR_STOP_RUNNING_WITHOUT_TORQUE</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITH_TORQUE">
+<code class="descname">MOTOR_STOP_RUNNING_WITH_TORQUE</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITH_TORQUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_stepper_motor.</code><code class="descname">StepperMotorStatus</code><a class="reference internal" href="_modules/blue_st_sdk/features/feature_stepper_motor.html#StepperMotorStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>This class lists the types of status in which a stepper motor can found
+itself.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus.MOTOR_INACTIVE">
+<code class="descname">MOTOR_INACTIVE</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus.MOTOR_INACTIVE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus.MOTOR_RUNNING">
+<code class="descname">MOTOR_RUNNING</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_stepper_motor.StepperMotorStatus.MOTOR_RUNNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_switch">
+<span id="blue-st-sdk-features-feature-switch-module"></span><h2>blue_st_sdk.features.feature_switch module<a class="headerlink" href="#module-blue_st_sdk.features.feature_switch" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_switch.</code><code class="descname">FeatureSwitch</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles an 8-bit switch status register, thus handling up to
+8 switches.</p>
+<p>Data is one byte long and has no decimal digits.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 256</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Status'</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Switch'</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.get_switch_status">
+<em class="property">classmethod </em><code class="descname">get_switch_status</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch.get_switch_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.get_switch_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the switch status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The switch status if the sample is valid, “-1” otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.read_switch_status">
+<code class="descname">read_switch_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch.read_switch_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.read_switch_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the switch status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The switch status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException" title="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException</span></code></a> – is raised if the feature is not enabled or the operation
+required is not supported.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_switch.FeatureSwitch.write_switch_status">
+<code class="descname">write_switch_status</code><span class="sig-paren">(</span><em>status</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_switch.html#FeatureSwitch.write_switch_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_switch.FeatureSwitch.write_switch_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the switch status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – The switch status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException" title="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException</span></code></a> – is raised if the feature is not enabled or the operation
+required is not supported.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.feature_temperature">
+<span id="blue-st-sdk-features-feature-temperature-module"></span><h2>blue_st_sdk.features.feature_temperature module<a class="headerlink" href="#module-blue_st_sdk.features.feature_temperature" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.feature_temperature.</code><code class="descname">FeatureTemperature</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_temperature.html#FeatureTemperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the data coming from a temperature sensor.</p>
+<p>Data is two bytes long and has one decimal digit.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 100</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Temperature'</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'Temperature'</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = 'C'</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.SCALE_FACTOR">
+<code class="descname">SCALE_FACTOR</code><em class="property"> = 10.0</em><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.SCALE_FACTOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_temperature.html#FeatureTemperature.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that will send data to
+this feature.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_temperature.html#FeatureTemperature.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Data’s timestamp.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The data read from the feature.</li>
+<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Offset where to start reading data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Container of the number
+of bytes read and the extracted data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a> if the data array has not enough data to read.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.feature_temperature.FeatureTemperature.get_temperature">
+<em class="property">classmethod </em><code class="descname">get_temperature</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/feature_temperature.html#FeatureTemperature.get_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.feature_temperature.FeatureTemperature.get_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the temperature value from a sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>) – Sample data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The temperature value if the data array is valid, &lt;nan&gt;
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.field">
+<span id="blue-st-sdk-features-field-module"></span><h2>blue_st_sdk.features.field module<a class="headerlink" href="#module-blue_st_sdk.features.field" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.field.Field">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.field.</code><code class="descname">Field</code><span class="sig-paren">(</span><em>name_</em>, <em>unit_</em>, <em>type_</em>, <em>max_</em>, <em>min_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that describes a feature data field.</p>
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name_</em>, <em>unit_</em>, <em>type_</em>, <em>max_</em>, <em>min_</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Unit.</li>
+<li><strong>type</strong> (<a class="reference internal" href="#blue_st_sdk.features.field.FieldType" title="blue_st_sdk.features.field.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.FieldType</span></code></a>) – Type.</li>
+<li><strong>max</strong> – Maximum value.</li>
+<li><strong>min</strong> – Minimum value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.get_max">
+<code class="descname">get_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.get_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.get_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maximum value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The maximum value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.get_min">
+<code class="descname">get_min</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.get_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.get_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the minimum value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The minimum value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.get_type">
+<code class="descname">get_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.get_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.features.field.FieldType" title="blue_st_sdk.features.field.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.FieldType</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.field.Field.get_unit">
+<code class="descname">get_unit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#Field.get_unit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.Field.get_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the unit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The unit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.features.field.FieldType">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.field.</code><code class="descname">FieldType</code><a class="reference internal" href="_modules/blue_st_sdk/features/field.html#FieldType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.field.FieldType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Type of field.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.ByteArray">
+<code class="descname">ByteArray</code><em class="property"> = u'ByteArray'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.ByteArray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.Float">
+<code class="descname">Float</code><em class="property"> = u'Float'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.Float" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.Int16">
+<code class="descname">Int16</code><em class="property"> = u'Int16'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.Int16" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.Int32">
+<code class="descname">Int32</code><em class="property"> = u'Int32'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.Int32" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.Int64">
+<code class="descname">Int64</code><em class="property"> = u'Int64'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.Int64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.Int8">
+<code class="descname">Int8</code><em class="property"> = u'Int8'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.Int8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.UInt16">
+<code class="descname">UInt16</code><em class="property"> = u'UInt16'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.UInt16" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.UInt32">
+<code class="descname">UInt32</code><em class="property"> = u'UInt32'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.UInt32" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.field.FieldType.UInt8">
+<code class="descname">UInt8</code><em class="property"> = u'UInt8'</em><a class="headerlink" href="#blue_st_sdk.features.field.FieldType.UInt8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.features" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="blue_st_sdk.features.standard_characteristics.html" class="btn btn-neutral float-right" title="blue_st_sdk.features.standard_characteristics package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="blue_st_sdk.html" class="btn btn-neutral" title="blue_st_sdk package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

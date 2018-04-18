@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.utils.number_conversion &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../blue_st_sdk.html">blue_st_sdk package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>blue_st_sdk.utils.number_conversion</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for blue_st_sdk.utils.number_conversion</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;number_conversion</span>
+
+<span class="sd">The number_conversion module contains tools to convert features&#39; data to</span>
+<span class="sd">numbers.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">import</span> <span class="nn">struct</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="NumberConversion"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.NumberConversion">[docs]</a><span class="k">class</span> <span class="nc">NumberConversion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class helps to convert array of bytes to different formats, and</span>
+<span class="sd">    viceversa.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NumberConversion.byteToUInt8"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.NumberConversion.byteToUInt8">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">byteToUInt8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the short value of the unsigned byte value in position</span>
+<span class="sd">        &quot;index&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Array of bytes that contains the value to convert.</span>
+<span class="sd">            index (int): Position of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The corresponding numerical value.      </span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="LittleEndian"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian">[docs]</a><span class="k">class</span> <span class="nc">LittleEndian</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class implements the conversion from array of bytes to different</span>
+<span class="sd">    formats, and viceversa, in Little Endian base order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LittleEndian.bytesToInt16"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt16">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToInt16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the signed short value of two bytes of the array in Little</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 2).order(ByteOrder.LITTLE_ENDIAN).getShort()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;h&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.bytesToInt32"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt32">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToInt32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the signed integer value of four bytes of the array in Little</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;i&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.bytesToUInt16"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt16">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToUInt16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the unsigned short value of two bytes of the array in Little</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 2).order(ByteOrder.LITTLE_ENDIAN).getShort() &amp; 0xFFFF</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.bytesToUInt32"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt32">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToUInt32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the unsigned integer value of four bytes of the array in</span>
+<span class="sd">        Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ((long(ByteBuffer.wrap(data, start, 4).order(ByteOrder.LITTLE_ENDIAN).getInt())) &amp; 0xFFFFFFFFL)</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;I&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.bytesToFloat"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToFloat">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToFloat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the floating point value of four bytes of the array in Little</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return Float.intBitsToFloat(self.bytesToInt32(data, start))</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;f&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.int16ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.int16ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">int16ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the two bytes array corresponding to the signed short value in</span>
+<span class="sd">        Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(value).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;i&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.int32ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.int32ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">int32ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the signed integer value</span>
+<span class="sd">        in Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;q&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.uint16ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.uint16ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint16ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the two bytes array corresponding to the unsigned short value</span>
+<span class="sd">        in Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(int((value &amp; 0xFFFF))).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.uint32ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.uint32ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint32ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the unsigned integer</span>
+<span class="sd">        value in Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(int((value &amp; 0xFFFFFFFFL))).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;Q&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+
+<div class="viewcode-block" id="LittleEndian.floatToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.LittleEndian.floatToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">floatToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the floating point value</span>
+<span class="sd">        in Little Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (float): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(value).array()</span></div></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;f&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BigEndian"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian">[docs]</a><span class="k">class</span> <span class="nc">BigEndian</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class implements the conversion from array of bytes to different</span>
+<span class="sd">    formats, and viceversa, in Big Endian base order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BigEndian.bytesToInt16"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt16">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToInt16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the signed short value of two bytes of the array in Big</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 2).order(ByteOrder.BIG_ENDIAN).getShort()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;h&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.bytesToInt32"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt32">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToInt32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the signed integer value of four bytes of the array in Big</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 4).order(ByteOrder.BIG_ENDIAN).getInt()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;i&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.bytesToUInt16"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt16">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToUInt16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the unsigned short value of two bytes of the array in Big</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.wrap(data, start, 2).order(ByteOrder.BIG_ENDIAN).getShort() &amp; 0xFFFF</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;H&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.bytesToUInt32"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt32">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToUInt32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the unsigned integer value of four bytes of the array in Big</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ((long(ByteBuffer.wrap(data, start, 4).order(ByteOrder.BIG_ENDIAN).getInt())) &amp; 0xFFFFFFFFL)</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;I&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.bytesToFloat"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.bytesToFloat">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">bytesToFloat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the floating point value of four bytes of the array in Big</span>
+<span class="sd">        Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): Input array of bytes that contains the value to convert.</span>
+<span class="sd">            start (int): Start index in the array of the value to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding numerical value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return Float.intBitsToFloat(self.bytesToInt32(data, start))</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;f&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;cccc&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.int16ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.int16ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">int16ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the two bytes array corresponding to the signed short value in</span>
+<span class="sd">        Big Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(2).order(ByteOrder.BIG_ENDIAN).putShort(value).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;i&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.int32ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.int32ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">int32ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the signed integer value</span>
+<span class="sd">        in Big Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(value).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;q&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.uint16ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.uint16ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint16ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the two bytes array corresponding to the unsigned short value</span>
+<span class="sd">        in Big Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(2).order(ByteOrder.BIG_ENDIAN).putShort(int((value &amp; 0xFFFF))).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;I&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.uint32ToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.uint32ToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint32ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the unsigned integer</span>
+<span class="sd">        value in Big Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(int((value &amp; 0xFFFFFFFFL))).array()</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;Q&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)[</span><span class="mi">4</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BigEndian.floatToBytes"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.number_conversion.BigEndian.floatToBytes">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">floatToBytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the four bytes array corresponding to the floating point value</span>
+<span class="sd">        in Big Endian base order.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): Value to convert.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The corresponding array of bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putFloat(value).array()</span></div></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;f&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

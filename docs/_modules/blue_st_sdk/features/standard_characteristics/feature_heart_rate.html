@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.features.standard_characteristics.feature_heart_rate &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../blue_st_sdk.html">blue_st_sdk package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>blue_st_sdk.features.standard_characteristics.feature_heart_rate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for blue_st_sdk.features.standard_characteristics.feature_heart_rate</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.features.device_timestamp_feature</span> <span class="k">import</span> <span class="n">DeviceTimestampFeature</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.feature</span> <span class="k">import</span> <span class="n">Sample</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.feature</span> <span class="k">import</span> <span class="n">ExtractedData</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.features.field</span> <span class="k">import</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.features.field</span> <span class="k">import</span> <span class="n">FieldType</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.number_conversion</span> <span class="k">import</span> <span class="n">LittleEndian</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="FeatureHeartRate"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate">[docs]</a><span class="k">class</span> <span class="nc">FeatureHeartRate</span><span class="p">(</span><span class="n">DeviceTimestampFeature</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Feature that manages the Heart Rate&#39;sample data as defined by the</span>
+<span class="sd">    Bluetooth specification. </span>
+
+<span class="sd">    Refer to</span>
+<span class="sd">    `Heart Rate Measurement Specs &lt;https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml&gt;`_</span>
+<span class="sd">    for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">FEATURE_NAME</span> <span class="o">=</span> <span class="s2">&quot;Heart Rate&quot;</span>
+    <span class="n">HEART_RATE_INDEX</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">HEART_RATE_FIELD</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;Heart Rate Measurement&quot;</span><span class="p">,</span> <span class="s2">&quot;bpm&quot;</span><span class="p">,</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">UInt16</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">ENERGY_EXPENDED_INDEX</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ENERGY_EXPENDED_FIELD</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;Energy Expended&quot;</span><span class="p">,</span> <span class="s2">&quot;kJ&quot;</span><span class="p">,</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">UInt16</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">RR_INTERVAL_INDEX</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">RR_INTERVAL_FIELD</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;RR-Interval&quot;</span><span class="p">,</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+    <span class="n">DATA_LENGTH_BYTES</span> <span class="o">=</span> <span class="mi">2</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.__init__"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build a new disabled feature, that doesn&#39;t need to be initialized at</span>
+<span class="sd">        node&#39;sample side.</span>
+<span class="sd">    </span>
+<span class="sd">        Args:</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): Node that will update this</span>
+<span class="sd">                feature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureHeartRate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FEATURE_NAME</span><span class="p">,</span>
+            <span class="n">node</span><span class="p">,</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">HEART_RATE_FIELD</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ENERGY_EXPENDED_FIELD</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">RR_INTERVAL_FIELD</span><span class="p">]</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.getHeartRate"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.getHeartRate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getHeartRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract the Heart Rate from the sample.</span>
+<span class="sd">    </span>
+<span class="sd">        Args:</span>
+<span class="sd">            sample (:class:`blue_st_sdk.feature.Sample`): The sample.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The Heart Rate if available, a negative number otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>      
+        <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEART_RATE_INDEX</span><span class="p">:</span>
+                <span class="n">hr</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">HEART_RATE_INDEX</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">hr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">hr</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.getEnergyExpended"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.getEnergyExpended">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getEnergyExpended</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract the energy expended field from the sample.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sample (:class:`blue_st_sdk.feature.Sample`): The sample.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The energy expended if available, a negative number otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ENERGY_EXPENDED_INDEX</span><span class="p">:</span>
+                <span class="n">ee</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ENERGY_EXPENDED_INDEX</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ee</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">ee</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.getRRInterval"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.getRRInterval">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getRRInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract the RR interval field from the sample.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sample (:class:`blue_st_sdk.feature.Sample`): The sample.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The RR interval if available, &lt;nan&gt; otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">RR_INTERVAL_INDEX</span><span class="p">:</span>
+                <span class="n">rri</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">RR_INTERVAL_INDEX</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">rri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rri</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.extract_data"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.extract_data">[docs]</a>    <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract the data from the feature&#39;s raw data.</span>
+<span class="sd">        In this case it reads a 16-bit signed integer value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timestamp (int): Data&#39;s timestamp.</span>
+<span class="sd">            data (str): The data read from the feature.</span>
+<span class="sd">            offset (int): Offset where to start reading data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.feature.ExtractedData`: Container of the number</span>
+<span class="sd">            of bytes read and the extracted data.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`Exception` if the data array has not enough data to read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;There are no </span><span class="si">%d</span><span class="s1"> bytes available to read.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">))</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has8BitHeartRate</span><span class="p">(</span><span class="n">flags</span><span class="p">):</span>
+            <span class="n">hr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hr</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasEnergyExpended</span><span class="p">(</span><span class="n">flags</span><span class="p">):</span>
+            <span class="n">ee</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ee</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasRRInterval</span><span class="p">(</span><span class="n">flags</span><span class="p">):</span>
+            <span class="n">rri</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rri</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ExtractedData</span><span class="p">(</span>
+            <span class="n">Sample</span><span class="p">(</span>
+                <span class="n">timestamp</span><span class="p">,</span>
+                <span class="p">[</span><span class="n">hr</span><span class="p">,</span> <span class="n">ee</span><span class="p">,</span> <span class="n">rri</span><span class="p">],</span>
+                <span class="n">getFieldsDescription</span><span class="p">()</span>
+            <span class="p">),</span>
+            <span class="n">offset</span> <span class="o">-</span> <span class="n">offset</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.has8BitHeartRate"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.has8BitHeartRate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">has8BitHeartRate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if there is Heart Rate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flags (int): Flags.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there is Heart Rate, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="mh">0x01</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.hasEnergyExpended"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.hasEnergyExpended">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">hasEnergyExpended</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if there is Energy Expended.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flags (int): Flags.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there is Energy Expended, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="mh">0x08</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="FeatureHeartRate.hasRRInterval"><a class="viewcode-back" href="../../../../blue_st_sdk.features.standard_characteristics.html#blue_st_sdk.features.standard_characteristics.feature_heart_rate.FeatureHeartRate.hasRRInterval">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">hasRRInterval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if there is RR interval.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            flags (int): Flags.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if there is RR Interval, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="mh">0x10</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
