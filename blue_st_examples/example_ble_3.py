@@ -28,6 +28,13 @@
 ################################################################################
 
 
+# DESCRIPTION
+#
+# This application example shows how to connect to two Bluetooth Low Energy
+# (BLE) devices exporting a "Switch" feature, and to get/set the status of the
+# feature.
+
+
 # IMPORT
 
 from __future__ import print_function
@@ -66,6 +73,8 @@ INTRO = """##################
 
 # BLUETOOTH DEVICES
 
+# Put here the MAC address of your Bluetooth Low Energy and Switch enabled
+# devices.
 SWITCH_DEVICE_1_MAC = 'd7:90:95:be:58:7e'
 SWITCH_DEVICE_2_MAC = 'd1:07:fd:84:30:8c'
 

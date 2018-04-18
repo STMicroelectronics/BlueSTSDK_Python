@@ -28,6 +28,13 @@
 ################################################################################
 
 
+# DESCRIPTION
+#
+# This application example shows how to connect to a Bluetooth Low Energy (BLE)
+# device exporting a "Stepper Motor" feature, to get its status, and to send
+# commands to it.
+
+
 # IMPORT
 
 from __future__ import print_function
@@ -63,6 +70,8 @@ INTRO = """##################
 SCANNING_TIME_s = 5
 
 # Devices.
+# Put here the MAC address of your Bluetooth Low Energy and Stepper Motor
+# enabled device.
 MOTOR_DEVICE_MAC = 'e8:83:80:11:e2:37'
 
 

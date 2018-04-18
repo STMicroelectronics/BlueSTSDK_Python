@@ -14,6 +14,22 @@ Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/con
 Please follow the official instructions to install the mentioned libraries.
 
 
+## Setting up the application examples
+Before running the application examples, please follow the steps here below.
+ * The "example_ble_1.py" application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the BlueST Protocol, e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html)) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
+ * The "example_ble_2.py" application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
+   * A [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development board
+   * An [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion board
+   * An [X-NUCLEO-IHM01A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-move-actuate-hw/x-nucleo-ihm01a1.html) Stepper Motor Driver expansion board, plus a proper stepper motor
+   * Import the [Node_BLE_StepperMotor_Device](https://os.mbed.com/teams/ST/code/Node_BLE_StepperMotor_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
+   * Edit the "example_ble_2.py" application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application)
+ * The "example_ble_3.py" application example shows how to connect to two BLE devices exporting a "Switch" feature, and to get/set the status of the feature. The application requires to set up two devices equipped with BLE connectivity, e.g.:
+   * Two [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development boards
+   * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
+   * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
+   * Edit the "example_ble_3.py" application example and set the "SWITCH_DEVICE_1_MAC" and "SWITCH_DEVICE_2_MAC" global variables with the proper MAC address of your switch enabled BLE devices (which you can retrieve for example through a smartphone application)
+
+
 ## How to run the application examples
 To run the BlueST application examples please follow the steps below:
  1. Clone the repository containing the BlueST SDK and the BlueST examples.
@@ -25,6 +41,7 @@ To run the BlueST application examples please follow the steps below:
     ```Shell
     $ python example_ble_x.py
     ```
+
 
 ## BlueST Protocol
 
@@ -172,7 +189,7 @@ Available features can be retrieved from Features package.
 
 
 ## License
-COPYRIGHT(c) 2018 STMicroelectronics                                          
+COPYRIGHT(c) 2018 STMicroelectronics
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

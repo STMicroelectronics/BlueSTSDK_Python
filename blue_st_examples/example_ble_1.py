@@ -28,6 +28,13 @@
 ################################################################################
 
 
+# DESCRIPTION
+#
+# This application example shows how to perform a Bluetooth Low Energy (BLE)
+# scan, connect to a device, retrieve its exported features, and get push
+# notifications from it.
+
+
 # IMPORT
 
 from __future__ import print_function
