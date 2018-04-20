@@ -246,7 +246,7 @@ class Node(Peripheral, object):
         # # Measurement characteristic.
         # map = UUIDToFeatureMap()
         # map.put(uuid.UUID('00002a37-0000-1000-8000-00805f9b34fb'),
-        #         FeatureHeartRate.FeatureHeartRate)
+        #         feature_heart_rate.FeatureHeartRate)
         # node.add_external_features(map)
         # # Connecting to the node.
         # node.connect()

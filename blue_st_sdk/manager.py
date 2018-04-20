@@ -504,7 +504,7 @@ class Manager(object):
         # # Adding a 'MyFeature' feature to a Nucleo device and mapping it to a
         # # custom '0x10000000-0001-11e1-ac36-0002a5d5c51b' characteristic.
         # mask_to_features_dic = {}
-        # mask_to_features_dic[0x10000000] = MyFeature.MyFeature
+        # mask_to_features_dic[0x10000000] = my_feature.MyFeature
         # try:
         #     Manager.add_features_to_node(0x80, mask_to_features_dic)
         # except InvalidFeatureBitMaskException as e:

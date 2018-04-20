@@ -16,14 +16,14 @@ Please follow the official instructions to install the mentioned libraries.
 
 ## Setting up the application examples
 Before running the application examples, please follow the steps here below.
- * The "example_ble_1.py" application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the BlueST Protocol, e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html)) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
- * The "example_ble_2.py" application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
+ * The [example_ble_1.p](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_1.py) application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the BlueST Protocol, e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
+ * The [example_ble_2.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_2.py) application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
    * A [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development board
    * An [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion board
    * An [X-NUCLEO-IHM01A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-move-actuate-hw/x-nucleo-ihm01a1.html) Stepper Motor Driver expansion board, plus a proper stepper motor
    * Import the [Node_BLE_StepperMotor_Device](https://os.mbed.com/teams/ST/code/Node_BLE_StepperMotor_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
    * Edit the "example_ble_2.py" application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application)
- * The "example_ble_3.py" application example shows how to connect to two BLE devices exporting a "Switch" feature, and to get/set the status of the feature. The application requires to set up two devices equipped with BLE connectivity, e.g.:
+ * The [example_ble_3.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_3.py) application example shows how to connect to two BLE devices exporting a "Switch" feature, and to get/set the status of the feature. The application requires to set up two devices equipped with BLE connectivity, e.g.:
    * Two [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development boards
    * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
    * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
@@ -76,7 +76,7 @@ The library shows only the devices that have a vendor-specific field formatted i
    |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
    |Feature|CO Sensor|DC Motor|Stepper Motor|SD Logging|Beam forming|Accelerometer Event|Free Fall|Sensor Fusion Compact|Sensor Fusion|Motion Intensity|Compass|Activity|Carry Position|Proximity Gesture|MEMS Gesture|Pedometer|
 
-To understand the way the data are exported by predefined features, please refer to the method <code> Feature.extractData(self, timestamp, data, offset)</code> within the features class definition.
+To understand the way the data are exported by predefined features, please refer to the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data) within the features class definition.
 
 - The device MAC address is optional, and needed only on the iOS platform.
 
@@ -114,14 +114,14 @@ The SDK is compatible with the following ST firmware:
 
 ## Main actors
 
-### Manager
+### [Manager](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.manager)
 This is a singleton class that starts/stops the discovery process and stores the retrieved nodes.
 
 Before starting the scanning process, it is also possible to define a new Device Id and to register/add new features to already defined devices.
 
-The Manager notifies a new discovered node through the <code>Manager.ManagerListener</code> class. Each callback is performed asynchronously by a thread running in background.
+The Manager notifies a new discovered node through the [<code>ManagerListener</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.manager.ManagerListener) class. Each callback is performed asynchronously by a thread running in background.
 
-### Node
+### [Node](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.node)
 This class represents a remote device.
 
 Through this class it is possible to recover the features exported by a node and read/write data from/to the device.
@@ -142,12 +142,12 @@ A node can be in one of following status:
 
 Each callback is performed asynchronously by a thread running in background.
 
-### Feature
+### [Feature](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.feature)
 This class represents the data exported by a node.
 
-Each feature has an array of <code>Field</code> objects that describes the data exported.
+Each feature has an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describes the data exported.
 
-Data are received from a BLE characteristic and contained in a <code>Feature.Sample</code> class. The user is notified about new data through a listener.
+Data are received from a BLE characteristic and contained in a [<code>Sample</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) class. The user is notified about new data through a listener.
 
 Note that each callback is performed asynchronously by a thread running in background.
 
@@ -156,10 +156,10 @@ Available features can be retrieved from Features package.
 #### How to add a new Feature
 
  1. Extend the Feature class:
-    1.  Create an array of <code>Feature.Field</code> objects that describes the data exported by the feature.
+    1.  Create an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describes the data exported by the feature.
     2.  Create a constructor that accepts only the node as a parameter. From this constructor call the superclass constructor, passing the feature's name and the feature's fields.
-    3.  Implement the method <code> Feature.extractData(self, timestamp, data, offset)</code>.
-    4.  Implement a class method that allows to get data from a <code>Feature.Sample</code> object.
+    3.  Implement the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data).
+    4.  Implement a class method that allows to get data from a [<code>Sample</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) object.
  2. Register the new feature:
     If you want to use BlueST's bitmask for features within the advertising data, please register the new feature before performing the discovery process, e.g.:
  
