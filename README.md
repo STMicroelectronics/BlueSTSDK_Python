@@ -22,15 +22,15 @@ Before running the application examples, please follow the steps here below.
    * An [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion board
    * An [X-NUCLEO-IHM01A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-move-actuate-hw/x-nucleo-ihm01a1.html) Stepper Motor Driver expansion board, plus a proper stepper motor
    * Import the [Node_BLE_StepperMotor_Device](https://os.mbed.com/teams/ST/code/Node_BLE_StepperMotor_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
-   * Edit the "example_ble_2.py" application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application)
- * The [example_ble_3.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_3.py) application example shows how to connect to two BLE devices exporting a "Switch" feature, and to get/set the status of the feature. The application requires to set up two devices equipped with BLE connectivity, e.g.:
+   * Edit the application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application)
+ * The [example_ble_3.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_3.py) application example shows how to handle two BLE devices exporting a "Switch" feature in such a way that pressing the user button on a device makes the LED of the other device toggle its state, through a logic defined within the application itself. The application requires to set up two devices equipped with BLE connectivity, e.g.:
    * Two [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development boards
    * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
    * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
-   * Edit the "example_ble_3.py" application example and set the "SWITCH_DEVICE_1_MAC" and "SWITCH_DEVICE_2_MAC" global variables with the proper MAC address of your switch enabled BLE devices (which you can retrieve for example through a smartphone application)
+   * Edit the application example and set the "SWITCH_DEVICE_1_MAC" and "SWITCH_DEVICE_2_MAC" global variables with the proper MAC address of your switch enabled BLE devices (which you can retrieve for example through a smartphone application)
 
 
-## How to run the application examples
+## Running the application examples
 To run the BlueST application examples please follow the steps below:
  1. Clone the repository containing the BlueST SDK and the BlueST examples.
  2. Add the parent folder of the "blue_st_sdk" package to the "PYTHONPATH" environment variable. On Linux:
