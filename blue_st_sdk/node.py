@@ -385,6 +385,7 @@ class Node(Peripheral, object):
                                 self._char_handle_to_characteristic_dict[char_handle]
                             features_size = len(features)
 
+    def _update_features(self, char_handle, data, notify_update=False):
         """Update the features related to a given characteristic.
 
         Args:
@@ -397,7 +398,6 @@ class Node(Peripheral, object):
             bool: True if the characteristic has some features associated to it
             and they have been updated, False otherwise.
         """
-    def _update_features(self, char_handle, data, notify_update=False):
         # Getting the features corresponding to the given characteristic.
         features = self._get_corresponding_features(char_handle)
         if features is None:
