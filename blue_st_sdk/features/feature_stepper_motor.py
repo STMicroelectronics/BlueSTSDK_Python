@@ -182,9 +182,12 @@ class FeatureStepperMotor(Feature):
 
         try:
             self.write_data(command_str)
-            # To clean the BLE buffer.
-            if self._parent.characteristic_can_be_read(self.get_characteristic()):
-                self.read_data()
+            # To clean the BLE buffer read the feature and throw away the data.
+            #if self._parent.characteristic_can_be_read(self.get_characteristic()):
+            #    self.read_data()
+            characteristic = self.get_characteristic()
+            char_handle = characteristic.getHandle()
+            data = self._parent.readCharacteristic(char_handle)
         except InvalidOperationException as e:
             raise e
 
