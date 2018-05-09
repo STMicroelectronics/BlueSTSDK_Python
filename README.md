@@ -9,7 +9,13 @@ This version of the SDK is compatible with [Python](https://www.python.org/) 2.7
 
 ## Preconditions
 The BlueST SDK makes use of the [bluepy](https://github.com/IanHarvey/bluepy) Python interface to Bluetooth Low Energy on Linux.
+  ```Shell
+  $ sudo pip install bluepy
+  ```
 Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/concurrent.futures.html) module to run pools of threads in background, that serve listeners' callbacks.
+  ```Shell
+  $ sudo pip install futures
+  ```
 
 Please follow the official instructions to install the mentioned libraries.
 
@@ -33,9 +39,9 @@ Before running the application examples, please follow the steps here below.
 ## Running the application examples
 To run the BlueST application examples please follow the steps below:
  1. Clone the repository containing the BlueST SDK and the BlueST examples.
- 2. Add the parent folder of the "blue_st_sdk" package to the "PYTHONPATH" environment variable. On Linux:
+ 2. Add the "BlueSTSDK_Python" folder to the "PYTHONPATH" environment variable. On Linux:
     ```Shell
-    $ export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
+    $ export PYTHONPATH=/home/<user>/BlueSTSDK_Python/
     ```
  3. Enter the BlueST examples folder and run the main scripts:
     ```Shell
