@@ -38,7 +38,7 @@ Before running the application examples, please follow the steps here below.
 
 ## Running the application examples
 To run the BlueST application examples please follow the steps below:
- 1. Clone the "BlueSTSDK_Python" repository.
+ 1. Clone the repository containing the BlueST SDK and the BlueST examples into a "BlueSTSDK_Python" folder.
  2. Add the "BlueSTSDK_Python" folder to the "PYTHONPATH" environment variable. On Linux:
     ```Shell
     $ export PYTHONPATH=/home/<user>/BlueSTSDK_Python/
