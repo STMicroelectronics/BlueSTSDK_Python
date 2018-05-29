@@ -69,4 +69,4 @@ class InvalidOperationException(Exception):
         Args:
             msg (str): The message to raise.
         """
-        super(InvalidOperationOnCharacteristic, self).__init__(msg)
+        super(InvalidOperationException, self).__init__(msg)
