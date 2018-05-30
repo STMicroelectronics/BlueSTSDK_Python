@@ -172,7 +172,7 @@ class Node(Peripheral, object):
         """
         self._update_node_status(NodeStatus.CONNECTING)
         self.add_external_features(user_defined_features)
-        super(Node, self).connect(self.get_tag(), "random")
+        super(Node, self).connect(self.get_tag(), self._device.addrType)
 
         # Getting services.
         services = self.getServices()
