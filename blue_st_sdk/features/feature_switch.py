@@ -142,7 +142,8 @@ class FeatureSwitch(Feature):
                 required is not supported.
         """
         try:
-            status_str = struct.pack('B', status)
+            ts = 0
+            status_str = struct.pack('<HB', ts, status)
             self.write_data(status_str)
         except InvalidOperationException as e:
             raise e
