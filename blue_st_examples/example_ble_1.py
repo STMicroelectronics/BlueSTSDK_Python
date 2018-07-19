@@ -27,6 +27,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                                  #
 ################################################################################
 
+################################################################################
+# Author:  Davide Aliprandi, STMicroelectronics                                #
+################################################################################
+
 
 # DESCRIPTION
 #
@@ -52,11 +56,11 @@ from blue_st_sdk.feature import FeatureListener
 
 # PRECONDITIONS
 #
-# Please remember to add to the "PYTHONPATH" environment variable the parent
-# folder of the "blue_st_sdk" package.
+# Please remember to add to the "PYTHONPATH" environment variable the location
+# of the "BlueSTSDK_Python" SDK.
 #
 # On Linux:
-#   export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
+#   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
 
 
 # CONSTANTS

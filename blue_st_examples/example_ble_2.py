@@ -27,6 +27,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                                  #
 ################################################################################
 
+################################################################################
+# Author:  Davide Aliprandi, STMicroelectronics                                #
+################################################################################
+
 
 # DESCRIPTION
 #
@@ -53,11 +57,11 @@ from blue_st_sdk.features import *
 
 # PRECONDITIONS
 #
-# Please remember to add to the "PYTHONPATH" environment variable the parent
-# folder of the "blue_st_sdk" package.
+# Please remember to add to the "PYTHONPATH" environment variable the location
+# of the "BlueSTSDK_Python" SDK.
 #
 # On Linux:
-#   export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
+#   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
 
 
 # CONSTANTS
@@ -72,7 +76,7 @@ SCANNING_TIME_s = 5
 # Devices.
 # Put here the MAC address of your Bluetooth Low Energy and Stepper Motor
 # enabled device.
-MOTOR_DEVICE_MAC = 'e8:83:80:11:e2:37'
+IOT_DEVICE_MAC = 'e8:83:80:11:e2:37'
 
 
 # FUNCTIONS
@@ -179,40 +183,40 @@ def main(argv):
             sys.exit(0)
 
         # Checking discovered devices.
-        device = None
+        iot_device = None
         for discovered in discovered_devices:
-            if discovered.get_tag() == MOTOR_DEVICE_MAC:
-                device = discovered
+            if discovered.get_tag() == IOT_DEVICE_MAC:
+                iot_device = discovered
                 break
-        if not device:
+        if not iot_device:
             print('\nBluetooth setup incomplete. Exiting...\n')
             sys.exit(0)
 
         # Connecting to the devices.
         node_listener = MyNodeListener()
-        device.add_listener(node_listener)
-        print('Connecting to %s...' % (device.get_name()))
-        device.connect()
+        iot_device.add_listener(node_listener)
+        print('Connecting to %s...' % (iot_device.get_name()))
+        iot_device.connect()
         print('Connection done.')
 
         # Getting features.
         print('\nGetting features...')
-        stepper_motor_feature = device.get_feature(feature_stepper_motor.FeatureStepperMotor)
+        iot_device_feature_stepper_motor = iot_device.get_feature(feature_stepper_motor.FeatureStepperMotor)
         print('\nStepper motor feature found.')
 
         # Managing feature.
         print('\nStepper motor status:')
-        print(stepper_motor_feature.read_motor_status())
+        print(iot_device_feature_stepper_motor.read_motor_status())
         print('\nStepper motor moving...')
-        stepper_motor_feature.write_motor_command(feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD, 3000)
+        iot_device_feature_stepper_motor.write_motor_command(feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD, 3000)
         print('\nStepper motor status:')
-        print(stepper_motor_feature.read_motor_status())
+        print(iot_device_feature_stepper_motor.read_motor_status())
 
         # Disconnecting from the device.
-        print('\nDisconnecting from %s...' % (device.get_name()))
-        device.disconnect()
+        print('\nDisconnecting from %s...' % (iot_device.get_name()))
+        iot_device.disconnect()
         print('Disconnection done.')
-        device.remove_listener(node_listener)
+        iot_device.remove_listener(node_listener)
 
     except BTLEException as e:
         print(e)

@@ -27,6 +27,10 @@
 # POSSIBILITY OF SUCH DAMAGE.                                                  #
 ################################################################################
 
+################################################################################
+# Author:  Davide Aliprandi, STMicroelectronics                                #
+################################################################################
+
 
 # DESCRIPTION
 #
@@ -57,11 +61,11 @@ from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
 
 # PRECONDITIONS
 #
-# Please remember to add to the "PYTHONPATH" environment variable the parent
-# folder of the "blue_st_sdk" package.
+# Please remember to add to the "PYTHONPATH" environment variable the location
+# of the "BlueSTSDK_Python" SDK.
 #
 # On Linux:
-#   export PYTHONPATH=/home/pi/BlueSTSDK_Python
+#   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
 
 
 # CONSTANTS
@@ -75,8 +79,8 @@ INTRO = """##################
 
 # Put here the MAC address of your Bluetooth Low Energy and Switch enabled
 # devices.
-SWITCH_DEVICE_1_MAC = 'd7:90:95:be:58:7e'
-SWITCH_DEVICE_2_MAC = 'd1:07:fd:84:30:8c'
+IOT_DEVICE_1_MAC = 'd1:07:fd:84:30:8c'
+IOT_DEVICE_2_MAC = 'd7:90:95:be:58:7e'
 
 
 # TIMEOUTS
@@ -93,7 +97,9 @@ class SwitchStatus(Enum):
 
 # UTILITY FUNCTIONS
 
-# Printing intro
+#
+# Printing intro.
+#
 def print_intro():
     print('\n' + INTRO + '\n')
 
@@ -152,18 +158,18 @@ class MyNodeListener(NodeListener):
 class MyFeatureSwitchDevice1Listener(FeatureListener):
 
     def on_update(self, feature, sample):
-        global switch_device_2, switch_device_2_feature, switch_device_2_status
+        global iot_device_2, iot_device_2_feature_switch, iot_device_2_status
 
-        toggle_switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
-        if toggle_switch_status:
+        # Getting value.
+        switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
 
-            # Toggle switch status.
-            switch_device_2_status = SwitchStatus.ON if switch_device_2_status == SwitchStatus.OFF else SwitchStatus.OFF 
-            
-            # Writing switch status.
-            switch_device_2.disable_notifications(switch_device_2_feature)
-            switch_device_2_feature.write_switch_status(switch_device_2_status.value)
-            switch_device_2.enable_notifications(switch_device_2_feature)
+        # Toggle switch status.
+        iot_device_2_status = SwitchStatus.ON if switch_status != 0 else SwitchStatus.OFF
+        
+        # Writing switch status.
+        iot_device_2.disable_notifications(iot_device_2_feature_switch)
+        iot_device_2_feature_switch.write_switch_status(iot_device_2_status.value)
+        iot_device_2.enable_notifications(iot_device_2_feature_switch)
 
 
 #
@@ -173,18 +179,18 @@ class MyFeatureSwitchDevice1Listener(FeatureListener):
 class MyFeatureSwitchDevice2Listener(FeatureListener):
 
     def on_update(self, feature, sample):
-        global switch_device_1, switch_device_1_feature, switch_device_1_status
+        global iot_device_1, iot_device_1_feature_switch, iot_device_1_status
 
-        toggle_switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
-        if toggle_switch_status:
+        # Getting value.
+        switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
 
-            # Toggle switch status.
-            switch_device_1_status = SwitchStatus.ON if switch_device_1_status == SwitchStatus.OFF else SwitchStatus.OFF 
-            
-            # Writing switch status.
-            switch_device_1.disable_notifications(switch_device_1_feature)
-            switch_device_1_feature.write_switch_status(switch_device_1_status.value)
-            switch_device_1.enable_notifications(switch_device_1_feature)
+        # Toggle switch status.
+        iot_device_1_status = SwitchStatus.ON if switch_status != 0 else SwitchStatus.OFF
+        
+        # Writing switch status.
+        iot_device_1.disable_notifications(iot_device_1_feature_switch)
+        iot_device_1_feature_switch.write_switch_status(iot_device_1_status.value)
+        iot_device_1.enable_notifications(iot_device_1_feature_switch)
 
 
 # MAIN APPLICATION
@@ -194,14 +200,14 @@ class MyFeatureSwitchDevice2Listener(FeatureListener):
 # pressing the user button.
 def main(argv):
 
-    # Global variabbles.
-    global switch_device_1, switch_device_2
-    global switch_device_1_feature, switch_device_2_feature
-    global switch_device_1_status, switch_device_2_status
+    # Global variables.
+    global iot_device_1, iot_device_2
+    global iot_device_1_feature_switch, iot_device_2_feature_switch
+    global iot_device_1_status, iot_device_2_status
 
     # Initial state.
-    switch_device_1_status = SwitchStatus.OFF
-    switch_device_2_status = SwitchStatus.OFF
+    iot_device_1_status = SwitchStatus.OFF
+    iot_device_2_status = SwitchStatus.OFF
 
     # Printing intro.
     print_intro()
@@ -230,12 +236,12 @@ def main(argv):
         # Checking discovered devices.
         devices = []
         for discovered in discovered_devices:
-            if discovered.get_tag() == SWITCH_DEVICE_1_MAC:
-                switch_device_1 = discovered
-                devices.append(switch_device_1)
-            elif discovered.get_tag() == SWITCH_DEVICE_2_MAC:
-                switch_device_2 = discovered
-                devices.append(switch_device_2)
+            if discovered.get_tag() == IOT_DEVICE_1_MAC:
+                iot_device_1 = discovered
+                devices.append(iot_device_1)
+            elif discovered.get_tag() == IOT_DEVICE_2_MAC:
+                iot_device_2 = discovered
+                devices.append(iot_device_2)
             if len(devices) == 2:
                 break
         if len(devices) < 2:
@@ -251,22 +257,22 @@ def main(argv):
 
         # Getting features.
         print('\nGetting features...')
-        switch_device_1_feature = switch_device_1.get_feature(feature_switch.FeatureSwitch)
-        switch_device_2_feature = switch_device_2.get_feature(feature_switch.FeatureSwitch)
+        iot_device_1_feature_switch = iot_device_1.get_feature(feature_switch.FeatureSwitch)
+        iot_device_2_feature_switch = iot_device_2.get_feature(feature_switch.FeatureSwitch)
 
         # Resetting switches.
         print('Resetting switches...')
-        switch_device_1_feature.write_switch_status(switch_device_1_status.value)
-        switch_device_2_feature.write_switch_status(switch_device_2_status.value)
+        iot_device_1_feature_switch.write_switch_status(iot_device_1_status.value)
+        iot_device_2_feature_switch.write_switch_status(iot_device_2_status.value)
 
         # Handling sensing and actuation of switch devices.
-        switch_device_1_feature.add_listener(MyFeatureSwitchDevice1Listener())
-        switch_device_2_feature.add_listener(MyFeatureSwitchDevice2Listener())
+        iot_device_1_feature_switch.add_listener(MyFeatureSwitchDevice1Listener())
+        iot_device_2_feature_switch.add_listener(MyFeatureSwitchDevice2Listener())
 
         # Enabling notifications.
         print('Enabling Bluetooth notifications...')
-        switch_device_1.enable_notifications(switch_device_1_feature)
-        switch_device_2.enable_notifications(switch_device_2_feature)
+        iot_device_1.enable_notifications(iot_device_1_feature_switch)
+        iot_device_2.enable_notifications(iot_device_2_feature_switch)
 
         # Bluetooth setup complete.
         print('\nBluetooth setup complete.')
@@ -278,7 +284,7 @@ def main(argv):
         while True:
 
             # Getting notifications.
-            if switch_device_1.wait_for_notifications(0.05) or switch_device_2.wait_for_notifications(0.05):
+            if iot_device_1.wait_for_notifications(0.05) or iot_device_2.wait_for_notifications(0.05):
                 continue
 
     except InvalidOperationException as e:

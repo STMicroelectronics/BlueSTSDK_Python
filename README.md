@@ -33,7 +33,7 @@ Before running the application examples, please follow the steps here below.
    * Two [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development boards
    * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
    * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
-   * Edit the application example and set the "SWITCH_DEVICE_1_MAC" and "SWITCH_DEVICE_2_MAC" global variables with the proper MAC address of your switch enabled BLE devices (which you can retrieve for example through a smartphone application)
+   * Edit the application example and set the "IOT_DEVICE_X_MAC" global variables properly (you can use a smartphone application to retrieve the MAC address)
 
 
 ## Running the application examples
