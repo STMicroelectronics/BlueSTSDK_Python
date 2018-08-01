@@ -70,32 +70,28 @@ from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
 
 # CONSTANTS
 
+# Presentation message.
 INTRO = """##################
 # BlueST Example #
 ##################"""
 
+# Bluetooth Scanning time in seconds.
+SCANNING_TIME_s = 5
 
-# BLUETOOTH DEVICES
-
-# Put here the MAC address of your Bluetooth Low Energy and Switch enabled
-# devices.
+# Bluetooth Low Energy devices' MAC address.
 IOT_DEVICE_1_MAC = 'd1:07:fd:84:30:8c'
 IOT_DEVICE_2_MAC = 'd7:90:95:be:58:7e'
 
 
-# TIMEOUTS
+# CLASSES
 
-SCANNING_TIME_s = 5
-
-
-# SWITCH STATUS
-
+# Status of the switch.
 class SwitchStatus(Enum):
     OFF = 0
     ON = 1
 
 
-# UTILITY FUNCTIONS
+# FUNCTIONS
 
 #
 # Printing intro.
@@ -104,7 +100,7 @@ def print_intro():
     print('\n' + INTRO + '\n')
 
 
-# LISTENERS
+# INTERFACES
 
 #
 # Implementation of the interface used by the Manager class to notify that a new
@@ -195,9 +191,9 @@ class MyFeatureSwitchDevice2Listener(FeatureListener):
 
 # MAIN APPLICATION
 
-# This application example connects to two Bluetooth Low Energy devices and
-# allows each of the two devices to turn ON/OFF the LED of the other device by
-# pressing the user button.
+#
+# Main application.
+#
 def main(argv):
 
     # Global variables.
@@ -278,7 +274,7 @@ def main(argv):
         print('\nBluetooth setup complete.')
 
         # Demo running.
-        print('\nDemo running...\n')
+        print('\nDemo running (\"CTRL+C\" to quit)...\n')
 
         # Infinite loop.
         while True:

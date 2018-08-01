@@ -66,6 +66,7 @@ from blue_st_sdk.features import *
 
 # CONSTANTS
 
+# Presentation message.
 INTRO = """##################
 # BlueST Example #
 ##################"""
@@ -73,15 +74,15 @@ INTRO = """##################
 # Bluetooth Scanning time in seconds.
 SCANNING_TIME_s = 5
 
-# Devices.
-# Put here the MAC address of your Bluetooth Low Energy and Stepper Motor
-# enabled device.
+# Bluetooth Low Energy devices' MAC address.
 IOT_DEVICE_MAC = 'e8:83:80:11:e2:37'
 
 
 # FUNCTIONS
 
-# Printing intro
+#
+# Printing intro.
+#
 def print_intro():
     print('\n' + INTRO + '\n')
 
@@ -151,8 +152,9 @@ class MyFeatureListener(FeatureListener):
 
 # MAIN APPLICATION
 
-# This application example connects to a Bluetooth Low Energy device equipped
-# with a stepper motor and make it run few steps.
+#
+# Main application.
+#
 def main(argv):
 
     # Number of notifications to get before disabling them.
@@ -201,14 +203,20 @@ def main(argv):
 
         # Getting features.
         print('\nGetting features...')
-        iot_device_feature_stepper_motor = iot_device.get_feature(feature_stepper_motor.FeatureStepperMotor)
+        iot_device_feature_stepper_motor = \
+            iot_device.get_feature(feature_stepper_motor.FeatureStepperMotor)
         print('\nStepper motor feature found.')
 
         # Managing feature.
+        iot_device_feature_stepper_motor.write_motor_command(
+            feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE)
         print('\nStepper motor status:')
         print(iot_device_feature_stepper_motor.read_motor_status())
         print('\nStepper motor moving...')
-        iot_device_feature_stepper_motor.write_motor_command(feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD, 3000)
+        iot_device_feature_stepper_motor.write_motor_command(
+            feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD,
+            3000
+        )
         print('\nStepper motor status:')
         print(iot_device_feature_stepper_motor.read_motor_status())
 
@@ -217,6 +225,7 @@ def main(argv):
         iot_device.disconnect()
         print('Disconnection done.')
         iot_device.remove_listener(node_listener)
+        print('\nExiting...\n')
 
     except BTLEException as e:
         print(e)

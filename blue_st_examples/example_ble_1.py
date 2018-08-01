@@ -65,6 +65,7 @@ from blue_st_sdk.feature import FeatureListener
 
 # CONSTANTS
 
+# Presentation message.
 INTRO = """##################
 # BlueST Example #
 ##################"""
@@ -75,7 +76,9 @@ SCANNING_TIME_s = 5
 
 # FUNCTIONS
 
-# Printing intro
+#
+# Printing intro.
+#
 def print_intro():
     print('\n' + INTRO + '\n')
 
@@ -145,9 +148,9 @@ class MyFeatureListener(FeatureListener):
 
 # MAIN APPLICATION
 
-# This application example connects to a Bluetooth Low Energy device, retrieves
-# its exported features, and let the user get data from those supporting
-# notifications.
+#
+# Main application.
+#
 def main(argv):
 
     # Number of notifications to get before disabling them.
@@ -188,7 +191,7 @@ def main(argv):
             if choice == 0:
                 # Exiting.
                 manager.remove_listener(manager_listener)
-                print()
+                print('Exiting...\n')
                 sys.exit(0)
             device = devices[choice - 1]
             

@@ -42,21 +42,35 @@ from threading import RLock
 # UTILITY FUNCTIONS.
 
 def lock_for_object(obj, locks={}):
-    """To be used to gain exclusive access to an object."""
+    """To be used to gain exclusive access to a shared object from different
+    threads."""
     return locks.setdefault(id(obj), RLock())
 
 def lock(self):
-    """To be used to gain exclusive access to a block of code."""
+    """To be used to gain exclusive access to a block of code from different
+    threads."""
     return RLock()
 
 def synchronized(call):
-    """To be used to synchronize a method."""
+    """To be used to synchronize a method called on the same object from
+    different threads."""
     assert call.__code__.co_varnames[0] in ['self', 'cls']
     @wraps(call)
     def inner(*args, **kwds):
         with lock_for_object(args[0]):
             return call(*args, **kwds)
     return inner
+
+def synchronized_with_attr(lock_name):
+    """To be used to synchronize a method called on the same object from
+    different threads."""
+    def decorator(method):
+        def synced_method(self, *args, **kws):
+            lock = getattr(self, lock_name)
+            with lock:
+                return method(self, *args, **kws)
+        return synced_method
+    return decorator
 
 def get_class(class_name):
     """Get a class from the class name throuth the 'reflection' property."""
