@@ -34,6 +34,7 @@ Before running the application examples, please follow the steps here below.
    * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
    * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
    * Edit the application example and set the "IOT_DEVICE_X_MAC" global variables properly (you can use a smartphone application to retrieve the MAC address)
+Other application examples can be found within the [EdgeST SDK](https://github.com/STMicroelectronics-CentralLabs/EdgeSTSDK_Python) for Linux, an IoT edge computing abstraction library for Linux gateways.
 
 
 ## Running the application examples
