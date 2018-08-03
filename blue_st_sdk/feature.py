@@ -62,12 +62,12 @@ class Feature(object):
     def __init__(self, name, node, description):
         """Constructor.
 
-            Args:
-                name (str): Name of the feature.
-                node (:class:`blue_st_sdk.node.Node`): Node that will update the
-                    feature.
-                description (list): Description of the data of the feature (list
-                    of :class:`blue_st_sdk.features.field.Field` objects).
+        Args:
+            name (str): Name of the feature.
+            node (:class:`blue_st_sdk.node.Node`): Node that will update the
+                feature.
+            description (list): Description of the data of the feature (list of
+                :class:`blue_st_sdk.features.field.Field` objects).
         """
 
         # Feature name.
