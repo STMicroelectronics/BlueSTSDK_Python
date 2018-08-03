@@ -491,7 +491,12 @@ class ExtractedData(object):
     method."""
 
     def __init__(self, sample, read_bytes):
-        """Constructor."""
+        """Constructor.
+
+        Args:
+            sample (:class:`blue_st_sdk.feature.Sample`): A sample object.
+            read_bytes (int): The number of bytes read after extracting data.
+        """
 
         # Data extracted from the byte stream.
         self._sample = sample
