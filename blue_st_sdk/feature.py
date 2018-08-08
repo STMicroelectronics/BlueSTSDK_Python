@@ -288,7 +288,7 @@ class Feature(object):
         """
         for logger in self._loggers:
             # Calling user-defined callback.
-            self._thread_pool.submit(logger._log_update(self, raw_data, sample))
+            self._thread_pool.submit(logger.log_update(self, raw_data, sample))
 
     def update(self, timestamp, data, offset, notify_update=False):
         """Update feature's internal data through an atomic operation, and
@@ -399,10 +399,11 @@ class Feature(object):
             number of bytes read and the extracted data.
 
         Raises:
+            :exc:`NotImplementedError` if the method has not been implemented.
             :exc:`Exception` if the data array has not enough data to read.
         """
         raise NotImplementedError(
-            'You must define "extract_data()" to use the "Feature" class.')
+            'You must implement "extract_data()" to use the "Feature" class.')
 
     def __str__(self):
         """Get a string representing the last sample.
@@ -453,9 +454,12 @@ class FeatureListener(object):
                 updated.
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data extracted
                 from the feature.
+
+        Raises:
+            :exc:`NotImplementedError` if the method has not been implemented.
         """
         raise NotImplementedError(
-            'You must define "on_update()" to use the "FeatureListener" class.')
+            'You must implement "on_update()" to use the "FeatureListener" class.')
 
 #
 # Interface used to dump the feature's data, both in raw format (as received
@@ -471,7 +475,7 @@ class FeatureLogger(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _log_update(self, feature, raw_data, sample):
+    def log_update(self, feature, raw_data, sample):
         """To be called to log the updates of the feature.
 
         Args:
@@ -480,9 +484,12 @@ class FeatureLogger(object):
             raw_data (str): Raw data used to update the feature.
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data extracted
                 from the feature.
+
+        Raises:
+            :exc:`NotImplementedError` if the method has not been implemented.
         """
         raise NotImplementedError(
-            'You must define "_log_update()" to use the "FeatureLogger" class.')
+            'You must implement "log_update()" to use the "FeatureLogger" class.')
 
 
 class ExtractedData(object):

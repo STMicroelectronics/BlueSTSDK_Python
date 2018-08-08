@@ -624,6 +624,10 @@ class Node(Peripheral, object):
                 method of
                 `ScanEntry <https://ianharvey.github.io/bluepy-doc/scanentry.html>`_
                 class for more information.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException`
+                is raised if the advertising data is not well formed.
         """
         try:
             self._advertising_data = BLEAdvertisingDataParser(advertising_data)
