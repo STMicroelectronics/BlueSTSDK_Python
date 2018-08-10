@@ -102,59 +102,60 @@ class Node(Peripheral, object):
         except InvalidBLEAdvertisingDataException as e:
             raise e
 
-        # BLE device.
-        # Python's "ScanEntry" object, equivalent to Android's "BluetoothDevice"
-        # object.
         self._device = scan_entry
+        """BLE device.
+        Python's "ScanEntry" object, equivalent to Android's "BluetoothDevice"
+        object."""
 
-        # Friendly name.
         self._friendly_name = None
+        """Friendly name."""
 
-        # Received Signal Strength Indication.
         self._rssi = scan_entry.rssi
+        """Received Signal Strength Indication."""
 
-        # Last update to the Received Signal Strength Indication.
         self._last_rssi_update = None
+        """Last update to the Received Signal Strength Indication."""
 
-        # Status.
         self._status = NodeStatus.INIT
+        """Status."""
 
-        # Pool of thread used to notify the listeners.
         self._thread_pool = ThreadPoolExecutor(Node._NUMBER_OF_THREADS)
+        """Pool of thread used to notify the listeners."""
 
-        # List of listeners to the node changes.
-        # It is a thread safe list, so a listener can subscribe itself through a
-        # callback.
         self._listeners = []
+        """List of listeners to the node changes.
+        It is a thread safe list, so a listener can subscribe itself through a
+        callback."""
 
-        # List of all the available features as claimed by the advertising data.
-        # (No duplicates.)
         self._available_features = []
+        """List of all the available features as claimed by the advertising data.
+        (No duplicates.)"""
 
-        # Mask to feature dictionary: there is an entry for each one-bit-high
-        # 32-bit mask.
         self._mask_to_feature_dic = {}
+        """Mask to feature dictionary: there is an entry for each one-bit-high
+        32-bit mask."""
 
-        # UUID to list of external features dictionary: there is an entry for
-        # each list of exported external features.
-        # Note: A UUID may export more than one feature.
-        # BlueSTSDK_Android: mExternalCharFeatures
+        """UUID to list of external features dictionary: there is an entry for
+        each list of exported external features.
+        Note: A UUID may export more than one feature.
+        Note: BlueSTSDK_Android: mExternalCharFeatures."""
         self._external_uuid_to_features_dic = UUIDToFeatureMap()
 
-        # Characteristic's handle to list of features dictionary: it tells which
-        # features to update when new data from a characteristic are received.
-        # Note: A UUID may export more than one feature.
-        # Note: The same feature may be added to different list of features in
-        #       case more characteristics have the same corresponding bit set to
-        #       high.
-        # BlueSTSDK_Android: mCharFeatureMap
         self._update_char_handle_to_features_dict = {}
+        """Characteristic's handle to list of features dictionary: it tells
+        which features to update when new data from a characteristic are
+        received.
+        Note: A UUID may export more than one feature.
+        Note: The same feature may be added to different list of features in
+              case more characteristics have the same corresponding bit set to
+              high.
+        Note: BlueSTSDK_Android: mCharFeatureMap."""
 
-        # Characteristic's handle to characteristic dictionary.
         self._char_handle_to_characteristic_dict = {}
+        """Characteristic's handle to characteristic dictionary."""
 
-        # Unwrap timestamp reference.
         self._unwrap_timestamp = UnwrapTimestamp()
+        """Unwrap timestamp reference."""
 
         # Updating node.
         self._update_rssi(self._rssi)
@@ -897,53 +898,53 @@ class NodeDelegate(DefaultDelegate):
 class NodeType(Enum):
     """Type of node."""
 
-    # Unknown board type.
     GENERIC = 0x00
+    """Unknown board type."""
 
-    # STEVAL-WESU1 board.
     STEVAL_WESU1 = 0x01
+    """STEVAL-WESU1 board."""
 
-    # SensorTile board.
     SENSOR_TILE = 0x02
+    """SensorTile board."""
 
-    # BlueCoin board.
     BLUE_COIN = 0x03
+    """BlueCoin board."""
 
-    # BlueNRG1 / BlueNRG2 STEVAL board.
     STEVAL_IDB008VX = 0x04
+    """BlueNRG1 / BlueNRG2 STEVAL board."""
 
-    # NUCLEO-based board.
     NUCLEO = 0x05
+    """NUCLEO-based board."""
 
 
 class NodeStatus(Enum):
     """Status of the node."""
 
-    # Dummy initial status.
     INIT = 'INIT'
+    """Dummy initial status."""
 
-    # Waiting for a connection and sending advertising data.
     IDLE = 'IDLE'
+    """Waiting for a connection and sending advertising data."""
 
-    # Opening a connection with the node.
     CONNECTING = 'CONNECTING'
+    """Opening a connection with the node."""
 
-    # Connected to the node.
-    # This status can be fired 2 times while doing a secure connection using
-    # Bluetooth pairing.
     CONNECTED = 'CONNECTED'
+    """Connected to the node.
+    This status can be fired 2 times while doing a secure connection using
+    Bluetooth pairing."""
 
-    # Closing the connection to the node.
     DISCONNECTING = 'DISCONNECTING'
+    """Closing the connection to the node."""
 
-    # The advertising data has been received for some time, but not anymore.
     LOST = 'LOST'
+    """The advertising data has been received for some time, but not anymore."""
 
-    # The node disappeared without first disconnecting.
     UNREACHABLE = 'UNREACHABLE'
+    """The node disappeared without first disconnecting."""
 
-    # Dummy final status.
     DEAD = 'DEAD'
+    """Dummy final status."""
 
 
 # INTERFACES

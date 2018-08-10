@@ -70,45 +70,45 @@ class Feature(object):
                 :class:`blue_st_sdk.features.field.Field` objects).
         """
 
-        # Feature name.
         self._name = name
+        """Feature name."""
 
-        # Node that will update the feature.
         self._parent = node
+        """Node that will update the feature."""
 
-        # List of feature's fields.
-        # Fields are described by name, unit, type, and minimum/maximum values.
         self._description = description
+        """List of feature's fields.
+        Fields are described by name, unit, type, and minimum/maximum values."""
 
-        # Tells whether the feature is enabled or not.
         self._is_enabled = False
+        """Tells whether the feature is enabled or not."""
 
-        # Tells whether the feature's notifications are enabled or not
         self._notify = False
+        """Tells whether the feature's notifications are enabled or not."""
 
-        # Pool of thread used to notify the listeners.
         self._thread_pool = ThreadPoolExecutor(Feature._NUMBER_OF_THREADS)
+        """Pool of thread used to notify the listeners."""
 
-        # List of listeners to the feature changes.
-        # It is a thread safe list, so a listener can subscribe itself through a
-        # callback.
         self._listeners = []
+        """List of listeners to the feature changes.
+        It is a thread safe list, so a listener can subscribe itself through a
+        callback."""
 
-        # List of listeners to log the received data.
-        # It is a thread safe list, so a listener can subscribe itself through a
-        # callback.
         self._loggers = []
+        """List of listeners to log the received data.
+        It is a thread safe list, so a listener can subscribe itself through a
+        callback."""
 
-        # Local time of the last update.
         self._last_update = None
+        """Local time of the last update."""
 
-        # Last data received from the node.
         self._last_sample = None
+        """Last data received from the node."""
 
-        # Reference to the characteristic that offers the feature.
-        # Note: By design, it is the characteristic that offers more features
-        #       beyond the current one, among those offering the current one.
         self._characteristic = None
+        """Reference to the characteristic that offers the feature.
+        Note: By design, it is the characteristic that offers more features
+              beyond the current one, among those offering the current one."""
 
     def add_listener(self, listener):
         """Add a listener.
@@ -505,11 +505,11 @@ class ExtractedData(object):
             read_bytes (int): The number of bytes read after extracting data.
         """
 
-        # Data extracted from the byte stream.
         self._sample = sample
+        """Data extracted from the byte stream."""
 
-        # Number of bytes read.
         self._read_bytes = read_bytes
+        """Number of bytes read."""
 
     def get_read_bytes(self):
         """Get the number of bytes read.

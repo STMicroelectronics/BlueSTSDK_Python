@@ -69,11 +69,13 @@ class _ScannerDelegate(DefaultDelegate):
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
-                discovering devices not respecting the BlueSTSDK's advertising
-                data format, nothing otherwise.
+                discovering devices that do not respect the BlueSTSDK's
+                advertising data format, nothing otherwise.
         """
         DefaultDelegate.__init__(self)
+
         self._show_warnings = show_warnings
+        """If True shows warnings, if any, during the discovery process."""
 
     def handleDiscovery(self, scan_entry, is_new_device, is_new_data):
         """Discovery handling callback.
@@ -227,25 +229,25 @@ class Manager(object):
         if self._INSTANCE is not None:
             raise Exception('An instance of \'Manager\' class already exists.')
 
-        # BLE scanner.
         self._scanner = None
+        """BLE scanner."""
 
-        # Scanning status.
         self._is_scanning = False
+        """Scanning status."""
 
-        # List of discovered nodes.
         self._discovered_nodes = []
+        """List of discovered nodes."""
 
-        # Pool of thread used to notify the listeners.
         self._thread_pool = ThreadPoolExecutor(Manager._NUMBER_OF_THREADS)
+        """Pool of thread used to notify the listeners."""
 
-        # _StoppableScanner object.
         self._scanner_thread = None
+        """Stoppable-scanner object."""
 
-        # List of listeners to the manager changes.
-        # It is a thread safe list, so a listener can subscribe itself through a
-        # callback.
         self._listeners = []
+        """List of listeners to the manager changes.
+        It is a thread safe list, so a listener can subscribe itself through a
+        callback."""
 
     @classmethod
     def instance(self):
