@@ -110,7 +110,7 @@ A characteristic's data format must be the following:
   
  The first 2 bytes are used to communicate a timestamp. This is especially useful to recognize any loss of data.
  
- Since the BLE packet maximum length is 20 bytes, the maximumm size of a feature's data field is 18 bytes.
+ Since the BLE packet maximum length is 20 bytes, the maximum size of a feature's data field is 18 bytes.
  
 
 ### Example
@@ -164,7 +164,7 @@ Available features can be retrieved from Features package.
 #### How to add a new Feature
 
  1. Extend the Feature class:
-    1.  Create an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describes the data exported by the feature.
+    1.  Create an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describe the data exported by the feature.
     2.  Create a constructor that accepts only the node as a parameter. From this constructor call the superclass constructor, passing the feature's name and the feature's fields.
     3.  Implement the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data).
     4.  Implement a class method that allows to get data from a [<code>Sample</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) object.
@@ -194,6 +194,10 @@ Available features can be retrieved from Features package.
     node.add_external_features(map)
     # Connecting to the node.
     node.connect()
+
+
+## Documentation
+Documentation can be found [here](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/index.html).
 
 
 ## License
