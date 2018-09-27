@@ -2,11 +2,11 @@ __all__ = [
     'device_timestamp_feature', \
     'field', \
     #'feature_analog', \
-    #'feature_audio_adpcm_sync', \
+    'feature_audio_adpcm_sync', \
     'feature_switch', \
     #'feature_direction_of_arrival', \
 
-    #'feature_audio_adpcm', \
+    'feature_audio_adpcm', \
     #'feature_microphone_level', \
     'feature_proximity', \
     #'feature_luminosity', \

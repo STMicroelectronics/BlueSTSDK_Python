@@ -52,6 +52,8 @@ from blue_st_sdk.manager import Manager
 from blue_st_sdk.manager import ManagerListener
 from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
+from blue_st_sdk.features.feature_audio_adpcm import FeatureAudioADPCM
+from blue_st_sdk.features.feature_audio_adpcm_sync import FeatureAudioADPCMSync
 
 
 # PRECONDITIONS
@@ -73,6 +75,8 @@ INTRO = """##################
 # Bluetooth Scanning time in seconds.
 SCANNING_TIME_s = 5
 
+# Number of notifications to get before disabling them.
+NOTIFICATIONS = 10
 
 # FUNCTIONS
 
@@ -136,6 +140,7 @@ class MyNodeListener(NodeListener):
 #
 class MyFeatureListener(FeatureListener):
 
+    num = 0
     #
     # To be called whenever the feature updates its data.
     #
@@ -143,7 +148,9 @@ class MyFeatureListener(FeatureListener):
     # @param sample  Data extracted from the feature.
     #
     def on_update(self, feature, sample):
-        print(feature)
+        if(self.num < NOTIFICATIONS):
+            print(feature)
+            self.num += 1
 
 
 # MAIN APPLICATION
@@ -152,9 +159,6 @@ class MyFeatureListener(FeatureListener):
 # Main application.
 #
 def main(argv):
-
-    # Number of notifications to get before disabling them.
-    NOTIFICATIONS = 10
 
     # Printing intro.
     print_intro()
@@ -207,10 +211,20 @@ def main(argv):
                 print('\nFeatures:')
                 i = 1
                 features = device.get_features()
+                
+                audioFeature = None
+                audioSyncFeature = None
+                
                 for feature in features:
-                    print('%d) %s' % (i, feature.get_name()))
-                    i += 1
-
+                    if not feature.get_name() == FeatureAudioADPCMSync.FEATURE_NAME:
+                        if feature.get_name() == FeatureAudioADPCM.FEATURE_NAME:
+                            audioFeature = feature
+                            print('%d,%d) %s' % (i,i+1, "Audio & Sync"))
+                        else:
+                            print('%d) %s' % (i, feature.get_name()))
+                        i+=1
+                    else:
+                        audioSyncFeature = feature
                 # Selecting a feature.
                 while True:
                     choice = int(input('\nSelect a feature '
@@ -228,12 +242,21 @@ def main(argv):
                     # Going back to the list of devices.
                     break
                 feature = features[choice - 1]
-
+                
                 # Enabling notifications.
                 feature_listener = MyFeatureListener()
                 feature.add_listener(feature_listener)
                 device.enable_notifications(feature)
-
+                
+                if feature.get_name() == FeatureAudioADPCM.FEATURE_NAME:
+                    audioSyncFeature_listener = MyFeatureListener()
+                    audioSyncFeature.add_listener(audioSyncFeature_listener)
+                    device.enable_notifications(audioSyncFeature)
+                elif feature.get_name() == FeatureAudioADPCMSync.FEATURE_NAME:
+                    audioFeature_listener = MyFeatureListener()
+                    audioFeature.add_listener(audioFeature_listener)
+                    device.enable_notifications(audioFeature)
+                
                 # Getting notifications.
                 n = 0
                 while n < NOTIFICATIONS:
@@ -243,6 +266,13 @@ def main(argv):
                 # Disabling notifications.
                 device.disable_notifications(feature)
                 feature.remove_listener(feature_listener)
+                
+                if feature.get_name() == FeatureAudioADPCM.FEATURE_NAME:
+                    device.disable_notifications(audioSyncFeature)
+                    audioSyncFeature.remove_listener(audioSyncFeature_listener)
+                elif feature.get_name() == FeatureAudioADPCMSync.FEATURE_NAME:
+                    device.disable_notifications(audioFeature)
+                    audioFeature.remove_listener(audioFeature_listener)
 
     except BTLEException as e:
         print(e)

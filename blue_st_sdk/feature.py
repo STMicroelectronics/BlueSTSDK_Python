@@ -426,16 +426,26 @@ class Feature(object):
                    str(sample._data[0]),
                    self._description[0]._unit)
             return result
-
-        result = '%s(%d): ( ' % (self._name, sample._timestamp)
-        i = 0
-        while i < len(sample._data):
-            result += '%s: %s %s%s' \
-                % (self._description[i]._name,
-                   str(sample._data[i]),
-                   self._description[i]._unit,
-                   '    ' if i < len(sample._data) - 1 else ' )')
-            i += 1
+        
+        # check on timestamp (ADPCM Audio and ADPCM Sync samples don't have
+        # the timestamp field in order to save bandwidth)
+        if sample._timestamp is not None:
+            result = '%s(%d): ( ' % (self._name, sample._timestamp)
+        
+            i = 0
+            while i < len(sample._data):
+                result += '%s: %s %s%s' \
+                    % (self._description[i]._name,
+                       str(sample._data[i]),
+                       self._description[i]._unit,
+                       '    ' if i < len(sample._data) - 1 else ' )')
+                i += 1
+        else:
+			# only for Audio Features
+            result = str(self._name) + " - "
+            for i in range(0,len(sample._data)-1):
+                result += str(sample._data[i]) + ", "
+            result += str(sample._data[len(sample._data)-1])
         return result
 
 

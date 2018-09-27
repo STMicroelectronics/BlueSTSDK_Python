@@ -180,11 +180,11 @@ class FeatureCharacteristic(object):
 
     DEFAULT_MASK_TO_FEATURE_DIC = {
         #0x80000000: feature_analog.FeatureAnalog,
-        #0x40000000: feature_audio_adpcm_sync.FeatureAudioADPCMSync,
+        0x40000000: feature_audio_adpcm_sync.FeatureAudioADPCMSync,
         0x20000000: feature_switch.FeatureSwitch,
         #0x10000000: feature_direction_of_arrival.FeatureDirectionOfArrival,
 
-        #0x08000000: feature_audio_adpcm.FeatureAudioADPCM,
+        0x08000000: feature_audio_adpcm.FeatureAudioADPCM,
         #0x04000000: feature_microphone_level.FeatureMicrophoneLevel,
         0x02000000: feature_proximity.FeatureProximity,
         #0x01000000: feature_luminosity.FeatureLuminosity,
