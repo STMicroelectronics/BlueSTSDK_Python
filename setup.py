@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
         long_description = fh.read()
 
         setuptools.setup(
-            name="blue_st_sdk_package",
+            name="blue_st_sdk",
             version="0.0.1",
             author="Davide Aliprandi",
             author_email="davide.aliprandi@st.com",
@@ -15,7 +15,7 @@ with open("README.md", "r") as fh:
             packages=setuptools.find_packages(),
             classifiers=[
                         "Programming Language :: Python :: 2.7",
-                        "License :: Open Source",
+                        "License :: OSI Approved :: MIT License",
                         "Operating System :: OS Independent",
                         ],
         )
