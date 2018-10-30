@@ -1,6 +1,6 @@
 # BlueST SDK
 
-BlueST is a multi-platform library ([Android](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Android), [iOS](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_iOS), and [Linux](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python) supported) that permits easy access to the data exported by a Bluetooth Low Energy (BLE) device that implements the [BlueST Protocol](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python#bluest-protocol).
+BlueST is a multi-platform library ([Android](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Android), [iOS](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_iOS), and [Linux](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python) supported) that allows easy access to the data exported by a Bluetooth Low Energy (BLE) device that implements the [BlueST Protocol](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python#bluest-protocol).
 
 
 ## Compatibility
