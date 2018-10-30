@@ -20,7 +20,14 @@ Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/con
 Please follow the official instructions to install the mentioned libraries.
 
 
+## Installation
+The BlueST SDK can be installed through the Python pip package manager.
+  ```Shell
+  $ sudo pip install blue_st_sdk
+
+
 ## Setting up the application examples
+The application examples can be found by cloning the git repository.
 Before running the application examples, please follow the steps here below.
  * The [example_ble_1.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_1.py) application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python#bluest-protocol), e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
  * The [example_ble_2.py](https://github.com/STMicroelectronics-CentralLabs/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_2.py) application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
@@ -42,12 +49,8 @@ Other application examples can be found within the [EdgeST SDK](https://github.c
 
 ## Running the application examples
 To run the BlueST application examples please follow the steps below:
- 1. Clone the repository containing the BlueST SDK and the BlueST examples into a "BlueSTSDK_Python" folder.
- 2. Add the "BlueSTSDK_Python" folder to the "PYTHONPATH" environment variable. On Linux:
-    ```Shell
-    $ export PYTHONPATH=/home/<user>/BlueSTSDK_Python/
-    ```
- 3. Enter the BlueST examples folder and run the main scripts:
+ 1. Clone the BlueST SDK git repository.
+ 2. Enter the "blue_st_examples" folder and run the desired script:
     ```Shell
     $ python example_ble_x.py
     ```
