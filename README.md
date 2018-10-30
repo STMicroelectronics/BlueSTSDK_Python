@@ -57,7 +57,7 @@ To run the BlueST application examples please follow the steps below:
  1. Clone the BlueST SDK git repository.
  2. Enter the "blue_st_examples" folder and run the desired script:
     ```Shell
-    $ python example_ble_x.py
+    $ sudo python example_ble_x.py
     ```
 
 
