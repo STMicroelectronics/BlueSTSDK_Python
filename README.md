@@ -4,7 +4,7 @@ BlueST is a multi-platform library ([Android](https://github.com/STMicroelectron
 
 
 ## Documentation
-Documentation can be found [here](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/index.html).
+Documentation can be found [here](https://stmicroelectronics.github.io/BlueSTSDK_Python/index.html).
 
 
 ## Compatibility
@@ -95,7 +95,7 @@ The library shows only the devices that have a vendor-specific field formatted i
    |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
    |Feature|CO Sensor|DC Motor|Stepper Motor|SD Logging|Beam forming|Accelerometer Event|Free Fall|Sensor Fusion Compact|Sensor Fusion|Motion Intensity|Compass|Activity Recognition|Carry Position|Proximity Gesture|MEMS Gesture|Pedometer|
 
-To understand the way the data are exported by predefined features, please refer to the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data) within the features class definition.
+To understand the way the data are exported by predefined features, please refer to the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data) within the features class definition.
 
 - The device MAC address is optional, and needed only on the iOS platform.
 
@@ -133,14 +133,14 @@ The SDK is compatible with the following ST firmware:
 
 ## Main actors
 
-### [Manager](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.manager)
+### [Manager](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.manager)
 This is a singleton class that starts/stops the discovery process and stores the retrieved nodes.
 
 Before starting the scanning process, it is also possible to define a new Device Id and to register/add new features to already defined devices.
 
-The Manager notifies a new discovered node through the [<code>ManagerListener</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.manager.ManagerListener) class. Each callback is performed asynchronously by a thread running in background.
+The Manager notifies a new discovered node through the [<code>ManagerListener</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.manager.ManagerListener) class. Each callback is performed asynchronously by a thread running in background.
 
-### [Node](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.node)
+### [Node](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.node)
 This class represents a remote device.
 
 Through this class it is possible to recover the features exported by a node and read/write data from/to the device.
@@ -161,12 +161,12 @@ A node can be in one of following status:
 
 Each callback is performed asynchronously by a thread running in background.
 
-### [Feature](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.feature)
+### [Feature](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#module-blue_st_sdk.feature)
 This class represents the data exported by a node.
 
-Each feature has an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describes the data exported.
+Each feature has an array of [<code>Field</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describes the data exported.
 
-Data are received from a BLE characteristic and contained in a [<code>Sample</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) class. The user is notified about new data through a listener.
+Data are received from a BLE characteristic and contained in a [<code>Sample</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) class. The user is notified about new data through a listener.
 
 Note that each callback is performed asynchronously by a thread running in background.
 
@@ -175,10 +175,10 @@ Available features can be retrieved from Features package.
 #### How to add a new Feature
 
  1. Extend the Feature class:
-    1.  Create an array of [<code>Field</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describe the data exported by the feature.
+    1.  Create an array of [<code>Field</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.features.html#module-blue_st_sdk.features.field) objects that describe the data exported by the feature.
     2.  Create a constructor that accepts only the node as a parameter. From this constructor call the superclass constructor, passing the feature's name and the feature's fields.
-    3.  Implement the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data).
-    4.  Implement a class method that allows to get data from a [<code>Sample</code>](https://stmicroelectronics-centrallabs.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) object.
+    3.  Implement the method [<code>Feature.extract_data(timestamp, data, offset)</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Feature.extract_data).
+    4.  Implement a class method that allows to get data from a [<code>Sample</code>](https://stmicroelectronics.github.io/BlueSTSDK_Python/blue_st_sdk.html#blue_st_sdk.feature.Sample) object.
  2. Register the new feature:
     If you want to use BlueST's bitmask for features within the advertising data, please register the new feature before performing the discovery process, e.g.:
  
