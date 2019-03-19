@@ -34,13 +34,16 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
+
+# CLASSES
         
 class FeatureAudioADPCMSync(Feature):
     """The feature handles the audio synchronization parameters mandatory to the
-
     ADPCM audio decompression.
     """
+
     FEATURE_NAME = "ADPCM Sync"
     FEATURE_UNIT = None
     FEATURE_DATA_NAME = ["ADPCM_index", "ADPCM_predsample"]
@@ -87,10 +90,12 @@ class FeatureAudioADPCMSync(Feature):
             and an int).
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
             
         sample = Sample(
@@ -110,7 +115,7 @@ class FeatureAudioADPCMSync(Feature):
         
         Returns:
             short: The ADPCM index synch parameter if the data array is
-            valid, None otherwise.
+            valid, "None" otherwise.
         """
         if sample is not None:
             if sample._data:
@@ -127,7 +132,7 @@ class FeatureAudioADPCMSync(Feature):
         
         Returns:
             short: The ADPCM predsample synch parameter if the data array is
-            valid, None otherwise.
+            valid, "None" otherwise.
         """
         if sample is not None:
             if sample._data:

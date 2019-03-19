@@ -78,6 +78,7 @@ SCANNING_TIME_s = 5
 # Number of notifications to get before disabling them.
 NOTIFICATIONS = 10
 
+
 # FUNCTIONS
 
 #
@@ -130,7 +131,7 @@ class MyNodeListener(NodeListener):
     # @param old_status Old node status.
     #
     def on_status_change(self, node, new_status, old_status):
-        print('Device %s went from %s to %s.' %
+        print('Device %s from %s to %s.' %
             (node.get_name(), str(old_status), str(new_status)))
 
 
@@ -175,29 +176,29 @@ def main(argv):
             manager.discover(False, SCANNING_TIME_s)
 
             # Getting discovered devices.
-            devices = manager.get_nodes()
+            discovered_devices = manager.get_nodes()
 
             # Listing discovered devices.
-            if not devices:
+            if not discovered_devices:
                 print('\nNo Bluetooth devices found.')
                 sys.exit(0)
             print('\nAvailable Bluetooth devices:')
             i = 1
-            for device in devices:
+            for device in discovered_devices:
                 print('%d) %s: [%s]' % (i, device.get_name(), device.get_tag()))
                 i += 1
 
             # Selecting a device.
             while True:
                 choice = int(input("\nSelect a device (\'0\' to quit): "))
-                if choice >= 0 and choice <= len(devices):
+                if choice >= 0 and choice <= len(discovered_devices):
                     break
             if choice == 0:
                 # Exiting.
                 manager.remove_listener(manager_listener)
                 print('Exiting...\n')
                 sys.exit(0)
-            device = devices[choice - 1]
+            device = discovered_devices[choice - 1]
             
             # Connecting to the device.
             node_listener = MyNodeListener()

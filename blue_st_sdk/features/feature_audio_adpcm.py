@@ -35,6 +35,8 @@ from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
 from blue_st_sdk.utils.bv_audio_sync_manager import BVAudioSyncManager
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+
 
 # CLASSES
 
@@ -87,10 +89,12 @@ class FeatureAudioADPCM(Feature):
             shorts array).
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         
         dataByte = bytearray(data)
@@ -141,16 +145,15 @@ class FeatureAudioADPCM(Feature):
         self.bvSyncManager.setSyncParams(sample)
 
 class ADPCMEngine(object):
-    #
-    #ADPCM Engine class. It contains all the operations and parameters necessary
-    #to decompress the received audio.
-    #
+    """DPCM Engine class.
+    It contains all the operations and parameters necessary to decompress the
+    received audio.
+
+    """
     
-    index=0
-    predsample=0
-    
-    # Default Constructor
     def __init__(self): 
+        """Constructor."""
+
         #Quantizer step size lookup table 
         self.StepSizeTable=[7,8,9,10,11,12,13,14,16,17,
             19,21,23,25,28,31,34,37,41,45,
@@ -165,20 +168,25 @@ class ADPCMEngine(object):
         # Table of index changes 
         self.IndexTable = [-1,-1,-1,-1,2,4,6,8,-1,-1,-1,-1,2,4,6,8]
         
-        self.index=0
-        self.predsample=0
-
-     #* ADPCM_Decode.
-     #* @param code: a byte containing a 4-bit ADPCM sample.
-     #* @return : a struct which contains a 16-bit ADPCM sample
+        self.index = 0
+        self.predsample = 0
 
     def decode(self, code, syncManager): 
-        if(syncManager is not None and syncManager.isIntra()):
+        """ADPCM_Decode.
+        
+        Args:
+            code (byte): It contains a 4-bit ADPCM sample.
+        
+        Returns:
+            int: A 16-bit ADPCM sample.
+        """
+        # 1. get sample
+        if (syncManager is not None and syncManager.isIntra()):
             self.index = syncManager.get_index_in()
             self.predsample = syncManager.get_predsample_in()
             syncManager.reinitResetFlag()
-        
         step = self.StepSizeTable[self.index]
+
         # 2. inverse code into diff 
         diffq = step>> 3
         if ((code&4)!=0):
@@ -214,8 +222,8 @@ class ADPCMEngine(object):
         if (self.index > 88):
             self.index = 88
 
-        #5. save predict sample and index for next iteration 
+        # 5. save predict sample and index for next iteration 
         # done! static variables 
 
-        # 6. return new speech sample
+        # 6. return speech sample
         return self.predsample

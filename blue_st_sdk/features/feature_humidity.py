@@ -34,6 +34,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -81,10 +83,12 @@ class FeatureHumidity(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
             [LittleEndian.bytesToInt16(data, offset) / self.SCALE_FACTOR],
@@ -108,3 +112,23 @@ class FeatureHumidity(Feature):
                 if sample._data[0] is not None:
                     return float(sample._data[0])
         return float('nan')
+
+    def read_humidity(self):
+        """Read the humidity value.
+
+        Returns:
+            float: The humidity value if the read operation is successful, <nan>
+            otherwise.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+                is raised if the feature is not enabled or the operation
+                required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
+        """
+        try:
+            self._read_data()
+            return FeatureHumidity.get_humidity(self._get_sample())
+        except (InvalidOperationException, InvalidDataException) as e:
+            raise e

@@ -105,3 +105,4 @@ class FieldType(Enum):
     UInt8 = u'UInt8'
     Int8 = u'Int8'
     ByteArray = u'ByteArray'
+    DateTime = u'DateTime'

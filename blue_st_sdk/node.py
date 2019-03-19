@@ -48,14 +48,17 @@ import logging
 
 import blue_st_sdk.manager
 from blue_st_sdk.python_utils import lock
+from blue_st_sdk.utils.ble_node_definitions import Debug
 from blue_st_sdk.utils.ble_node_definitions import FeatureCharacteristic
 from blue_st_sdk.utils.ble_node_definitions import TIMESTAMP_OFFSET_BYTES
 from blue_st_sdk.utils.ble_advertising_data_parser import BLEAdvertisingDataParser
 from blue_st_sdk.utils.blue_st_exceptions import InvalidBLEAdvertisingDataException
 from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 from blue_st_sdk.utils.uuid_to_feature_map import UUIDToFeatureMap
 from blue_st_sdk.utils.number_conversion import LittleEndian
 from blue_st_sdk.utils.unwrap_timestamp import UnwrapTimestamp
+from blue_st_sdk.debug_console import DebugConsole
 
 
 # CLASSES
@@ -157,12 +160,250 @@ class Node(Peripheral, object):
         self._unwrap_timestamp = UnwrapTimestamp()
         """Unwrap timestamp reference."""
 
+        #self._characteristic_write_queue = Queue()
+        """Queue of write jobs."""
+
+        # Debug console used to read/write debug messages from/to the Bluetooth
+        # device. None if the device doesn't export the debug service.
+        self._debug_console = None
+
         # Updating node.
         self._update_rssi(self._rssi)
         self._update_node_status(NodeStatus.IDLE)
 
         # Building available features.
         self._build_available_features()
+
+    def _build_feature_from_class(self, feature_class):
+        """Get a feature object from the given class.
+
+        Args:
+            feature_class (class): Feature class to instantiate.
+        
+        Returns:
+            :class:`blue_st_sdk.feature.Feature`: The feature object built if
+            the feature class is valid, "None" otherwise.
+        """
+        return feature_class(self) if feature_class else None
+
+    def _build_features(self, characteristic):
+        """Build the exported features of a BLE characteristic.
+
+        After building the features, add them to the dictionary of the features
+        to be updated.
+
+        Args:
+            characteristic (Characteristic): The BLE characteristic. Refer to
+                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+                for more information.
+        """
+        # Extracting the feature mask from the characteristic's UUID.
+        feature_mask = FeatureCharacteristic.extract_feature_mask(
+            characteristic.uuid)
+        # Looking for the exported features in reverse order to get them in the
+        # correct order in case of characteristic that exports multiple
+        # features.
+        features = []
+        mask = 1 << 31
+        for i in range(0, 32):
+            if (feature_mask & mask) != 0:
+                if mask in self._mask_to_feature_dic:
+                    feature = self._mask_to_feature_dic[mask]
+                    if feature is not None:
+                        feature.set_enable(True)
+                        features.append(feature)
+            mask = mask >> 1
+
+        # If the features are valid, add an entry for the corresponding
+        # characteristic.
+        if features:
+            self._update_char_handle_to_features_dict[
+                characteristic.getHandle()] = features
+
+    def _build_features_known_uuid(self, characteristic, feature_classes):
+        """Build the given features of a BLE characteristic.
+
+        After building the features, add them to the dictionary of the features
+        to be updated.
+
+        Args:
+            characteristic (Characteristic): The BLE characteristic. Refer to
+                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+                for more information.
+            feature_classes (list): The list of feature-classes to instantiate.
+        """
+        # Build the features.
+        features = []
+        for feature_class in feature_classes:
+            feature = self._build_feature_from_class(feature_class)
+            if feature is not None:
+                feature.set_enable(True)
+                features.append(feature)
+                self._available_features.append(feature)
+
+        # If the features are valid, add an entry for the corresponding
+        # characteristic.
+        if features:
+            self._update_char_handle_to_features_dict[
+                characteristic.getHandle()] = features
+
+    def _build_available_features(self):
+        """Build available features as claimed by the advertising data.
+
+        Build a list of possible features that this node can export by
+        relying on the advertising data.
+        """
+        # Getting device identifier and feature mask from advertising data.
+        device_id = self._advertising_data.get_device_id()
+        feature_mask = self._advertising_data.get_feature_mask()
+
+        # Getting the dictionary that maps feature-masks to feature-classes
+        # related to the advertising data's device identifier.
+        decoder = blue_st_sdk.manager.Manager.get_node_features(device_id)
+
+        # Initializing list of available-features and mask-to-feature
+        # dictionary.
+        self._available_features = []
+        self._mask_to_feature_dic = {}
+
+        # Building features as claimed by the advertising data's feature-mask.
+        mask = 1
+        for i in range(0, 32):
+            if feature_mask & mask != 0:
+                feature_class = decoder.get(mask)
+                if feature_class is not None:
+                    feature = self._build_feature_from_class(feature_class)
+                    if feature is not None:
+                        self._available_features.append(feature)
+                        self._mask_to_feature_dic[mask] = feature
+                    else:
+                        self._logger.warning('Impossible to build the feature \"'
+                            + feature_class.get_simple_name() + '\".')
+            mask = mask << 1
+
+    def _set_features_characteristics(self):
+        """For each feature stores a reference to its characteristic.
+
+        It is useful to enable/disable notifications on the characteristic
+        itself.
+
+        By design, the characteristic that offers more features beyond the
+        feature is selected.
+        """
+        for feature in self._available_features:
+            features_size = 0
+            for entry in self._update_char_handle_to_features_dict.items():
+                char_handle = entry[0]
+                features = entry[1]
+                if feature in features:
+                    if feature._characteristic is None:
+                        feature._characteristic = \
+                            self._char_handle_to_characteristic_dict[char_handle]
+                        features_size = len(features)
+                    else:
+                        if len(features) > features_size:
+                            feature._characteristic = \
+                                self._char_handle_to_characteristic_dict[char_handle]
+                            features_size = len(features)
+
+    def _update_features(self, char_handle, data, notify_update=False):
+        """Update the features related to a given characteristic.
+
+        Args:
+            char_handle (int): The characteristic's handle to look for.
+            data (str): The data read from the given characteristic.
+            notify_update (bool, optional): If True all the registered listeners
+                are notified about the new data.
+
+        Returns:
+            bool: True if the characteristic has some features associated to it
+            and they have been updated, False otherwise.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
+        """
+        # Getting the features corresponding to the given characteristic.
+        features = self._get_corresponding_features(char_handle)
+        if features is None:
+            return False
+
+        # Computing the timestamp.
+        timestamp = self._unwrap_timestamp.unwrap(
+            LittleEndian.bytesToUInt16(data))
+
+        # Updating the features.
+        offset = TIMESTAMP_OFFSET_BYTES  # Timestamp sixe in bytes.
+        try:
+            for feature in features:
+                offset += feature.update(timestamp, data, offset, notify_update)
+        except InvalidDataException as e:
+            raise e
+        return True
+
+    def _get_corresponding_features(self, char_handle):
+        """Get the features corresponding to the given characteristic.
+
+        Args:
+            char_handle (int): The characteristic's handle to look for.
+
+        Returns:
+            list: The list of features associated to the given characteristic,
+            None if the characteristic does not exist.
+        """
+        if char_handle in self._update_char_handle_to_features_dict:
+            return self._update_char_handle_to_features_dict[char_handle]
+        return None
+
+    def _update_node_status(self, new_status):
+        """Update the status of the node.
+
+        Args:
+            new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
+        """
+        old_status = self._status
+        self._status = new_status
+        for listener in self._listeners:
+            # Calling user-defined callback.
+            self._thread_pool.submit(
+                listener.on_status_change(
+                    self, new_status.value, old_status.value))
+
+    def _update_rssi(self, rssi):
+        """Update the RSSI value.
+
+        Args:
+            rssi (int): New RSSI value.
+        """
+        self._rssi = rssi
+        self._last_rssi_update = datetime.now()
+        if self._status == NodeStatus.LOST:
+            self._update_node_status(NodeStatus.IDLE)
+
+    def _build_debug_console(self, debug_service):
+        """Build a debug console used to read/write debug messages from/to the
+        Bluetooth device.
+
+        Args:
+            debug_service (Service): The BLE service. Refer to
+                `Service <https://ianharvey.github.io/bluepy-doc/service.html>`_
+                for more information.
+
+        Returns:
+            :class:`blue_st_sdk.debug_console.DebugConsole`: A debug console
+            used to read/write debug messages from/to the Bluetooth device.
+            None if the device doesn't export the needed characteristics.
+        """
+        stdinout = None
+        stderr = None
+        for characteristic in debug_service.getCharacteristics():
+            if str(characteristic.uuid) == str(Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID):
+                stdinout = characteristic
+            elif str(characteristic.uuid) == str(Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID):
+                stderr = characteristic
+            if stdinout and stderr:
+                return DebugConsole(self, stdinout, stderr)
+        return None
 
     def connect(self, user_defined_features=None):
         """Open a connection to the node.
@@ -183,14 +424,13 @@ class Node(Peripheral, object):
 
         # Handling Debug, Config, and Feature characteristics.
         for service in services:
-            # TBD
-            # if service.uuid == Debug.DEBUG_BLUESTSDK_SENSOR_SERVICE_UUID:
+            if Debug.is_debug_service(str(service.uuid)):
                 # Handling Debug.
-            #    pass
-            # elif service.uuid == Config.CONFIG_BLUESTSDK_SENSOR_SERVICE_UUID:
+                self._debug_console = self._build_debug_console(service)
+            #elif Config.is_config_service(str(service.uuid)):
                 # Handling Config.
             #    pass
-            # else:
+            #else:
             # Getting characteristics.
             characteristics = service.getCharacteristics()
             for characteristic in characteristics:
@@ -200,14 +440,21 @@ class Node(Peripheral, object):
                     characteristic.getHandle()] = characteristic
 
                 # Building characteristics' features.
-                if FeatureCharacteristic.is_feature_characteristic(
-                    characteristic.uuid):
+                if FeatureCharacteristic.is_base_feature_characteristic(
+                    str(characteristic.uuid)):
                     self._build_features(characteristic)
+                elif FeatureCharacteristic.is_extended_feature_characteristic(
+                    str(characteristic.uuid)):
+                    self._build_features_known_uuid(
+                        characteristic,
+                        [FeatureCharacteristic.get_extended_feature_class(
+                            characteristic.uuid)])
                 elif bool(self._external_uuid_to_features_dic) \
                     and characteristic.uuid in self._external_uuid_to_features_dic:
                     self._build_features_known_uuid(
                         characteristic,
-                        self._external_uuid_to_features_dic[characteristic.uuid])
+                        [self._external_uuid_to_features_dic[
+                        characteristic.uuid]])
 
         # For each feature store a reference to the characteristic offering the
         # feature, useful to enable/disable notifications on the characteristic
@@ -254,179 +501,6 @@ class Node(Peripheral, object):
 
         if user_defined_features is not None:
             self._external_uuid_to_features_dic.put_all(user_defined_features)
-
-    def _build_feature_from_class(self, feature_class):
-        """Get a feature object from the given class.
-
-        Args:
-            feature_class (class): Feature class to instantiate.
-        
-        Returns:
-            :class:`blue_st_sdk.feature.Feature`: The feature object built.
-        """
-        return feature_class(self)
-
-    def _build_features(self, characteristic):
-        """Build the exported features of a BLE characteristic.
-
-        After building the features, add them to the dictionary of the features
-        to be updated.
-
-        Args:
-            characteristic (Characteristic): The BLE characteristic. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
-        """
-        # Extracting the feature mask from the characteristic's UUID.
-        feature_mask = FeatureCharacteristic.extract_feature_mask(
-            characteristic.uuid)
-        # Looking for the exported features in reverse order to get them in the
-        # correct order in case of characteristic that exports multiple
-        # features.
-        features = []
-        mask = 1 << 31
-        for i in range(0, 32):
-            if (feature_mask & mask) != 0:
-                if mask in self._mask_to_feature_dic:
-                    feature = self._mask_to_feature_dic[mask]
-                    if feature is not None:
-                        feature.set_enable(True)
-                        features.append(feature)
-            mask = mask >> 1
-
-        # If the features are valid, add an entry for the corresponding
-        # characteristic.
-        if features:
-            self._update_char_handle_to_features_dict[
-                characteristic.getHandle()] = features
-
-    def _build_features_known_uuid(self, characteristic, features_class):
-        """Build the given features of a BLE characteristic.
-
-        After building the features, add them to the dictionary of the features
-        to be updated.
-
-        Args:
-            characteristic (Characteristic): The BLE characteristic. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
-            features_class (list): The list of features-classes to instantiate.
-        """
-        # Build the features.
-        features = []
-        for feature_class in features_class:
-            feature = self._build_feature_from_class(feature_class)
-            if feature is not None:
-                feature.set_enable(True)
-                features.append(feature)
-                self._available_features.append(feature)
-
-        # If the features are valid, add an entry for the corresponding
-        # characteristic.
-        if features:
-            self._update_char_handle_to_features_dict[
-                characteristic.getHandle()] = features
-
-    def _build_available_features(self):
-        """Build available features as claimed by the advertising data.
-
-        Build a list of possible features that this node can export by
-        relying on the advertising data.
-        """
-        # Getting device identifier and feature mask from advertising data.
-        device_id = self._advertising_data.get_device_id()
-        feature_mask = self._advertising_data.get_feature_mask()
-
-        # Getting the dictionary that maps feature-masks to feature-classes
-        # related to the advertising data's device identifier.
-        decoder = blue_st_sdk.manager.Manager.get_node_features(device_id)
-
-        # Initializing list of available-features and mask-to-feature
-        # dictionary.
-        self._available_features = []
-        self._mask_to_feature_dic = {}
-
-        # Building features as claimed by the advertising data's feature-mask.
-        mask = 1
-        for i in range(0, 32):
-            if feature_mask & mask != 0:
-                feature_class = decoder.get(mask)
-                if feature_class is not None:
-                    feature = self._build_feature_from_class(feature_class)
-                    if feature is not None:
-                        self._available_features.append(feature)
-                        self._mask_to_feature_dic[mask] = feature
-                    else:
-                        logging.error('Impossible to build the feature \"'
-                                      + feature_class.get_simple_name() + '\".')
-            mask = mask << 1
-
-    def _set_features_characteristics(self):
-        """For each feature stores a reference to its characteristic.
-
-        It is useful to enable/disable notifications on the characteristic
-        itself.
-
-        By design, the characteristic that offers more features beyond the
-        feature is selected.
-        """
-        for feature in self._available_features:
-            features_size = 0
-            for entry in self._update_char_handle_to_features_dict.items():
-                char_handle = entry[0]
-                features = entry[1]
-                if feature in features:
-                    if feature._characteristic is None:
-                        feature._characteristic = \
-                            self._char_handle_to_characteristic_dict[char_handle]
-                        features_size = len(features)
-                    else:
-                        if len(features) > features_size:
-                            feature._characteristic = \
-                                self._char_handle_to_characteristic_dict[char_handle]
-                            features_size = len(features)
-
-    def _update_features(self, char_handle, data, notify_update=False):
-        """Update the features related to a given characteristic.
-
-        Args:
-            char_handle (int): The characteristic's handle to look for.
-            data (str): The data read from the given characteristic.
-            notify_update (bool, optional): If True all the registered listeners
-                are notified about the new data.
-
-        Returns:
-            bool: True if the characteristic has some features associated to it
-            and they have been updated, False otherwise.
-        """
-        # Getting the features corresponding to the given characteristic.
-        features = self._get_corresponding_features(char_handle)
-        if features is None:
-            return False
-
-        # Computing the timestamp.
-        timestamp = self._unwrap_timestamp.unwrap(
-            LittleEndian.bytesToUInt16(data))
-
-        # Updating the features.
-        offset = TIMESTAMP_OFFSET_BYTES  # Timestamp's bytes.
-        for feature in features:
-            offset += feature.update(timestamp, data, offset, notify_update)
-        return True
-
-    def _get_corresponding_features(self, char_handle):
-        """Get the features corresponding to the given characteristic.
-
-        Args:
-            char_handle (int): The characteristic's handle to look for.
-
-        Returns:
-            list: The list of features associated to the given characteristic,
-            None if the characteristic does not exist.
-        """
-        if char_handle in self._update_char_handle_to_features_dict:
-            return self._update_char_handle_to_features_dict[char_handle]
-        return None
 
     def get_tag(self):
         """Get the tag of the node.
@@ -532,7 +606,7 @@ class Node(Peripheral, object):
 
         Returns:
             The feature of the given type (class name) if exported by this node,
-            None otherwise.
+            "None" otherwise.
         """
         features = self.get_features(feature_class)
         if len(features) != 0:
@@ -555,17 +629,6 @@ class Node(Peripheral, object):
         """
         return self._rssi
 
-    def _update_rssi(self, rssi):
-        """Update the RSSI value.
-
-        Args:
-            rssi (int): New RSSI value.
-        """
-        self._rssi = rssi
-        self._last_rssi_update = datetime.now()
-        if self._status == NodeStatus.LOST:
-            self._update_node_status(NodeStatus.IDLE)
-
     def get_last_rssi_update_date(self):
         """Get the time of the last RSSI update received.
 
@@ -575,20 +638,6 @@ class Node(Peripheral, object):
             for more information.
         """
         return self._last_rssi_update
-
-    def _update_node_status(self, new_status):
-        """Update the status of the node.
-
-        Args:
-            new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
-        """
-        old_status = self._status
-        self._status = new_status
-        for listener in self._listeners:
-            # Calling user-defined callback.
-            self._thread_pool.submit(
-                listener.on_status_change(
-                    self, new_status.value, old_status.value))
 
     def is_connected(self):
         """Check whether the node is connected.
@@ -696,18 +745,15 @@ class Node(Peripheral, object):
     def read_feature(self, feature):
         """Synchronous request to read a feature.
 
-        The read value is returned.
-
         Args:
             feature (:class:`blue_st_sdk.feature.Feature`): The feature to read.
-
-        Returns:
-            str: The raw data read.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if not feature.is_enabled():
             raise InvalidOperationException(
@@ -716,13 +762,24 @@ class Node(Peripheral, object):
         characteristic = feature.get_characteristic()
         if not self.characteristic_can_be_read(characteristic):
             raise InvalidOperationException(
-                ' The "' + feature.get_name() + '" cannot be read.')
+                ' The "' + feature.get_name() + '" feature is not readable.')
 
+        # Reading data.
         char_handle = characteristic.getHandle()
         data = self.readCharacteristic(char_handle)
-        self._update_features(char_handle, data, False)
 
-        return data
+        # Calling on-read callback.
+        if self._debug_console and \
+            Debug.is_debug_characteristic(str(characteristic.uuid)):
+            # Calling on-read callback for a debug characteristic.
+            self._debug_console.on_update_characteristic(
+                characteristic, data)
+        else:
+            # Calling on-read callback for the other characteristics.
+            try:
+                self._update_features(char_handle, data, False)
+            except InvalidDataException as e:
+                raise e
 
     def write_feature(self, feature, data):
         """Synchronous request to write a feature.
@@ -744,10 +801,25 @@ class Node(Peripheral, object):
         characteristic = feature.get_characteristic()
         if not self.characteristic_can_be_written(characteristic):
             raise InvalidOperationException(
-                ' The "' + feature.get_name() + '" cannot be written.')
+                ' The "' + feature.get_name() + '" feature is not writeable.')
 
         char_handle = characteristic.getHandle()
         self.writeCharacteristic(char_handle, data, True)
+
+    def set_notification_status(self, characteristic, status):
+        """Ask the node to set the notification status of the given
+        characteristic.
+
+        Args:
+            characteristic (Characteristic): The BLE characteristic to check.
+                Refer to
+                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+                for more information.
+            status (bool): True if the notifications have to be turned on, False
+                otherwise.
+        """
+        self.writeCharacteristic(characteristic.getHandle() + 1,
+            self._NOTIFICATION_ON if status else self._NOTIFICATION_OFF, True)
 
     def enable_notifications(self, feature):
         """Ask the node to notify when a feature updates its value.
@@ -767,8 +839,7 @@ class Node(Peripheral, object):
         characteristic = feature.get_characteristic()
         if self.characteristic_can_be_notified(characteristic):
             feature.set_notify(True)
-            self.writeCharacteristic(characteristic.getHandle() + 1,
-                self._NOTIFICATION_ON, True)
+            self.set_notification_status(characteristic, True)
             return True
         return False
 
@@ -790,8 +861,7 @@ class Node(Peripheral, object):
             feature.set_notify(False)
             if not self.characteristic_has_other_notifying_features(
                     characteristic, feature):
-                self.writeCharacteristic(characteristic.getHandle() + 1,
-                    self._NOTIFICATION_OFF, True)
+                self.set_notification_status(characteristic, True)
             return True
         return False
 
@@ -860,7 +930,7 @@ class Node(Peripheral, object):
 
     def remove_listener(self, listener):
         """Remove a listener.
-        
+
         Args:
             listener (:class:`blue_st_sdk.node.NodeListener`): Listener to
                 be removed.
@@ -869,6 +939,17 @@ class Node(Peripheral, object):
             with lock(self):
                 if listener in self._listeners:
                     self._listeners.remove(listener)
+
+    def get_debug(self):
+        """Getting a debug console used to read/write debug messages from/to the
+        Bluetooth device.
+
+        Returns:
+            :class:`blue_st_sdk.debug_console.DebugConsole`: A debug console
+            used to read/write debug messages from/to the Bluetooth device.
+            None if the device doesn't export the debug service.
+        """
+        return self._debug_console
 
 
 class NodeDelegate(DefaultDelegate):
@@ -882,17 +963,37 @@ class NodeDelegate(DefaultDelegate):
                 notifications.
         """
         DefaultDelegate.__init__(self)
+
         self._node = node
+
+        self._logger = logging.getLogger('BlueSTSDK')
+
 
     def handleNotification(self, char_handle, data):
         """It is called whenever a notification arises.
 
         Args:
             char_handle (int): The characteristic's handle to look for.
-            data (str): The data notiffied from the given characteristic.
+            data (str): The data notified from the given characteristic.
 
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
-        self._node._update_features(char_handle, data, True)
+        try:
+            # Calling on-read callback.
+            if self._node._debug_console:
+                # Calling on-update callback for a debug characteristic.
+                characteristic = \
+                    self._node._char_handle_to_characteristic_dict[char_handle]
+                if Debug.is_debug_characteristic(str(characteristic.uuid)):
+                    self._node._debug_console.on_update_characteristic(
+                        characteristic, data)
+                    return
+            # Calling on-read callback for the other characteristics.
+            self._node._update_features(char_handle, data, True)
+        except InvalidDataException as e:
+            self._logger.warning(str(e))
 
 
 class NodeType(Enum):
@@ -913,7 +1014,13 @@ class NodeType(Enum):
     STEVAL_IDB008VX = 0x04
     """BlueNRG1 / BlueNRG2 STEVAL board."""
 
-    NUCLEO = 0x05
+    STEVAL_BCN002V1 = 0x05
+    """BlueNRG-Tile STEVAL board."""
+    
+    SENSOR_TILE_101 = 0x06
+    """SensorTile 101 board."""
+
+    NUCLEO = 0x07
     """NUCLEO-based board."""
 
 
@@ -965,7 +1072,7 @@ class NodeListener(object):
             old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.
 
         Raises:
-            'NotImplementedError' is raised if the method is not implemented.
+            :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must define "on_status_change()" to use '
-                                  'the "NodeListener" class.')
+        raise NotImplementedError('You must implement "on_status_change()" to '
+                                  'use the "NodeListener" class.')

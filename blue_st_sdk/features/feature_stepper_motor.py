@@ -38,6 +38,7 @@ from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import NumberConversion
 from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -112,10 +113,12 @@ class FeatureStepperMotor(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.STATUS_DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %d bytes available to read.' \
                 % (self.STATUS_DATA_LENGTH_BYTES))
         sample = Sample(
             [NumberConversion.byteToUInt8(data, offset)],
@@ -131,13 +134,14 @@ class FeatureStepperMotor(Feature):
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data.
 
         Returns:
-            int: The motor status if the sample is valid, "-1" otherwise.
+            :class:`StepperMotorStatus`: The motor status if the sample is valid,
+            "None" otherwise.
         """
         if sample is not None:
             if sample._data:
                 if sample._data[0] is not None:
-                    return int(sample._data[0])
-        return -1
+                    return StepperMotorStatus(sample._data[0])
+        return None
 
     def read_motor_status(self):
         """Read the motor status.
@@ -149,12 +153,13 @@ class FeatureStepperMotor(Feature):
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         try:
-            data = self.read_data()
-            (ts, status) = struct.unpack('<Hb', data)
-            return StepperMotorStatus(status)
-        except InvalidOperationException as e:
+            self._read_data()
+            return self.get_motor_status(self._get_sample())
+        except (InvalidOperationException, InvalidDataException) as e:
             raise e
 
     def write_motor_command(self, command, steps=0):
@@ -181,7 +186,7 @@ class FeatureStepperMotor(Feature):
             command_str = struct.pack('=BH', int(command.value), steps)
 
         try:
-            self.write_data(command_str)
+            self._write_data(command_str)
             # To clean the BLE buffer read the feature and throw away the data.
             #if self._parent.characteristic_can_be_read(self.get_characteristic()):
             #    self.read_data()

@@ -38,6 +38,7 @@ from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import NumberConversion
 from blue_st_sdk.python_utils import lock
 from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -85,10 +86,12 @@ class FeatureSwitch(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There is no %d byte available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
             [NumberConversion.byteToUInt8(data, offset)],
@@ -122,12 +125,13 @@ class FeatureSwitch(Feature):
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         try:
-            data = self.read_data()
-            (ts, status) = struct.unpack('<Hb', data)
-            return status
-        except InvalidOperationException as e:
+            self._read_data()
+            return self.get_switch_status(self._get_sample())
+        except (InvalidOperationException, InvalidDataException) as e:
             raise e
 
     def write_switch_status(self, status):
@@ -144,7 +148,7 @@ class FeatureSwitch(Feature):
         try:
             ts = 0
             status_str = struct.pack('<HB', ts, status)
-            self.write_data(status_str)
+            self._write_data(status_str)
         except InvalidOperationException as e:
             raise e
 

@@ -34,6 +34,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -97,10 +99,12 @@ class FeatureMagnetometer(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %s bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
             [LittleEndian.bytesToInt16(data, offset),
@@ -111,7 +115,7 @@ class FeatureMagnetometer(Feature):
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
 
     @classmethod
-    def get_mag_x(self, sample):
+    def get_magnetometer_x(self, sample):
         """Get the magnetometer value on the X axis from a sample.
 
         Args:
@@ -128,7 +132,7 @@ class FeatureMagnetometer(Feature):
         return float('nan')
 
     @classmethod
-    def get_mag_y(self, sample):
+    def get_magnetometer_y(self, sample):
         """Get the magnetometer value on the Y axis from a sample.
 
         Args:
@@ -145,7 +149,7 @@ class FeatureMagnetometer(Feature):
         return float('nan')
 
     @classmethod
-    def get_mag_z(self, sample):
+    def get_magnetometer_z(self, sample):
         """Get the magnetometer value on the Z axis from a sample.
 
         Args:
@@ -160,3 +164,25 @@ class FeatureMagnetometer(Feature):
                 if sample._data[self.Z_INDEX] is not None:
                     return float(sample._data[self.Z_INDEX])
         return float('nan')
+
+    def read_magnetometer(self):
+        """Read the magnetometer values.
+
+        Returns:
+            list: The magnetometer values on the three axis if the read
+            operation is successful, <nan> values otherwise.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+                is raised if the feature is not enabled or the operation
+                required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
+        """
+        try:
+            self._read_data()
+            return [FeatureAccelerometer.get_magnetometer_x(self._get_sample()),
+                FeatureAccelerometer.get_magnetometer_y(self._get_sample()),
+                FeatureAccelerometer.get_magnetometer_z(self._get_sample())]
+        except (InvalidOperationException, InvalidDataException) as e:
+            raise e

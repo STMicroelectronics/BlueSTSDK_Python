@@ -34,6 +34,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -98,10 +100,12 @@ class FeatureGyroscope(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %s bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
             [LittleEndian.bytesToInt16(data, offset) / self.SCALE_FACTOR,
@@ -112,7 +116,7 @@ class FeatureGyroscope(Feature):
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
 
     @classmethod
-    def get_gyr_x(self, sample):
+    def get_gyroscope_x(self, sample):
         """Get the gyroscope value on the X axis from a sample.
 
         Args:
@@ -129,7 +133,7 @@ class FeatureGyroscope(Feature):
         return float('nan')
 
     @classmethod
-    def get_gyr_y(self, sample):
+    def get_gyroscope_y(self, sample):
         """Get the gyroscope value on the Y axis from a sample.
 
         Args:
@@ -146,7 +150,7 @@ class FeatureGyroscope(Feature):
         return float('nan')
 
     @classmethod
-    def get_gyr_z(self, sample):
+    def get_gyroscope_z(self, sample):
         """Get the gyroscope value on the Z axis from a sample.
 
         Args:
@@ -162,3 +166,24 @@ class FeatureGyroscope(Feature):
                     return float(sample._data[self.Z_INDEX])
         return float('nan')
 
+    def read_gyroscope(self):
+        """Read the gyroscope values.
+
+        Returns:
+            list: The gyroscope values on the three axis if the read operation
+            is successful, <nan> values otherwise.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+                is raised if the feature is not enabled or the operation
+                required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
+        """
+        try:
+            self._read_data()
+            return [FeatureAccelerometer.get_gyroscope_x(self._get_sample()),
+                FeatureAccelerometer.get_gyroscope_y(self._get_sample()),
+                FeatureAccelerometer.get_gyroscope_z(self._get_sample())]
+        except (InvalidOperationException, InvalidDataException) as e:
+            raise e

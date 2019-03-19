@@ -70,3 +70,15 @@ class InvalidOperationException(Exception):
             msg (str): The message to raise.
         """
         super(InvalidOperationException, self).__init__(msg)
+
+
+class InvalidDataException(Exception):
+    """Exception raised whenever a feature's data are not complete."""
+
+    def __init__(self, msg):
+        """Constructor
+
+        Args:
+            msg (str): The message to raise.
+        """
+        super(InvalidDataException, self).__init__(msg)

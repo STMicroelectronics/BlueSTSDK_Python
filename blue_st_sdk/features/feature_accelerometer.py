@@ -34,6 +34,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -72,7 +74,6 @@ class FeatureAccelerometer(Feature):
         DATA_MIN)
     DATA_LENGTH_BYTES = 6
 
-
     def __init__(self, node):
         """Constructor.
 
@@ -98,10 +99,12 @@ class FeatureAccelerometer(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %s bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
             [LittleEndian.bytesToInt16(data, offset),
@@ -112,7 +115,7 @@ class FeatureAccelerometer(Feature):
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
 
     @classmethod
-    def get_acc_x(self, sample):
+    def get_accelerometer_x(self, sample):
         """Get the accererometer value on the X axis from a sample.
 
         Args:
@@ -129,7 +132,7 @@ class FeatureAccelerometer(Feature):
         return float('nan')
 
     @classmethod
-    def get_acc_y(self, sample):
+    def get_accelerometer_y(self, sample):
         """Get the accererometer value on the Y axis from a sample.
 
         Args:
@@ -146,7 +149,7 @@ class FeatureAccelerometer(Feature):
         return float('nan')
 
     @classmethod
-    def get_acc_z(self, sample):
+    def get_accelerometer_z(self, sample):
         """Get the accererometer value on the Z axis from a sample.
 
         Args:
@@ -161,3 +164,25 @@ class FeatureAccelerometer(Feature):
                 if sample._data[self.Z_INDEX] is not None:
                     return float(sample._data[self.Z_INDEX])
         return float('nan')
+
+    def read_accelerometer(self):
+        """Read the accelerometer values.
+
+        Returns:
+            list: The accelerometer values on the three axis if the read
+            operation is successful, <nan> values otherwise.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+                is raised if the feature is not enabled or the operation
+                required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
+        """
+        try:
+            self._read_data()
+            return [FeatureAccelerometer.get_accelerometer_x(self._get_sample()),
+                FeatureAccelerometer.get_accelerometer_y(self._get_sample()),
+                FeatureAccelerometer.get_accelerometer_z(self._get_sample())]
+        except (InvalidOperationException, InvalidDataException) as e:
+            raise e

@@ -48,7 +48,6 @@ TIMESTAMP_OFFSET_BYTES = 2
 
 # CLASSES
 
-
 class BLENodeDefinitions(object):
     """This class helps to get the list of services and characteristics
     available in the BlueST devices.
@@ -63,8 +62,11 @@ class BLENodeDefinitions(object):
     BLUESTSDK_CHARACTERISTIC_UUID = '-11e1-ac36-0002a5d5c51b'
     """Characteristic UUIDs handled by this SDK must end with this value."""
 
-    FEATURE_UUID = '-0001'
-    """Feature UUID."""
+    BASE_FEATURE_UUID = '-0001'
+    """Base feature UUID."""
+
+    EXTENDED_FEATURE_UUID = '-0002'
+    """Extended feature UUID."""
 
     DEBUG_UUID = '-000E'
     """Debug UUID."""
@@ -87,15 +89,16 @@ class Services(object):
         '00000000-[0-9a-fA-F]{4}' + BLENodeDefinitions.BLUESTSDK_SERVICE_UUID
     """Format of the blue_st_sdk's service UUID."""
 
-    def isKnownService(self, uuid):
-        """Check if the service is handled by this SDK, i.e. if the uuid has the
+    @classmethod
+    def is_known_service(self, uuid):
+        """Checking whether the service is handled by this SDK, i.e. if the uuid has the
         '00000000-YYYY-11e1-9ab4-0002a5d5c51b' format.
 
         Args:
             uuid (str): UUID of the service under test.
 
         Returns:
-            True if the UUID ends with
+            bool: True if the UUID ends with
             :attr:`blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID`,
             False otherwise.
         """
@@ -112,11 +115,11 @@ class Debug(object):
         + BLENodeDefinitions.BLUESTSDK_SERVICE_UUID)
     """Debug service UUID."""
 
-    DEBUG_TERMINAL_BLUESTSDK_SERVICE_UUID = \
+    DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID = \
         uuid.UUID('00000001' \
         + BLENodeDefinitions.DEBUG_UUID \
         + BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID)
-    """Debug characteristic UUID where you can write and read output commands."""
+    """Debug characteristic UUID where you can read and write messages."""
 
     DEBUG_STDERR_BLUESTSDK_SERVICE_UUID = \
         uuid.UUID('00000002' \
@@ -124,18 +127,32 @@ class Debug(object):
         + BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID)
     """Debug characteristic UUID where the node writes error messages."""
 
-    def isDebugCharacteristics(self, uuid):
-        """Check if the provided UUID is a valid debug characteristic UUID.
+    @classmethod
+    def is_debug_service(self, uuid):
+        """Checking whether the provided UUID is a valid debug service UUID.
 
         Args:
-            uuid Characteristic UUID.
+            uuid (str): Service UUID.
         
         Returns:
-            True if the provided UUID is a valid debug characteristic UUID,
+            bool: True if the provided UUID is a valid debug service UUID,
             False otherwise.
         """
-        return uuid == DEBUG_STDERR_BLUESTSDK_SERVICE_UUID \
-            or uuid == DEBUG_TERMINAL_BLUESTSDK_SERVICE_UUID
+        return uuid.endswith(str(Debug.DEBUG_BLUESTSDK_SERVICE_UUID))
+
+    @classmethod
+    def is_debug_characteristic(self, uuid):
+        """Checking whether the provided UUID is a valid debug characteristic UUID.
+
+        Args:
+            uuid (str): Characteristic UUID.
+        
+        Returns:
+            bool: True if the provided UUID is a valid debug characteristic UUID,
+            False otherwise.
+        """
+        return uuid.endswith(str(Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID)) or \
+            uuid.endswith(str(Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID))
 
 
 class Config(object):
@@ -161,6 +178,19 @@ class Config(object):
     """Control characteristic UUID through which you can send commands to a
     feature."""
 
+    @classmethod
+    def is_config_service(self, uuid):
+        """Checking whether the provided UUID is a valid config service UUID.
+
+        Args:
+            uuid (str): Service UUID.
+        
+        Returns:
+            bool: True if the provided UUID is a valid config service UUID,
+            False otherwise.
+        """
+        return uuid.endswith(str(Config.CONFIG_BLUESTSDK_SERVICE_UUID))
+
 
 class FeatureCharacteristic(object):
     """This class defines the associations characteristic-feature.
@@ -173,12 +203,17 @@ class FeatureCharacteristic(object):
     all the corresponding features' values at the same time.
     """
 
-    BLUESTSDK_FEATURES_UUID = \
-        BLENodeDefinitions.FEATURE_UUID \
+    BLUESTSDK_BASE_FEATURES_UUID = \
+        BLENodeDefinitions.BASE_FEATURE_UUID \
         + BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID
-    """Feature UUIDs handled by this SDK must end with this value."""
+    """Base feature UUIDs handled by this SDK must end with this value."""
 
-    DEFAULT_MASK_TO_FEATURE_DIC = {
+    BLUESTSDK_EXTENDED_FEATURES_UUID = \
+        BLENodeDefinitions.EXTENDED_FEATURE_UUID \
+        + BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID
+    """Extended feature UUIDs handled by this SDK must end with this value."""
+
+    BASE_MASK_TO_FEATURE_DIC = {
         #0x80000000: feature_analog.FeatureAnalog,
         0x40000000: feature_audio_adpcm_sync.FeatureAudioADPCMSync,
         0x20000000: feature_switch.FeatureSwitch,
@@ -212,35 +247,83 @@ class FeatureCharacteristic(object):
         #0x00000080: feature_mems_sensor_fusion.FeatureMemsSensorFusion,
         #0x00000020: feature_motion_intensity.FeatureMotionIntensity,
         #0x00000040: feature_compass.FeatureCompass,
-        #0x00000010: feature_activity.FeatureActivity,
+        0x00000010: feature_activity_recognition.FeatureActivityRecognition,
 
         #0x00000008: feature_carry_position.FeatureCarryPosition,
         0x00000004: feature_proximity_gesture.FeatureProximityGesture
         #0x00000002: feature_mems_gesture.FeatureMemsGesture,
         #0x00000001: feature_pedometer.FeaturePedometer
     }
-    """Map from feature's masks to feature's classes."""
+    """Map from base feature's masks to feature's classes."""
+
+    EXTENDED_MASK_TO_FEATURE_DIC = {
+        0x00000003: feature_audio_scene_classification.FeatureAudioSceneClassification
+        #0x00000004: feature_ai_logging.FeatureAILogging,
+        #0x00000005: feature_fft_amplitude.FeatureFFTAmplitude,
+        #0x00000006: feature_motor_time_parameter.FeatureMotorTimeParameter
+    }
+    """Map from extended feature's masks to feature's classes."""
 
     @classmethod
     def extract_feature_mask(self, uuid):
         """"Extract the fist 32 bits from the characteristic's UUID.
         
         Args:
-            uuid (str): Characteristic's UUID.
-        
+            uuid (UUID): Characteristic's UUID.
+                Refer to
+                `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
+                more information.
+
         Returns:
-            The first 32 bit of the characteristic's UUID.
+            int: The first 32 bit of the characteristic's UUID.
         """
         return int(str(uuid).split('-')[0], 16)
 
     @classmethod
-    def is_feature_characteristic(self, uuid):
-        """Check if the UUID is a valid feature UUID.
+    def is_base_feature_characteristic(self, uuid):
+        """Checking whether the UUID is a valid feature UUID.
 
         Args:
             uuid (str): Characteristic's UUID.
         
         Returns:
-            True if the UUID is a valid feature UUID, False otherwise.
+            bool: True if the UUID is a valid feature UUID, False otherwise.
         """
-        return str(uuid).endswith(self.BLUESTSDK_FEATURES_UUID)
+        return uuid.endswith(
+            FeatureCharacteristic.BLUESTSDK_BASE_FEATURES_UUID)
+
+    @classmethod
+    def is_extended_feature_characteristic(self, uuid):
+        """Checking whether the UUID is a valid extended feature UUID.
+
+        Args:
+            uuid (str): Characteristic's UUID.
+        
+        Returns:
+            bool: True if the UUID is a valid extended feature UUID, False
+            otherwise.
+        """
+        return uuid.endswith(
+            FeatureCharacteristic.BLUESTSDK_EXTENDED_FEATURES_UUID)
+
+    @classmethod
+    def get_extended_feature_class(self, uuid):
+        """Getting the extended feature class from a UUID.
+
+        Args:
+            uuid (UUID): Characteristic's UUID.
+                Refer to
+                `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
+                more information.
+        
+        Returns:
+            type: The feature's class if found, "None" otherwise.
+        """
+        # Extracting the feature mask from the characteristic's UUID.
+        feature_mask = FeatureCharacteristic.extract_feature_mask(uuid)
+
+        # Returning the feature's class.
+        if feature_mask in FeatureCharacteristic.EXTENDED_MASK_TO_FEATURE_DIC:
+            return FeatureCharacteristic.EXTENDED_MASK_TO_FEATURE_DIC[
+                feature_mask]
+        return None

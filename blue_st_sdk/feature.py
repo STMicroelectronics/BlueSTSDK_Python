@@ -42,6 +42,7 @@ from datetime import datetime
 
 from blue_st_sdk.python_utils import lock
 from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -69,7 +70,6 @@ class Feature(object):
             description (list): Description of the data of the feature (list of
                 :class:`blue_st_sdk.features.field.Field` objects).
         """
-
         self._name = name
         """Feature name."""
 
@@ -207,10 +207,10 @@ class Feature(object):
         """
         return self._description
 
-    def get_sample(self):
+    def _get_sample(self):
         """Return a sample containing the last timestamp and data received from
         the device.
-        
+
         Returns:
             :class:`blue_st_sdk.feature.Sample`: The last sample received, None
             if missing.
@@ -309,15 +309,21 @@ class Feature(object):
 
         Returns:
             int: The number of bytes read.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         # Update the feature's internal data
         sample = None
         with lock(self):
-            extracted_data = self.extract_data(timestamp, data, offset)
+            try:
+                extracted_data = self.extract_data(timestamp, data, offset)
+            except InvalidDataException as e:
+                raise e
             sample = self._last_sample = extracted_data.get_sample()
             read_bytes = extracted_data.get_read_bytes()
             self._last_update = datetime.now()
-
         if notify_update:
             # Notify all the registered listeners about the new data.
             self._notify_update(sample)
@@ -343,23 +349,22 @@ class Feature(object):
             and len(sample._data) > index \
             and sample._data[index] is not None
 
-    def read_data(self):
+    def _read_data(self):
         """Read data from the feature.
-
-        Returns:
-            str: The raw data read.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         try:
-            return self._parent.read_feature(self)
-        except InvalidOperationException as e:
+            self._parent.read_feature(self)
+        except (InvalidOperationException, InvalidDataException) as e:
             raise e
 
-    def write_data(self, data):
+    def _write_data(self, data):
         """Write data to the feature.
 
         Args:
@@ -400,7 +405,8 @@ class Feature(object):
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         raise NotImplementedError(
             'You must implement "extract_data()" to use the "Feature" class.')
@@ -427,8 +433,8 @@ class Feature(object):
                    self._description[0]._unit)
             return result
         
-        # check on timestamp (ADPCM Audio and ADPCM Sync samples don't have
-        # the timestamp field in order to save bandwidth)
+        # Check on timestamp (ADPCM Audio and ADPCM Sync samples don't have
+        # the timestamp field in order to save bandwidth.)
         if sample._timestamp is not None:
             result = '%s(%d): ( ' % (self._name, sample._timestamp)
         
@@ -441,7 +447,7 @@ class Feature(object):
                        '    ' if i < len(sample._data) - 1 else ' )')
                 i += 1
         else:
-			# only for Audio Features
+			# Only for Audio Features.
             result = str(self._name) + " - "
             for i in range(0,len(sample._data)-1):
                 result += str(sample._data[i]) + ", "
@@ -471,13 +477,7 @@ class FeatureListener(object):
         raise NotImplementedError(
             'You must implement "on_update()" to use the "FeatureListener" class.')
 
-#
-# Interface used to dump the feature's data, both in raw format (as received
-# from the node) and after parsing it.
-#
-# @author STMicroelectronics - Central Labs.
-# @version 1.0
-#
+
 class FeatureLogger(object):
     """Interface used by the :class:`blue_st_sdk.feature.Feature` class to
     log changes of a feature's data.
@@ -563,10 +563,11 @@ class Sample(object):
         Args:
             copy_me (:class:`blue_st_sdk.feature.Sample`): A given sample.
         """
-        sample._data = copy_me._data.copy()
-        sample._description = copy_me._description.copy()
-        sample._timestamp = copy_me.timestamp
-        sample._notification_time = copy_me.notification_time
+        sample = Sample(
+            list(copy_me._data),
+            list(copy_me._description),
+            copy_me._timestamp)
+        sample._notification_time = copy_me._notification_time
         return sample
 
     def equals(self, sample):

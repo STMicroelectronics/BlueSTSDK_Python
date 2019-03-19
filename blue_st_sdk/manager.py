@@ -6,7 +6,7 @@
 #   1. Redistributions of source code must retain the above copyright notice,  #
 #      this list of conditions and the following disclaimer.                   #
 #   2. Redistributions in binary form must reproduce the above copyright       #
-#      notice, this list of conditions and the following disclaimer in the #
+#      notice, this list of conditions and the following disclaimer in the     #
 #      documentation and/or other materials provided with the distribution.    #
 #   3. Neither the name of STMicroelectronics nor the names of its             #
 #      contributors may be used to endorse or promote products derived from    #
@@ -74,8 +74,9 @@ class _ScannerDelegate(DefaultDelegate):
         """
         DefaultDelegate.__init__(self)
 
+        self._logger = logging.getLogger('BlueSTSDK')
         self._show_warnings = show_warnings
-        """If True shows warnings, if any, during the discovery process."""
+
 
     def handleDiscovery(self, scan_entry, is_new_device, is_new_data):
         """Discovery handling callback.
@@ -115,7 +116,7 @@ class _ScannerDelegate(DefaultDelegate):
             manager.add_node(node)
         except (BTLEException, InvalidBLEAdvertisingDataException) as e:
             if self._show_warnings:
-                logging.warning(e)
+                self._logger.warning(str(e))
 
 
 class _StoppableScanner(threading.Thread):
@@ -287,6 +288,7 @@ class Manager(object):
                 return False
             if timeout_s == 0:
                 timeout_s = _ScannerDelegate.SCANNING_TIME_DEFAULT_s
+            self._discovered_nodes = []
             self._notify_discovery_change(True)
             self._scanner = Scanner().withDelegate(_ScannerDelegate(show_warnings))
             self._scanner.scan(timeout_s)
@@ -326,6 +328,7 @@ class Manager(object):
                 return False
             if timeout_s == 0:
                 timeout_s = _ScannerDelegate.SCANNING_TIME_DEFAULT_s
+            self._discovered_nodes = []
             self._notify_discovery_change(True)
             self._scanner_thread = _StoppableScanner(show_warnings, timeout_s)
             self._scanner_thread.start()
@@ -545,11 +548,11 @@ class Manager(object):
         
         Returns:
             dict: A copy of the features map available for the given device
-            identifier if found, None otherwise.
+            identifier if found, the base features map otherwise.
         """
         if device_id in self._features_decoder_dic:
             return self._features_decoder_dic[device_id].copy()
-        return FeatureCharacteristic.DEFAULT_MASK_TO_FEATURE_DIC.copy()
+        return FeatureCharacteristic.BASE_MASK_TO_FEATURE_DIC.copy()
 
     def add_listener(self, listener):
         """Add a listener.
@@ -595,9 +598,9 @@ class ManagerListener(object):
             enabled (bool): True if a new discovery starts, False otherwise.
 
         Raises:
-            'NotImplementedError' is raised if the method is not implemented.
+            :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must define \"on_discovery_change()\" '
+        raise NotImplementedError('You must implement \"on_discovery_change()\" '
             'to use the \"ManagerListener\" class.')
 
     @abstractmethod
@@ -611,7 +614,7 @@ class ManagerListener(object):
 
 
         Raises:
-            'NotImplementedError' is raised if the method is not implemented.
+            :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must define \"on_node_discovered()\" '
+        raise NotImplementedError('You must implement \"on_node_discovered()\" '
             'to use the \"ManagerListener\" class.')

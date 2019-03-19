@@ -47,7 +47,6 @@ import os
 import time
 import getopt
 import json
-import logging
 from enum import Enum
 from bluepy.btle import BTLEException
 
@@ -143,7 +142,7 @@ class MyNodeListener(NodeListener):
     # @param old_status Old node status.
     #
     def on_status_change(self, node, new_status, old_status):
-        print('Device %s went from %s to %s.' %
+        print('Device %s from %s to %s.' %
             (node.get_name(), str(old_status), str(new_status)))
 
 

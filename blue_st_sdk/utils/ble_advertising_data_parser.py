@@ -196,6 +196,10 @@ class BLEAdvertisingDataParser(object):
             return blue_st_sdk.node.NodeType.BLUE_COIN
         if temp == 0x04:
             return blue_st_sdk.node.NodeType.STEVAL_IDB008VX
+        if temp == 0x05:
+            return blue_st_sdk.node.NodeType.STEVAL_BCN002V1
+        if temp == 0x06:
+            return blue_st_sdk.node.NodeType.SENSOR_TILE_101
         if temp >= 0x80 and temp <= 0xFF:
             return blue_st_sdk.node.NodeType.NUCLEO
         return blue_st_sdk.node.NodeType.GENERIC

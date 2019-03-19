@@ -53,6 +53,8 @@ from blue_st_sdk.manager import ManagerListener
 from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
 from blue_st_sdk.features import *
+from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # PRECONDITIONS
@@ -130,7 +132,7 @@ class MyNodeListener(NodeListener):
     # @param old_status Old node status.
     #
     def on_status_change(self, node, new_status, old_status):
-        print('Device %s went from %s to %s.' %
+        print('Device %s from %s to %s.' %
             (node.get_name(), str(old_status), str(new_status)))
 
 
@@ -156,9 +158,6 @@ class MyFeatureListener(FeatureListener):
 # Main application.
 #
 def main(argv):
-
-    # Number of notifications to get before disabling them.
-    NOTIFICATIONS = 10
 
     # Printing intro.
     print_intro()
@@ -207,18 +206,24 @@ def main(argv):
             iot_device.get_feature(feature_stepper_motor.FeatureStepperMotor)
         print('\nStepper motor feature found.')
 
-        # Managing feature.
-        iot_device_feature_stepper_motor.write_motor_command(
-            feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE)
-        print('\nStepper motor status:')
-        print(iot_device_feature_stepper_motor.read_motor_status())
-        print('\nStepper motor moving...')
-        iot_device_feature_stepper_motor.write_motor_command(
-            feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD,
-            3000
-        )
-        print('\nStepper motor status:')
-        print(iot_device_feature_stepper_motor.read_motor_status())
+        try:
+            # Managing feature.
+            iot_device_feature_stepper_motor.write_motor_command(
+                feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE)
+            print('\nStepper motor status:')
+            print(iot_device_feature_stepper_motor.read_motor_status())
+            print('\nStepper motor moving...')
+            iot_device_feature_stepper_motor.write_motor_command(
+                feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD,
+                3000
+            )
+            print('\nStepper motor status:')
+            print(iot_device_feature_stepper_motor.read_motor_status())
+        except (InvalidOperationException, InvalidDataException) as e:
+            print(e)
+            # Exiting.
+            print('Exiting...\n')
+            sys.exit(0)
 
         # Disconnecting from the device.
         print('\nDisconnecting from %s...' % (iot_device.get_name()))

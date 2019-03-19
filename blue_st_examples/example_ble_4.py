@@ -30,9 +30,8 @@
 
 # DESCRIPTION
 #
-# This application example shows how to perform a Bluetooth Low Energy (BLE)
-# scan, connect to a device, retrieve its exported features, and get push
-# notifications from it.
+# This application example shows how to connect to a Bluetooth Low Energy (BLE)
+# device exporting audio features, and to use it.
 
 
 # IMPORT
@@ -89,28 +88,29 @@ INTRO = """##################
 AUDIO_DUMPS_PATH = "/home/pi/audioDumps/"
 AUDIO_DUMP_SUFFIX = "_audioDump.raw"
 
-#Notifications per second
+# Notifications per second.
 NPS = 200
 
-#Number of channels
+# Number of channels.
 CHANNELS = 1
 
-#Sampling frequency
+# Sampling frequency.
 SAMPLING_FREQ = 8000
 
-# Global Audio Raw file
+# Global Audio Raw file.
 audioFile=None
 saveAudioFlag = 0
 
 # Bluetooth Scanning time in seconds.
 SCANNING_TIME_s = 5
 
-# Global stream control index
+# Global stream control index.
 nIdx = 0
 
-# Global audio features
+# Global audio features.
 audioFeature = None
 audioSyncFeature = None
+
 
 # FUNCTIONS
 
@@ -161,7 +161,7 @@ class MyNodeListener(NodeListener):
     # @param old_status Old node status.
     #
     def on_status_change(self, node, new_status, old_status):
-        print('Device %s went from %s to %s.' %
+        print('Device %s from %s to %s.' %
             (node.get_name(), str(old_status), str(new_status)))
 
 #
@@ -198,6 +198,7 @@ class MyFeatureListener(FeatureListener):
                 ###Audio Stream#########################################
             nIdx += 1
 
+
 #
 # Implementation of the interface used by the Feature class to notify that a
 # feature has updated its data.
@@ -215,6 +216,7 @@ class MyFeatureListenerSync(FeatureListener):
         if audioFeature is not None:
             audioFeature.setAudioSyncParams(sample)
                 
+
 # MAIN APPLICATION
 
 # This application example connects to a Bluetooth Low Energy device, retrieves

@@ -34,6 +34,7 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
+from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 
 
 # CLASSES
@@ -88,10 +89,12 @@ class FeatureProximity(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`Exception` if the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
+                the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise Exception('There are no %d bytes available to read.' \
+            raise InvalidDataException(
+                'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = None
         value = LittleEndian.bytesToUInt16(data, offset)
@@ -217,9 +220,8 @@ class FeatureProximity(Feature):
                        str(distance),
                        self._description[0]._unit)
             else:
-                result = '%s(%d): %s %s' \
+                result = '%s(%d): %s' \
                     % (self._name,
                        sample._timestamp,
-                       'Out Of Range',
-                       '')
+                       'Out Of Range')
             return result

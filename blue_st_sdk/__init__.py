@@ -1,6 +1,7 @@
 __all__ = [
+    'debug_console', \
+    'feature', \
     'manager', \
     'node', \
-    'feature', \
     'python_utils'
 ]

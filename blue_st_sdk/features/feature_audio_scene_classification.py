@@ -28,37 +28,48 @@
 
 # IMPORT
 
+from enum import Enum
+
 from blue_st_sdk.feature import Feature
 from blue_st_sdk.feature import Sample
 from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
-from blue_st_sdk.utils.number_conversion import LittleEndian
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
+from blue_st_sdk.utils.number_conversion import NumberConversion
 from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.python_utils import lock
 
 
 # CLASSES
 
-class FeaturePressure(Feature):
-    """The feature handles the data coming from a pressure sensor.
+class SceneType(Enum):
+    """Type of scene."""
 
-    Data is four bytes long and has two decimal digits.
+    UNKNOWN = -1
+    INDOOR = 0
+    OUTDOOR = 1
+    IN_VEHICLE = 2
+    ERROR = 3
+
+
+class FeatureAudioSceneClassification(Feature):
+    """The feature handles the type of scene that can be detected by a device.
+
+    Data is one byte long and has no decimal digits.
     """
 
-    FEATURE_NAME = "Pressure"
-    FEATURE_UNIT = "mBar"
-    FEATURE_DATA_NAME = "Pressure"
-    DATA_MAX = 2000
+    FEATURE_NAME = "Audio Scene Classification"
+    FEATURE_UNIT = None
+    FEATURE_DATA_NAME = "SceneType"
+    DATA_MAX = 3
     DATA_MIN = 0
     FEATURE_FIELDS = Field(
         FEATURE_DATA_NAME,
         FEATURE_UNIT,
-        FieldType.Float,
+        FieldType.UInt8,
         DATA_MAX,
         DATA_MIN)
-    DATA_LENGTH_BYTES = 4
-    SCALE_FACTOR = 100.0
+    DATA_LENGTH_BYTES = 1
 
     def __init__(self, node):
         """Constructor.
@@ -67,7 +78,7 @@ class FeaturePressure(Feature):
             node (:class:`blue_st_sdk.node.Node`): Node that will send data to
                 this feature.
         """
-        super(FeaturePressure, self).__init__(
+        super(FeatureAudioSceneClassification, self).__init__(
             self.FEATURE_NAME, node, [self.FEATURE_FIELDS])
 
     def extract_data(self, timestamp, data, offset):
@@ -88,47 +99,49 @@ class FeaturePressure(Feature):
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
             raise InvalidDataException(
-                'There are no %d bytes available to read.' \
+                'There is no %d byte available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
-            [LittleEndian.bytesToInt32(data, offset) / self.SCALE_FACTOR],
+            [NumberConversion.byteToUInt8(data, offset)],
             self.get_fields_description(),
             timestamp)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
 
     @classmethod
-    def get_pressure(self, sample):
-        """Get the pressure value from a sample.
+    def get_scene(self, sample):
+        """Getting the scene from a sample.
 
         Args:
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data.
-        
+
         Returns:
-            float: The pressure value if the data array is valid, <nan>
-            otherwise.
+            :class:`SceneType`: The type of the scene if the sample is valid,
+            "SceneType.ERROR" otherwise.
         """
         if sample is not None:
             if sample._data:
                 if sample._data[0] is not None:
-                    return float(sample._data[0])
-        return float('nan')
+                    return SceneType(sample._data[0])
+        return SceneType.ERROR
 
-    def read_pressure(self):
-        """Read the pressure value.
+    def __str__(self):
+        """Get a string representing the last sample.
 
-        Returns:
-            float: The pressure value if the read operation is successful, <nan>
-            otherwise.
-
-        Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
-                is raised if the feature is not enabled or the operation
-                required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+        Return:
+            str: A string representing the last sample.
         """
-        try:
-            self._read_data()
-            return FeaturePressure.get_pressure(self._get_sample())
-        except (InvalidOperationException, InvalidDataException) as e:
-            raise e
+        with lock(self):
+            sample = self._last_sample
+
+        if sample is None:
+            return self._name + ': Unknown'
+        if not sample._data:
+            return self._name + ': Unknown'
+
+        if len(sample._data) == 1:
+            result = '%s(%d): Scene is \"%s\"' \
+                % (self._name,
+                   sample._timestamp,
+                   str(self.get_scene(sample))
+                   )
+        return result
