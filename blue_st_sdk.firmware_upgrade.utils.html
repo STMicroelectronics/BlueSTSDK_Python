@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.firmware_upgrade.utils package &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="index.html"/>
+        <link rel="up" title="blue_st_sdk.firmware_upgrade package" href="blue_st_sdk.firmware_upgrade.html"/>
+        <link rel="next" title="blue_st_sdk.utils package" href="blue_st_sdk.utils.html"/>
+        <link rel="prev" title="blue_st_sdk.firmware_upgrade package" href="blue_st_sdk.firmware_upgrade.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="blue_st_sdk.html">blue_st_sdk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="blue_st_sdk.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.features.html">blue_st_sdk.features package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html">blue_st_sdk.firmware_upgrade package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#module-blue_st_sdk.firmware_upgrade.firmware_upgrade">blue_st_sdk.firmware_upgrade.firmware_upgrade module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#module-blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#module-blue_st_sdk.firmware_upgrade">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.utils.html">blue_st_sdk.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.debug_console">blue_st_sdk.debug_console module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.feature">blue_st_sdk.feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.manager">blue_st_sdk.manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.node">blue_st_sdk.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.python_utils">blue_st_sdk.python_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="blue_st_sdk.html">blue_st_sdk package</a> &raquo;</li>
+        
+          <li><a href="blue_st_sdk.firmware_upgrade.html">blue_st_sdk.firmware_upgrade package</a> &raquo;</li>
+        
+      <li>blue_st_sdk.firmware_upgrade.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/blue_st_sdk.firmware_upgrade.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blue-st-sdk-firmware-upgrade-utils-package">
+<h1>blue_st_sdk.firmware_upgrade.utils package<a class="headerlink" href="#blue-st-sdk-firmware-upgrade-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade.utils.firmware_file">
+<span id="blue-st-sdk-firmware-upgrade-utils-firmware-file-module"></span><h2>blue_st_sdk.firmware_upgrade.utils.firmware_file module<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade.utils.firmware_file" title="Permalink to this headline">¶</a></h2>
+<p>firmware_file</p>
+<p>The firmware_file module is responsible for handling a firmware file.</p>
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.utils.firmware_file.</code><code class="descname">FirmwareFile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – File name of the firmware file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the firmware file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_crc_32">
+<code class="descname">get_crc_32</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.get_crc_32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_crc_32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getting the 32 bit CRC of the firmware file.</p>
+<p>The file size must be multiple of 32 bits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the firmware file can not be read properly.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The CRC of the firmware file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.get_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the firmware size in bytes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The firmware size in bytes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_type">
+<code class="descname">get_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.get_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the firmware type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The firmware type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareFile.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the firmware file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The file descriptor of the firmware file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.utils.firmware_file.</code><code class="descname">FirmwareType</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/firmware_file.html#FirmwareType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Firmware type.</p>
+<p>Currently only BIN format is handled.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType.BIN">
+<code class="descname">BIN</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType.BIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType.UNKNOWN">
+<code class="descname">UNKNOWN</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareType.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade.utils.stm32crc32">
+<span id="blue-st-sdk-firmware-upgrade-utils-stm32crc32-module"></span><h2>blue_st_sdk.firmware_upgrade.utils.stm32crc32 module<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade.utils.stm32crc32" title="Permalink to this headline">¶</a></h2>
+<p>firmware_file</p>
+<p>The firmware_file module is responsible for handling a firmware file.</p>
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.utils.stm32crc32.</code><code class="descname">STM32Crc32</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/stm32crc32.html#STM32Crc32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Computes the CRC32 by using the same algorithm implemented by STM32 chips.</p>
+<p>The algorithm works on unsigned integer 32 numbers, hence the buffer must
+have a length multiple of 4.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.CRC_TABLE">
+<code class="descname">CRC_TABLE</code><em class="property"> = [0, 79764919, 159529838, 222504665, 319059676, 398814059, 445009330, 507990021, 638119352, 583659535, 797628118, 726387553, 890018660, 835552979, 1015980042, 944750013]</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.CRC_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nibble lookup table for 0x04C11DB7 polynomial.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.INITIAL_VALUE">
+<code class="descname">INITIAL_VALUE</code><em class="property"> = 4294967295</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.INITIAL_VALUE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial value of the CRC.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/stm32crc32.html#STM32Crc32.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/stm32crc32.html#STM32Crc32.get_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the CRC value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value of the current CRC.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/stm32crc32.html#STM32Crc32.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the CRC to the initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/utils/stm32crc32.html#STM32Crc32.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.utils.stm32crc32.STM32Crc32.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the value of the CRC.</p>
+<p>Size of data in bytes must be multiple of 4.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.7)"><em>bytearray</em></a>) – Data to compute the CRC value of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the length of the data is not multiple of 4.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="blue_st_sdk.utils.html" class="btn btn-neutral float-right" title="blue_st_sdk.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="blue_st_sdk.firmware_upgrade.html" class="btn btn-neutral" title="blue_st_sdk.firmware_upgrade package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

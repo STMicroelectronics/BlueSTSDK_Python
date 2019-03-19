@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.manager &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../blue_st_sdk.html">blue_st_sdk package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>blue_st_sdk.manager</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for blue_st_sdk.manager</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;manager</span>
+
+<span class="sd">The manager module is responsible for managing the discovery process of</span>
+<span class="sd">Bluetooth Low Energy (BLE) devices/nodes and allocating the needed resources.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="k">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">bluepy.btle</span> <span class="k">import</span> <span class="n">Scanner</span>
+<span class="kn">from</span> <span class="nn">bluepy.btle</span> <span class="k">import</span> <span class="n">DefaultDelegate</span>
+<span class="kn">from</span> <span class="nn">bluepy.btle</span> <span class="k">import</span> <span class="n">BTLEException</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.node</span> <span class="k">import</span> <span class="n">Node</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.ble_node_definitions</span> <span class="k">import</span> <span class="n">FeatureCharacteristic</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.blue_st_exceptions</span> <span class="k">import</span> <span class="n">InvalidFeatureBitMaskException</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.blue_st_exceptions</span> <span class="k">import</span> <span class="n">InvalidBLEAdvertisingDataException</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.python_utils</span> <span class="k">import</span> <span class="n">lock</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.python_utils</span> <span class="k">import</span> <span class="n">lock_for_object</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<span class="k">class</span> <span class="nc">_ScannerDelegate</span><span class="p">(</span><span class="n">DefaultDelegate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Delegate class to scan Bluetooth Low Energy devices.&quot;&quot;&quot;</span>
+
+    <span class="n">SCANNING_TIME_DEFAULT_s</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="sd">&quot;&quot;&quot;Default Bluetooth scanning timeout in seconds.&quot;&quot;&quot;</span>
+
+    <span class="n">_SCANNING_TIME_PROCESS_s</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="sd">&quot;&quot;&quot;Default Bluetooth scanning timeout in seconds for a single call to</span>
+<span class="sd">    bluepy&#39;s process() method.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            show_warnings (bool, optional): If True shows warnings, if any, when</span>
+<span class="sd">                discovering devices that do not respect the BlueSTSDK&#39;s</span>
+<span class="sd">                advertising data format, nothing otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">DefaultDelegate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;BlueSTSDK&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_show_warnings</span> <span class="o">=</span> <span class="n">show_warnings</span>
+
+
+    <span class="k">def</span> <span class="nf">handleDiscovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scan_entry</span><span class="p">,</span> <span class="n">is_new_device</span><span class="p">,</span> <span class="n">is_new_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Discovery handling callback.</span>
+
+<span class="sd">        Called when an advertising data is received from a BLE device while a</span>
+<span class="sd">        Scanner object is active.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            scan_entry (ScanEntry): BLE device. It contains device information</span>
+<span class="sd">                and advertising data. Refer to</span>
+<span class="sd">                `ScanEntry &lt;https://ianharvey.github.io/bluepy-doc/scanentry.html&gt;`_</span>
+<span class="sd">                for more information.</span>
+<span class="sd">            is_new_device (bool): True if the device (as identified by its MAC</span>
+<span class="sd">                address) has not been seen before by the scanner, False</span>
+<span class="sd">                otherwise.</span>
+<span class="sd">            is_new_data (bool): True if new or updated advertising data is</span>
+<span class="sd">                available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Getting a Manager&#39;s instance.</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+        <span class="c1"># Getting device&#39;s address.</span>
+        <span class="n">device_address</span> <span class="o">=</span> <span class="n">scan_entry</span><span class="o">.</span><span class="n">addr</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># If the node has already been added, skip adding it again, rather</span>
+            <span class="c1"># update it.</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_nodes</span><span class="p">()[:]</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">get_tag</span><span class="p">()</span> <span class="o">==</span> <span class="n">device_address</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">is_alive</span><span class="p">(</span><span class="n">scan_entry</span><span class="o">.</span><span class="n">rssi</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">update_advertising_data</span><span class="p">(</span><span class="n">scan_entry</span><span class="o">.</span><span class="n">getScanData</span><span class="p">())</span>
+                    <span class="k">return</span>
+
+            <span class="c1"># Creating new node.</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">scan_entry</span><span class="p">)</span>
+            <span class="n">manager</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">BTLEException</span><span class="p">,</span> <span class="n">InvalidBLEAdvertisingDataException</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_warnings</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">_StoppableScanner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scanner class which can be started and stopped asynchronously.</span>
+
+<span class="sd">    Non-thread-safe.</span>
+
+<span class="sd">    It is implemented as a thread which checks regularly for the stop</span>
+<span class="sd">    condition within the :meth:`run()` method; it can be stopped by calling the</span>
+<span class="sd">    :meth:`stop()` method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout_s</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            show_warnings (bool, optional): If True shows warnings, if any, when</span>
+<span class="sd">                discovering devices not respecting the BlueSTSDK&#39;s advertising</span>
+<span class="sd">                data format, nothing otherwise.</span>
+<span class="sd">            timeout_s (int, optional): Time in seconds to wait before stopping</span>
+<span class="sd">                the discovery process.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_StoppableScanner</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_called</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_done</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span> <span class="o">=</span> <span class="n">Scanner</span><span class="p">()</span><span class="o">.</span><span class="n">withDelegate</span><span class="p">(</span><span class="n">_ScannerDelegate</span><span class="p">(</span><span class="n">show_warnings</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_s</span> <span class="o">=</span> <span class="n">timeout_s</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run the thread.&quot;&quot;&quot;</span>
+        <span class="c1">#print(&#39;run()&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_called</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_done</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">passive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">elapsed_time_s</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="c1">#print(&#39;.&#39;)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">_ScannerDelegate</span><span class="o">.</span><span class="n">_SCANNING_TIME_PROCESS_s</span><span class="p">)</span>
+                <span class="n">elapsed_time_s</span> <span class="o">+=</span> <span class="n">_ScannerDelegate</span><span class="o">.</span><span class="n">_SCANNING_TIME_PROCESS_s</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_called</span><span class="o">.</span><span class="n">isSet</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_process_done</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">elapsed_time_s</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_s</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_process_done</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                    <span class="k">break</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Save details of the exception raised but don&#39;t re-raise, just</span>
+            <span class="c1"># complete the function.</span>
+            <span class="kn">import</span> <span class="nn">sys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop the thread.&quot;&quot;&quot;</span>
+        <span class="c1">#print(&#39;stop()&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_called</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_done</span><span class="o">.</span><span class="n">isSet</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Save details of the exception raised but don&#39;t re-raise, just</span>
+            <span class="c1"># complete the function.</span>
+            <span class="kn">import</span> <span class="nn">sys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Join the thread.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            &#39;BTLEException&#39; is raised if this method is not run as root.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_StoppableScanner</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exc</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bluetooth scanning requires root privilege, &#39;</span> \
+                  <span class="s1">&#39;so please run the script with </span><span class="se">\&quot;</span><span class="s1">sudo</span><span class="se">\&quot;</span><span class="s1">.&#39;</span>
+            <span class="k">raise</span> <span class="n">BTLEException</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Manager"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager">[docs]</a><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Singleton class to manage the discovery of Bluetooth Low Energy (BLE)</span>
+<span class="sd">    devices.</span>
+
+<span class="sd">    Before starting the scanning process, it is possible to define a new Device</span>
+<span class="sd">    Id and to register/add new features to already defined devices.</span>
+
+<span class="sd">    It notifies a new discovered node through the</span>
+<span class="sd">    :class:`blue_st_sdk.manager.ManagerListener` class.</span>
+<span class="sd">    Each callback is performed asynchronously by a thread running in background.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_INSTANCE</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;Instance object.&quot;&quot;&quot;</span>
+
+    <span class="n">_NUMBER_OF_THREADS</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="sd">&quot;&quot;&quot;Number of threads to be used to notify the listeners.&quot;&quot;&quot;</span>
+
+    <span class="n">_features_decoder_dic</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="sd">&quot;&quot;&quot;Features decoder dictionary.</span>
+<span class="sd">    Dictionary that maps device identifiers to dictionaries that map</span>
+<span class="sd">    feature-masks to feature-classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Manager.__init__"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.&quot;&quot;&quot;</span>
+        <span class="c1"># Raise an exception if an object has already been instantiated.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_INSTANCE</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;An instance of </span><span class="se">\&#39;</span><span class="s1">Manager</span><span class="se">\&#39;</span><span class="s1"> class already exists.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;BLE scanner.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_scanning</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="sd">&quot;&quot;&quot;Scanning status.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&quot;&quot;&quot;List of discovered nodes.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">Manager</span><span class="o">.</span><span class="n">_NUMBER_OF_THREADS</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Pool of thread used to notify the listeners.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scanner_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;Stoppable-scanner object.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&quot;&quot;&quot;List of listeners to the manager changes.</span>
+<span class="sd">        It is a thread safe list, so a listener can subscribe itself through a</span></div>
+<span class="sd">        callback.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Manager.instance"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.instance">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Getting an instance of the class.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.manager.Manager`: An instance of the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_INSTANCE</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_INSTANCE</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_INSTANCE</span>
+
+<div class="viewcode-block" id="Manager.discover"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.discover">[docs]</a>    <span class="k">def</span> <span class="nf">discover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout_s</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform the discovery process.</span>
+
+<span class="sd">        The discovery process will last *timeout_s* seconds if provided, a</span>
+<span class="sd">        default timeout otherwise.</span>
+
+<span class="sd">        Synchronous method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            show_warnings (bool, optional): If True shows warnings, if any, when</span>
+<span class="sd">                discovering devices not respecting the BlueSTSDK&#39;s advertising</span>
+<span class="sd">                data format, nothing otherwise.</span>
+<span class="sd">            timeout_s (int, optional): Time in seconds to wait before stopping</span>
+<span class="sd">                the discovery process.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the discovery has finished, False if a discovery is</span>
+<span class="sd">            already running.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            &#39;BTLEException&#39; is raised if this method is not run as root.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_discovering</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">timeout_s</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">timeout_s</span> <span class="o">=</span> <span class="n">_ScannerDelegate</span><span class="o">.</span><span class="n">SCANNING_TIME_DEFAULT_s</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_notify_discovery_change</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span> <span class="o">=</span> <span class="n">Scanner</span><span class="p">()</span><span class="o">.</span><span class="n">withDelegate</span><span class="p">(</span><span class="n">_ScannerDelegate</span><span class="p">(</span><span class="n">show_warnings</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">timeout_s</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_notify_discovery_change</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bluetooth scanning requires root privilege, &#39;</span> \
+                  <span class="s1">&#39;so please run the script with </span><span class="se">\&quot;</span><span class="s1">sudo</span><span class="se">\&quot;</span><span class="s1">.&#39;</span></div>
+            <span class="k">raise</span> <span class="n">BTLEException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Manager.start_discovery"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.start_discovery">[docs]</a>    <span class="k">def</span> <span class="nf">start_discovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout_s</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start the discovery process.</span>
+
+<span class="sd">        The discovery process will last *timeout_s* seconds if provided, a</span>
+<span class="sd">        default timeout otherwise.</span>
+
+<span class="sd">        Asynchronous method, to be followed by a call to</span>
+<span class="sd">        :meth:`stop_discovery()`&#39;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            show_warnings (bool, optional): If True shows warnings, if any, when</span>
+<span class="sd">                discovering devices not respecting the BlueSTSDK&#39;s advertising</span>
+<span class="sd">                data format, nothing otherwise.</span>
+<span class="sd">            timeout_s (int, optional): Time in seconds to wait before stopping</span>
+<span class="sd">                the discovery process.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the discovery has started, False if a discovery is</span>
+<span class="sd">            already running.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            &#39;BTLEException&#39; is raised if this method is not run as root.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#print(&#39;start_discovery()&#39;)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_discovering</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">timeout_s</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">timeout_s</span> <span class="o">=</span> <span class="n">_ScannerDelegate</span><span class="o">.</span><span class="n">SCANNING_TIME_DEFAULT_s</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_notify_discovery_change</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner_thread</span> <span class="o">=</span> <span class="n">_StoppableScanner</span><span class="p">(</span><span class="n">show_warnings</span><span class="p">,</span> <span class="n">timeout_s</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scanner_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="n">e</span>
+
+<div class="viewcode-block" id="Manager.stop_discovery"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.stop_discovery">[docs]</a>    <span class="k">def</span> <span class="nf">stop_discovery</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stop a discovery process.</span>
+
+<span class="sd">        Asynchronous method, to be preceeded by a call to</span>
+<span class="sd">        :meth:`start_discovery()`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the discovery has been stopped, False if there are no</span>
+<span class="sd">            running discovery processes.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            &#39;BTLEException&#39; is raised if this method is not run as root.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#print(&#39;stop_discovery()&#39;)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_discovering</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_scanner_thread</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_scanner_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_notify_discovery_change</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="n">e</span>
+
+<div class="viewcode-block" id="Manager.is_discovering"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.is_discovering">[docs]</a>    <span class="k">def</span> <span class="nf">is_discovering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the discovery process.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the manager is looking for new nodes, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_scanning</span>
+
+<div class="viewcode-block" id="Manager.reset_discovery"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.reset_discovery">[docs]</a>    <span class="k">def</span> <span class="nf">reset_discovery</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reset the discovery process.</span>
+
+<span class="sd">        Stop the discovery process and remove all the already discovered nodes.</span>
+<span class="sd">        Node already bounded with the device will be kept in the list.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            &#39;BTLEException&#39; is raised if this method is not run as root.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_discovering</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop_discovery</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_nodes</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">_notify_discovery_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Notify :class:`blue_st_sdk.manager.ManagerListener` objects that the</span>
+<span class="sd">        discovery process has changed status.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            status (bool): If True the discovery starts, if False the discovery</span>
+<span class="sd">                stops.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_scanning</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="c1"># Calling user-defined callback.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">listener</span><span class="o">.</span><span class="n">on_discovery_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_notify_new_node_discovered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Notify :class:`blue_st_sdk.manager.ManagerListener` objects that a</span>
+<span class="sd">        new node has been discovered.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): Node discovered.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="c1"># Calling user-defined callback.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_pool</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">listener</span><span class="o">.</span><span class="n">on_node_discovered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Manager.add_node"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.add_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert a node to the Manager, and notify the listeners about it.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_node (:class:`blue_st_sdk.node.Node`): Node to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the node is added, False if a node with the same tag</span>
+<span class="sd">            is already present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock_for_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">):</span>
+            <span class="n">new_tag</span> <span class="o">=</span> <span class="n">new_node</span><span class="o">.</span><span class="n">get_tag</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">new_tag</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">get_tag</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notify_new_node_discovered</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Manager.get_nodes"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.get_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">get_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the list of the discovered nodes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list of :class:`blue_st_sdk.node.Node`: The list of all discovered</span>
+<span class="sd">            nodes until the time of invocation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock_for_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">):</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span>
+
+<div class="viewcode-block" id="Manager.get_node_with_tag"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.get_node_with_tag">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_with_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the node with the given tag.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): Unique string identifier that identifies a node.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.node.Node`: The node with the given tag, None</span>
+<span class="sd">            if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock_for_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">get_tag</span><span class="p">()</span> <span class="o">==</span> <span class="n">tag</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">node</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Manager.get_node_with_name"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.get_node_with_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_with_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the node with the given name.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            As the name is not unique, it will return the fist node matching.</span>
+<span class="sd">            The match is case sensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Name of the device.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.node.Node`: The node with the given name, None</span>
+<span class="sd">            if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock_for_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">node</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Manager.remove_nodes"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.remove_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">remove_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove all nodes not bounded with the device.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock_for_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Manager.add_features_to_node"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.add_features_to_node">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_features_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">mask_to_features_dic</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add features to a node.</span>
+
+<span class="sd">        Register a new device identifier with the corresponding mask-to-features</span>
+<span class="sd">        dictionary summarizing its available features, or add available features</span>
+<span class="sd">        to an already registered device, before performing the discovery</span>
+<span class="sd">        process.</span>
+
+<span class="sd">        Otherwise, it is possible to register the feature after discovering a</span>
+<span class="sd">        node and before connecting to it (see</span>
+<span class="sd">        :meth:`blue_st_sdk.node.Node.add_external_features()`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (int): Device identifier.</span>
+<span class="sd">            mask_to_features_dic (dict): Mask-to-features dictionary to be added</span>
+<span class="sd">                to the features decoder dictionary referenced by the device</span>
+<span class="sd">                identifier. The feature masks of the dictionary must have only</span>
+<span class="sd">                one bit set to &quot;1&quot;.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException`</span>
+<span class="sd">                is raised when a feature is in a non-power-of-two position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Example:</span>
+        <span class="c1"># # Adding a &#39;MyFeature&#39; feature to a Nucleo device and mapping it to a</span>
+        <span class="c1"># # custom &#39;0x10000000-0001-11e1-ac36-0002a5d5c51b&#39; characteristic.</span>
+        <span class="c1"># mask_to_features_dic = {}</span>
+        <span class="c1"># mask_to_features_dic[0x10000000] = my_feature.MyFeature</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#     Manager.add_features_to_node(0x80, mask_to_features_dic)</span>
+        <span class="c1"># except InvalidFeatureBitMaskException as e:</span>
+        <span class="c1">#     print(e)</span>
+
+        <span class="c1"># Synchronous discovery of Bluetooth devices.</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">SCANNING_TIME_s</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_decoder_dic</span><span class="p">:</span>
+            <span class="n">decoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_decoder_dic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">decoder</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_decoder_dic</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">decoder</span>
+
+        <span class="n">decoder_to_check</span> <span class="o">=</span> <span class="n">mask_to_features_dic</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+            <span class="n">feature_class</span> <span class="o">=</span> <span class="n">decoder_to_check</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">feature_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">decoder</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_class</span>
+                <span class="n">decoder_to_check</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">decoder_to_check</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidFeatureBitMaskException</span><span class="p">(</span><span class="s1">&#39;Not all keys of the &#39;</span></div>
+                <span class="s1">&#39;mask-to-features dictionary have a single bit set to &quot;1&quot;.&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Manager.get_node_features"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.get_node_features">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_node_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a copy of the features map available for the given device</span>
+<span class="sd">        identifier.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (int): Device identifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A copy of the features map available for the given device</span>
+<span class="sd">            identifier if found, the base features map otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_decoder_dic</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_decoder_dic</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">FeatureCharacteristic</span><span class="o">.</span><span class="n">BASE_MASK_TO_FEATURE_DIC</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Manager.add_listener"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.add_listener">[docs]</a>    <span class="k">def</span> <span class="nf">add_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a listener.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            listener (:class:`blue_st_sdk.manager.ManagerListener`): Listener to</span>
+<span class="sd">                be added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">listener</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Manager.remove_listener"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.remove_listener">[docs]</a>    <span class="k">def</span> <span class="nf">remove_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove a listener.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            listener (:class:`blue_st_sdk.manager.ManagerListener`): Listener to</span>
+<span class="sd">                be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">listener</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span></div></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_listeners</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+
+
+<span class="c1"># INTERFACES</span>
+
+<div class="viewcode-block" id="ManagerListener"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.ManagerListener">[docs]</a><span class="k">class</span> <span class="nc">ManagerListener</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Interface used by the :class:`blue_st_sdk.manager.Manager` class to</span>
+<span class="sd">    notify that a new Node has been discovered or that the scanning has</span>
+<span class="sd">    started/stopped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+
+<div class="viewcode-block" id="ManagerListener.on_discovery_change"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.ManagerListener.on_discovery_change">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">on_discovery_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">,</span> <span class="n">enabled</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is called whenever a discovery process starts or stops.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            manager (:class:`blue_st_sdk.manager.Manager`): Manager instance</span>
+<span class="sd">                that starts/stops the process.</span>
+<span class="sd">            enabled (bool): True if a new discovery starts, False otherwise.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`NotImplementedError` if the method has not been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;You must implement </span><span class="se">\&quot;</span><span class="s1">on_discovery_change()</span><span class="se">\&quot;</span><span class="s1"> &#39;</span></div>
+            <span class="s1">&#39;to use the </span><span class="se">\&quot;</span><span class="s1">ManagerListener</span><span class="se">\&quot;</span><span class="s1"> class.&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ManagerListener.on_node_discovered"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.ManagerListener.on_node_discovered">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">on_node_discovered</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is called whenever a new node is discovered.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            manager (:class:`blue_st_sdk.manager.Manager`): Manager instance</span>
+<span class="sd">                that discovers the node.</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): New node discovered.</span>
+
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`NotImplementedError` if the method has not been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;You must implement </span><span class="se">\&quot;</span><span class="s1">on_node_discovered()</span><span class="se">\&quot;</span><span class="s1"> &#39;</span></div></div>
+            <span class="s1">&#39;to use the </span><span class="se">\&quot;</span><span class="s1">ManagerListener</span><span class="se">\&quot;</span><span class="s1"> class.&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

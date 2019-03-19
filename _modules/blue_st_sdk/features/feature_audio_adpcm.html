@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.features.feature_audio_adpcm &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../blue_st_sdk.html">blue_st_sdk package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>blue_st_sdk.features.feature_audio_adpcm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for blue_st_sdk.features.feature_audio_adpcm</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.feature</span> <span class="k">import</span> <span class="n">Feature</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.feature</span> <span class="k">import</span> <span class="n">Sample</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.feature</span> <span class="k">import</span> <span class="n">ExtractedData</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.features.field</span> <span class="k">import</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.features.field</span> <span class="k">import</span> <span class="n">FieldType</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.number_conversion</span> <span class="k">import</span> <span class="n">LittleEndian</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.bv_audio_sync_manager</span> <span class="k">import</span> <span class="n">BVAudioSyncManager</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.blue_st_exceptions</span> <span class="k">import</span> <span class="n">InvalidDataException</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="FeatureAudioADPCM"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM">[docs]</a><span class="k">class</span> <span class="nc">FeatureAudioADPCM</span><span class="p">(</span><span class="n">Feature</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The feature handles the compressed audio data acquired from a microphone.</span>
+
+<span class="sd">    Data is a twenty bytes array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">FEATURE_NAME</span> <span class="o">=</span> <span class="s2">&quot;ADPCM Audio&quot;</span>
+    <span class="n">FEATURE_UNIT</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">FEATURE_DATA_NAME</span> <span class="o">=</span> <span class="s2">&quot;Audio&quot;</span>
+    <span class="n">DATA_MAX</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">DATA_MIN</span> <span class="o">=</span> <span class="mi">256</span>
+    <span class="n">FEATURE_FIELDS</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">FEATURE_DATA_NAME</span><span class="p">,</span>
+        <span class="n">FEATURE_UNIT</span><span class="p">,</span>
+        <span class="n">FieldType</span><span class="o">.</span><span class="n">ByteArray</span><span class="p">,</span>
+        <span class="n">DATA_MAX</span><span class="p">,</span>
+        <span class="n">DATA_MIN</span><span class="p">)</span>
+    <span class="n">DATA_LENGTH_BYTES</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">AUDIO_PACKAGE_SIZE</span> <span class="o">=</span> <span class="mi">40</span>
+    
+    <span class="n">bvSyncManager</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">engineADPCM</span> <span class="o">=</span> <span class="kc">None</span>
+    
+<div class="viewcode-block" id="FeatureAudioADPCM.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): Node that will send data to</span>
+<span class="sd">                this feature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">bvSyncManager</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureAudioADPCM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FEATURE_NAME</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FEATURE_FIELDS</span><span class="p">])</span>
+            
+        <span class="n">FeatureAudioADPCM</span><span class="o">.</span><span class="n">bvSyncManager</span><span class="o">=</span><span class="n">BVAudioSyncManager</span><span class="p">()</span></div>
+        <span class="n">FeatureAudioADPCM</span><span class="o">.</span><span class="n">engineADPCM</span><span class="o">=</span><span class="n">ADPCMEngine</span><span class="p">()</span>
+            
+<div class="viewcode-block" id="FeatureAudioADPCM.extract_data"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM.extract_data">[docs]</a>    <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract the data from the feature&#39;s raw data.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            data (bytearray): The data read from the feature (a 20 bytes array).</span>
+<span class="sd">            offset (int): Offset where to start reading data (0 by default).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.feature.ExtractedData`: Container of the number</span>
+<span class="sd">            of bytes read (20)  and the extracted data (audio info, the 40</span>
+<span class="sd">            shorts array).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`</span>
+<span class="sd">                if the data array has not enough data to read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidDataException</span><span class="p">(</span>
+                <span class="s1">&#39;There are no </span><span class="si">%d</span><span class="s1"> bytes available to read.&#39;</span> \
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">))</span>
+        
+        <span class="n">dataByte</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        
+        <span class="n">dataPkt</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">AUDIO_PACKAGE_SIZE</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">AUDIO_PACKAGE_SIZE</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">dataPkt</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engineADPCM</span><span class="o">.</span><span class="n">decode</span><span class="p">((</span><span class="n">dataByte</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x0F</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bvSyncManager</span><span class="p">)</span>
+            <span class="n">dataPkt</span><span class="p">[(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engineADPCM</span><span class="o">.</span><span class="n">decode</span><span class="p">(((</span><span class="n">dataByte</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x0F</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bvSyncManager</span><span class="p">)</span>
+        
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span>
+            <span class="n">dataPkt</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_fields_description</span><span class="p">(),</span>
+            <span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ExtractedData</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="FeatureAudioADPCM.get_audio"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM.get_audio">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_audio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the audio data from a sample.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sample (:class:`blue_st_sdk.feature.Sample`): Sample data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            short[]: audio values if the data array is valid, None[]</span>
+<span class="sd">            otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">audioPckt</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+                    <span class="n">audioPckt</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">length</span>
+                    
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">length</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">sample</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">audioPckt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToInt16</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="n">audioPckt</span></div>
+        <span class="k">return</span> <span class="n">audioPckt</span>
+    
+<div class="viewcode-block" id="FeatureAudioADPCM.set_audio_sync_parameters"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM.set_audio_sync_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">set_audio_sync_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the object synchronization parameters necessary to the</span>
+<span class="sd">		   decompression process.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sample (:class:`blue_st_sdk.feature.Sample`): Extracted sample which</span>
+<span class="sd">                contains the synchronization parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bvSyncManager</span><span class="o">.</span><span class="n">setSyncParams</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ADPCMEngine"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.ADPCMEngine">[docs]</a><span class="k">class</span> <span class="nc">ADPCMEngine</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;DPCM Engine class.</span>
+<span class="sd">    It contains all the operations and parameters necessary to decompress the</span>
+<span class="sd">    received audio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ADPCMEngine.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.ADPCMEngine.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;Constructor.&quot;&quot;&quot;</span>
+
+        <span class="c1">#Quantizer step size lookup table </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">StepSizeTable</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span>
+            <span class="mi">19</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span>
+            <span class="mi">50</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">73</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">88</span><span class="p">,</span><span class="mi">97</span><span class="p">,</span><span class="mi">107</span><span class="p">,</span><span class="mi">118</span><span class="p">,</span>
+            <span class="mi">130</span><span class="p">,</span><span class="mi">143</span><span class="p">,</span><span class="mi">157</span><span class="p">,</span><span class="mi">173</span><span class="p">,</span><span class="mi">190</span><span class="p">,</span><span class="mi">209</span><span class="p">,</span><span class="mi">230</span><span class="p">,</span><span class="mi">253</span><span class="p">,</span><span class="mi">279</span><span class="p">,</span><span class="mi">307</span><span class="p">,</span>
+            <span class="mi">337</span><span class="p">,</span><span class="mi">371</span><span class="p">,</span><span class="mi">408</span><span class="p">,</span><span class="mi">449</span><span class="p">,</span><span class="mi">494</span><span class="p">,</span><span class="mi">544</span><span class="p">,</span><span class="mi">598</span><span class="p">,</span><span class="mi">658</span><span class="p">,</span><span class="mi">724</span><span class="p">,</span><span class="mi">796</span><span class="p">,</span>
+            <span class="mi">876</span><span class="p">,</span><span class="mi">963</span><span class="p">,</span><span class="mi">1060</span><span class="p">,</span><span class="mi">1166</span><span class="p">,</span><span class="mi">1282</span><span class="p">,</span><span class="mi">1411</span><span class="p">,</span><span class="mi">1552</span><span class="p">,</span><span class="mi">1707</span><span class="p">,</span><span class="mi">1878</span><span class="p">,</span><span class="mi">2066</span><span class="p">,</span>
+            <span class="mi">2272</span><span class="p">,</span><span class="mi">2499</span><span class="p">,</span><span class="mi">2749</span><span class="p">,</span><span class="mi">3024</span><span class="p">,</span><span class="mi">3327</span><span class="p">,</span><span class="mi">3660</span><span class="p">,</span><span class="mi">4026</span><span class="p">,</span><span class="mi">4428</span><span class="p">,</span><span class="mi">4871</span><span class="p">,</span><span class="mi">5358</span><span class="p">,</span>
+            <span class="mi">5894</span><span class="p">,</span><span class="mi">6484</span><span class="p">,</span><span class="mi">7132</span><span class="p">,</span><span class="mi">7845</span><span class="p">,</span><span class="mi">8630</span><span class="p">,</span><span class="mi">9493</span><span class="p">,</span><span class="mi">10442</span><span class="p">,</span><span class="mi">11487</span><span class="p">,</span><span class="mi">12635</span><span class="p">,</span><span class="mi">13899</span><span class="p">,</span>
+            <span class="mi">15289</span><span class="p">,</span><span class="mi">16818</span><span class="p">,</span><span class="mi">18500</span><span class="p">,</span><span class="mi">20350</span><span class="p">,</span><span class="mi">22385</span><span class="p">,</span><span class="mi">24623</span><span class="p">,</span><span class="mi">27086</span><span class="p">,</span><span class="mi">29794</span><span class="p">,</span><span class="mi">32767</span><span class="p">]</span>
+
+        <span class="c1"># Table of index changes </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">IndexTable</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="ADPCMEngine.decode"><a class="viewcode-back" href="../../../blue_st_sdk.features.html#blue_st_sdk.features.feature_audio_adpcm.ADPCMEngine.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">syncManager</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;ADPCM_Decode.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            code (byte): It contains a 4-bit ADPCM sample.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: A 16-bit ADPCM sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 1. get sample</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">syncManager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">syncManager</span><span class="o">.</span><span class="n">isIntra</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">syncManager</span><span class="o">.</span><span class="n">get_index_in</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">=</span> <span class="n">syncManager</span><span class="o">.</span><span class="n">get_predsample_in</span><span class="p">()</span>
+            <span class="n">syncManager</span><span class="o">.</span><span class="n">reinitResetFlag</span><span class="p">()</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StepSizeTable</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1"># 2. inverse code into diff </span>
+        <span class="n">diffq</span> <span class="o">=</span> <span class="n">step</span><span class="o">&gt;&gt;</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">code</span><span class="o">&amp;</span><span class="mi">4</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">diffq</span> <span class="o">+=</span> <span class="n">step</span>
+        
+        <span class="k">if</span> <span class="p">((</span><span class="n">code</span><span class="o">&amp;</span><span class="mi">2</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">diffq</span> <span class="o">+=</span> <span class="n">step</span><span class="o">&gt;&gt;</span><span class="mi">1</span>
+        
+
+        <span class="k">if</span> <span class="p">((</span><span class="n">code</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">diffq</span> <span class="o">+=</span> <span class="n">step</span><span class="o">&gt;&gt;</span><span class="mi">2</span>
+
+        <span class="c1"># 3. add diff to predicted sample</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">code</span><span class="o">&amp;</span><span class="mi">8</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">-=</span> <span class="n">diffq</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">+=</span> <span class="n">diffq</span>
+        
+        <span class="c1"># check for overflow</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">&gt;</span> <span class="mi">32767</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">=</span> <span class="mi">32767</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">32768</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32768</span>
+
+        <span class="c1"># 4. find new quantizer step size </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IndexTable</span> <span class="p">[</span><span class="n">code</span><span class="p">]</span>
+        <span class="c1">#check for overflow</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;</span> <span class="mi">88</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">88</span>
+
+        <span class="c1"># 5. save predict sample and index for next iteration </span>
+        <span class="c1"># done! static variables </span>
+
+        <span class="c1"># 6. return speech sample</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predsample</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,725 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.firmware_upgrade package &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="index.html"/>
+        <link rel="up" title="blue_st_sdk package" href="blue_st_sdk.html"/>
+        <link rel="next" title="blue_st_sdk.firmware_upgrade.utils package" href="blue_st_sdk.firmware_upgrade.utils.html"/>
+        <link rel="prev" title="blue_st_sdk.features.standard_characteristics package" href="blue_st_sdk.features.standard_characteristics.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="blue_st_sdk.html">blue_st_sdk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="blue_st_sdk.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.features.html">blue_st_sdk.features package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">blue_st_sdk.firmware_upgrade package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.firmware_upgrade.firmware_upgrade">blue_st_sdk.firmware_upgrade.firmware_upgrade module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.firmware_upgrade">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.utils.html">blue_st_sdk.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.debug_console">blue_st_sdk.debug_console module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.feature">blue_st_sdk.feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.manager">blue_st_sdk.manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.node">blue_st_sdk.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.python_utils">blue_st_sdk.python_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="blue_st_sdk.html">blue_st_sdk package</a> &raquo;</li>
+        
+      <li>blue_st_sdk.firmware_upgrade package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/blue_st_sdk.firmware_upgrade.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blue-st-sdk-firmware-upgrade-package">
+<h1>blue_st_sdk.firmware_upgrade package<a class="headerlink" href="#blue-st-sdk-firmware-upgrade-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html">blue_st_sdk.firmware_upgrade.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils.firmware_file">blue_st_sdk.firmware_upgrade.utils.firmware_file module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils.stm32crc32">blue_st_sdk.firmware_upgrade.utils.stm32crc32 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade.firmware_upgrade">
+<span id="blue-st-sdk-firmware-upgrade-firmware-upgrade-module"></span><h2>blue_st_sdk.firmware_upgrade.firmware_upgrade module<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade.firmware_upgrade" title="Permalink to this headline">¶</a></h2>
+<p>firmware_upgrade</p>
+<p>The firmware_upgrade module is responsible for managing the upgrading process of
+devices’ firmware via Bluetooth Low Energy (BLE).</p>
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade.</code><code class="descname">FirmwareUpgrade</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class to handle the firmware upgrade capability for a board running the
+BlueST Protocol.</p>
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.add_listener">
+<code class="descname">add_listener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade.add_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.add_listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a listener.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listener</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener</span></code>) – Listener to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.get_console">
+<code class="descname">get_console</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade.get_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.get_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an instance of this class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node whose firmware has to be
+updated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An instance of this class if the given node implements the BlueST
+protocol, “None” otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.remove_listener">
+<code class="descname">remove_listener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade.remove_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.remove_listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a listener.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listener</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener</span></code>) – Listener to be removed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.upgrade_firmware">
+<code class="descname">upgrade_firmware</code><span class="sig-paren">(</span><em>firmware_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgrade.upgrade_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade.upgrade_firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upgrade the firmware onto the device assiciated to the debug console.
+The firmware is loaded starting from the address “0x0804000”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the firmware file can not be read properly.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the upload starts correctly, False otherwise.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade.</code><code class="descname">FirmwareUpgradeError</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgradeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Class with different errors that may happen when upgrading the
+firmware</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.CORRUPTED_FILE_ERROR">
+<code class="descname">CORRUPTED_FILE_ERROR</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.CORRUPTED_FILE_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.INVALID_FIRMWARE_ERROR">
+<code class="descname">INVALID_FIRMWARE_ERROR</code><em class="property"> = 2</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.INVALID_FIRMWARE_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.TRANSMISSION_ERROR">
+<code class="descname">TRANSMISSION_ERROR</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError.TRANSMISSION_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade.</code><code class="descname">FirmwareUpgradeListener</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgradeListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Interface used by the <a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade</span></code></a>
+class to notify changes of the firmware uprgade process.</p>
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_complete">
+<code class="descname">on_upgrade_firmware_complete</code><span class="sig-paren">(</span><em>debug_console</em>, <em>firmware_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgradeListener.on_upgrade_firmware_complete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called whenever the firmware has been upgraded correctly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.debug_console.DebugConsole" title="blue_st_sdk.debug_console.DebugConsole"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.debug_console.DebugConsole</span></code></a>) – Debug console.</li>
+<li><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_error">
+<code class="descname">on_upgrade_firmware_error</code><span class="sig-paren">(</span><em>debug_console</em>, <em>firmware_file</em>, <em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgradeListener.on_upgrade_firmware_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called whenever there is an error in upgrading the firmware.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.debug_console.DebugConsole" title="blue_st_sdk.debug_console.DebugConsole"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.debug_console.DebugConsole</span></code></a>) – Debug console.</li>
+<li><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</li>
+<li><strong>error</strong> (<a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError</span></code></a>) – Error code.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_progress">
+<code class="descname">on_upgrade_firmware_progress</code><span class="sig-paren">(</span><em>debug_console</em>, <em>firmware_file</em>, <em>bytes_sent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade.html#FirmwareUpgradeListener.on_upgrade_firmware_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeListener.on_upgrade_firmware_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called whenever there is an update in upgrading the firmware,
+i.e. a block of data has been correctly sent and it is possible to send
+a new one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.debug_console.DebugConsole" title="blue_st_sdk.debug_console.DebugConsole"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.debug_console.DebugConsole</span></code></a>) – Debug console.</li>
+<li><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</li>
+<li><strong>bytes_sent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Data sent in bytes.</li>
+<li><strong>bytes_to_send</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Data to send in bytes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo">
+<span id="blue-st-sdk-firmware-upgrade-firmware-upgrade-nucleo-module"></span><h2>blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo module<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo" title="Permalink to this headline">¶</a></h2>
+<p>firmware_upgrade</p>
+<p>The firmware_upgrade_nucleo module is responsible for managing the upgrading
+process of devices’firmware via Bluetooth Low Energy (BLE).</p>
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.</code><code class="descname">FirmwareUpgradeDebugConsoleListener</code><span class="sig-paren">(</span><em>firmware_upgrade_console</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.debug_console.DebugConsoleListener" title="blue_st_sdk.debug_console.DebugConsoleListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.debug_console.DebugConsoleListener</span></code></a></p>
+<p>Class that handles the upgrade of the firmware file to a device via
+Bluetooth.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.ACK_MSG">
+<code class="descname">ACK_MSG</code><em class="property"> = u'\x01'</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.ACK_MSG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acknowledgement message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.BLOCK_OF_PACKETS_SIZE">
+<code class="descname">BLOCK_OF_PACKETS_SIZE</code><em class="property"> = 10</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.BLOCK_OF_PACKETS_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sending a block of packets at a time, in order to not to stress the
+Bluetooth too much.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.FIRMWARE_UPGRADE_COMMAND">
+<code class="descname">FIRMWARE_UPGRADE_COMMAND</code><em class="property"> = 'upgradeFw'</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.FIRMWARE_UPGRADE_COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd><p>Firmware upgrade command.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.FIRMWARE_UPGRADE_TIMEOUT_ms">
+<code class="descname">FIRMWARE_UPGRADE_TIMEOUT_ms</code><em class="property"> = 4000</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.FIRMWARE_UPGRADE_TIMEOUT_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increased timeout for sending a message</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.LOST_MSG_TIMEOUT_ms">
+<code class="descname">LOST_MSG_TIMEOUT_ms</code><em class="property"> = 1000</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.LOST_MSG_TIMEOUT_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timeout for sending a message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.MAX_MSG_SIZE">
+<code class="descname">MAX_MSG_SIZE</code><em class="property"> = 16</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.MAX_MSG_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The STM32L4 Family can write only 8 bytes at a time, thus sending a
+multiple of 8 bytes simplifies the code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>firmware_upgrade_console</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Costructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>firmware_upgrade_console</strong> (<a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade"><em>FirmwareUpgrade</em></a>) – Firmware upgrade console
+used to call user-defined listener’s methods.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.load_file">
+<code class="descname">load_file</code><span class="sig-paren">(</span><em>firmware_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener.load_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.load_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts to upload the firmware.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the firmware file can not be read properly.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stderr_receive">
+<code class="descname">on_stderr_receive</code><span class="sig-paren">(</span><em>debug</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener.on_stderr_receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stderr_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called whenever a message is received on the standard error.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Console that sends the message.</li>
+<li><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message received on the stderr console.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdin_send">
+<code class="descname">on_stdin_send</code><span class="sig-paren">(</span><em>debug_console</em>, <em>message</em>, <em>status</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener.on_stdin_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdin_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called whenever a message is sent to the standard input.</p>
+<p>A message is sent to the standard input whenever some data are written
+to the debug console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Console that receives the message.</li>
+<li><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message sent to the stdin console.</li>
+<li><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – True if the message is sent correctly, False
+otherwise.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdout_receive">
+<code class="descname">on_stdout_receive</code><span class="sig-paren">(</span><em>debug_console</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeDebugConsoleListener.on_stdout_receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdout_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called whenever a message is received on the standard output.</p>
+<dl class="docutils">
+<dt>A message is received on the standard output in two cases:</dt>
+<dd><ul class="first last simple">
+<li>When the device sends back the CRC received from the gateway.</li>
+<li>When the device sends an ACK or a NACK message after receiving the
+firmware file and comparing the CRC computed on it with the CRC
+previously received from the gateway.</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>debug_console</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Console that sends the message.</li>
+<li><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message received on the stdout console.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.</code><code class="descname">FirmwareUpgradeNucleo</code><span class="sig-paren">(</span><em>debug_console</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeNucleo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade</span></code></a></p>
+<p>Class that implements the firmware upgrade capability for a Nucleo board.</p>
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>debug_console</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeNucleo.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>debug_console</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.debug.Debug</span></code>) – Console
+used to send commands.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.get_console">
+<em class="property">classmethod </em><code class="descname">get_console</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeNucleo.get_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.get_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an instance of this class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node whose firmware has to be
+updated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An instance of this class if the given node implements the BlueST
+protocol, “None” otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade" title="blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.upgrade_firmware">
+<code class="descname">upgrade_firmware</code><span class="sig-paren">(</span><em>firmware_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#FirmwareUpgradeNucleo.upgrade_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.upgrade_firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upgrade the firmware onto the device assiciated to the debug console.
+The firmware is loaded starting from the address “0x0804000”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>firmware_file</strong> (<a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile" title="blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile</span></code></a>) – Firmware file.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if the file is not found or is inaccessible.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if the firmware file can not be read properly.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the upload starts correctly, False otherwise.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.</code><code class="descname">LoadingFileStatus</code><a class="reference internal" href="_modules/blue_st_sdk/firmware_upgrade/firmware_upgrade_nucleo.html#LoadingFileStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Status of loading file process.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus.ACK_CHECK">
+<code class="descname">ACK_CHECK</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus.ACK_CHECK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus.CRC_CHECK">
+<code class="descname">CRC_CHECK</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus.CRC_CHECK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.firmware_upgrade">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.firmware_upgrade" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="blue_st_sdk.firmware_upgrade.utils.html" class="btn btn-neutral float-right" title="blue_st_sdk.firmware_upgrade.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="blue_st_sdk.features.standard_characteristics.html" class="btn btn-neutral" title="blue_st_sdk.features.standard_characteristics package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>blue_st_sdk.utils package &mdash; BlueSTSDK 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="BlueSTSDK 1.0.0 documentation" href="index.html"/>
+        <link rel="up" title="blue_st_sdk package" href="blue_st_sdk.html"/>
+        <link rel="prev" title="blue_st_sdk.firmware_upgrade.utils package" href="blue_st_sdk.firmware_upgrade.utils.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> BlueSTSDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="blue_st_sdk.html">blue_st_sdk package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="blue_st_sdk.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.features.html">blue_st_sdk.features package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html">blue_st_sdk.firmware_upgrade package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">blue_st_sdk.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.ble_advertising_data_parser">blue_st_sdk.utils.ble_advertising_data_parser module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.ble_node_definitions">blue_st_sdk.utils.ble_node_definitions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.blue_st_exceptions">blue_st_sdk.utils.blue_st_exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.bv_audio_sync_manager">blue_st_sdk.utils.bv_audio_sync_manager module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.dict_put_single_element">blue_st_sdk.utils.dict_put_single_element module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.number_conversion">blue_st_sdk.utils.number_conversion module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.unwrap_timestamp">blue_st_sdk.utils.unwrap_timestamp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils.uuid_to_feature_map">blue_st_sdk.utils.uuid_to_feature_map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-blue_st_sdk.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.debug_console">blue_st_sdk.debug_console module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.feature">blue_st_sdk.feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.manager">blue_st_sdk.manager module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.node">blue_st_sdk.node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk.python_utils">blue_st_sdk.python_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.html#module-blue_st_sdk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BlueSTSDK</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="blue_st_sdk.html">blue_st_sdk package</a> &raquo;</li>
+        
+      <li>blue_st_sdk.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/blue_st_sdk.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blue-st-sdk-utils-package">
+<h1>blue_st_sdk.utils package<a class="headerlink" href="#blue-st-sdk-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.utils.ble_advertising_data_parser">
+<span id="blue-st-sdk-utils-ble-advertising-data-parser-module"></span><h2>blue_st_sdk.utils.ble_advertising_data_parser module<a class="headerlink" href="#module-blue_st_sdk.utils.ble_advertising_data_parser" title="Permalink to this headline">¶</a></h2>
+<p>ble_advertising_data_parser</p>
+<p>The ble_advertising_data_parser module contains tools to parse the advertising
+data coming from Bluetooth devices and recognized by the BlueSTSDK.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_advertising_data_parser.</code><code class="descname">BLEAdvertisingDataParser</code><span class="sig-paren">(</span><em>advertising_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Parse the advertising data sent by a device that follows the BlueST
+protocol.</p>
+<p>It raises an exception if the advertising data is not valid.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.ADVERTISING_DATA_MANUFACTURER_LENGTH_1">
+<code class="descname">ADVERTISING_DATA_MANUFACTURER_LENGTH_1</code><em class="property"> = 7</em><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.ADVERTISING_DATA_MANUFACTURER_LENGTH_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allowed length for the advertising data manufacturer in bytes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.ADVERTISING_DATA_MANUFACTURER_LENGTH_2">
+<code class="descname">ADVERTISING_DATA_MANUFACTURER_LENGTH_2</code><em class="property"> = 13</em><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.ADVERTISING_DATA_MANUFACTURER_LENGTH_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allowed length for the advertising data manufacturer in bytes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.VERSION_PROTOCOL_SUPPORTED_MAX">
+<code class="descname">VERSION_PROTOCOL_SUPPORTED_MAX</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.VERSION_PROTOCOL_SUPPORTED_MAX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum version protocol supported.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.VERSION_PROTOCOL_SUPPORTED_MIN">
+<code class="descname">VERSION_PROTOCOL_SUPPORTED_MIN</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.VERSION_PROTOCOL_SUPPORTED_MIN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum version protocol supported.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>advertising_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>advertising_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – BLE advertising_data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException" title="blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException</span></code></a> – is raised if the advertising data is not well formed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_address">
+<code class="descname">get_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device MAC address.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The device MAC address.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_board_sleeping">
+<code class="descname">get_board_sleeping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_board_sleeping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_board_sleeping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sleeping status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the board is sleeping, False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_board_type">
+<code class="descname">get_board_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_board_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_board_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the board’s type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The board’s type.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_device_id">
+<code class="descname">get_device_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_device_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_device_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device identifier.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The device identifier.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_feature_mask">
+<code class="descname">get_feature_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_feature_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_feature_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the bitmask that keeps track of the available features.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The bitmask that keeps track of the available features.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The device name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_protocol_version">
+<code class="descname">get_protocol_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_protocol_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_protocol_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device protocol version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The device protocol version.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_tx_power">
+<code class="descname">get_tx_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_advertising_data_parser.html#BLEAdvertisingDataParser.get_tx_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_advertising_data_parser.BLEAdvertisingDataParser.get_tx_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device transmission power in mdb.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The device transmission power in mdb.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.ble_node_definitions">
+<span id="blue-st-sdk-utils-ble-node-definitions-module"></span><h2>blue_st_sdk.utils.ble_node_definitions module<a class="headerlink" href="#module-blue_st_sdk.utils.ble_node_definitions" title="Permalink to this headline">¶</a></h2>
+<p>ble_node_definitions</p>
+<p>The ble_node_definitions module contains definitions related to the Bluetooth
+and recognized by the BlueSTSDK.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_node_definitions.</code><code class="descname">BLENodeDefinitions</code><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#BLENodeDefinitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class helps to get the list of services and characteristics
+available in the BlueST devices.</p>
+<p>It defines the UUID and the name of the services and the characteristics
+available in the BlueST devices.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BASE_FEATURE_UUID">
+<code class="descname">BASE_FEATURE_UUID</code><em class="property"> = '-0001'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BASE_FEATURE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base feature UUID.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID">
+<code class="descname">BLUESTSDK_CHARACTERISTIC_UUID</code><em class="property"> = '-11e1-ac36-0002a5d5c51b'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Characteristic UUIDs handled by this SDK must end with this value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID">
+<code class="descname">BLUESTSDK_SERVICE_UUID</code><em class="property"> = '-11e1-9ab4-0002a5d5c51b'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Service UUIDs handled by this SDK must end with this value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.CONFIG_UUID">
+<code class="descname">CONFIG_UUID</code><em class="property"> = '-000F'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.CONFIG_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Config UUID.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.DEBUG_UUID">
+<code class="descname">DEBUG_UUID</code><em class="property"> = '-000E'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.DEBUG_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug UUID.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.EXTENDED_FEATURE_UUID">
+<code class="descname">EXTENDED_FEATURE_UUID</code><em class="property"> = '-0002'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.EXTENDED_FEATURE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended feature UUID.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Config">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_node_definitions.</code><code class="descname">Config</code><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Service that allows to configure the board parameters or the features.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Config.CONFIG_BLUESTSDK_SERVICE_UUID">
+<code class="descname">CONFIG_BLUESTSDK_SERVICE_UUID</code><em class="property"> = UUID('00000000-000f-11e1-9ab4-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Config.CONFIG_BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control service UUID.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Config.CONFIG_COMMAND_BLUESTSDK_SERVICE_UUID">
+<code class="descname">CONFIG_COMMAND_BLUESTSDK_SERVICE_UUID</code><em class="property"> = UUID('00000002-000f-11e1-9ab4-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Config.CONFIG_COMMAND_BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control characteristic UUID through which you can send commands to a
+feature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Config.REGISTERS_ACCESS_UUID">
+<code class="descname">REGISTERS_ACCESS_UUID</code><em class="property"> = UUID('00000001-000f-11e1-9ab4-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Config.REGISTERS_ACCESS_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control characteristic UUID through which you can manage registers, i.e.
+to read or write registers.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Config.is_config_service">
+<em class="property">classmethod </em><code class="descname">is_config_service</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Config.is_config_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Config.is_config_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the provided UUID is a valid config service UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Service UUID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the provided UUID is a valid config service UUID,
+False otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_node_definitions.</code><code class="descname">Debug</code><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class to access the board’ stdout/stderr streams.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_BLUESTSDK_SERVICE_UUID">
+<code class="descname">DEBUG_BLUESTSDK_SERVICE_UUID</code><em class="property"> = UUID('00000000-000e-11e1-9ab4-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug service UUID.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID">
+<code class="descname">DEBUG_STDERR_BLUESTSDK_SERVICE_UUID</code><em class="property"> = UUID('00000002-000e-11e1-ac36-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug characteristic UUID where the node writes error messages.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID">
+<code class="descname">DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID</code><em class="property"> = UUID('00000001-000e-11e1-ac36-0002a5d5c51b')</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debug characteristic UUID where you can read and write messages.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug.is_debug_characteristic">
+<em class="property">classmethod </em><code class="descname">is_debug_characteristic</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Debug.is_debug_characteristic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug.is_debug_characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the provided UUID is a valid debug characteristic UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Characteristic UUID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the provided UUID is a valid debug characteristic UUID,
+False otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Debug.is_debug_service">
+<em class="property">classmethod </em><code class="descname">is_debug_service</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Debug.is_debug_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Debug.is_debug_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the provided UUID is a valid debug service UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Service UUID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the provided UUID is a valid debug service UUID,
+False otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_node_definitions.</code><code class="descname">FeatureCharacteristic</code><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#FeatureCharacteristic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class defines the associations characteristic-feature.</p>
+<p>A feature’s characteristic has the form
+‘XXXXXXXX-0001-11e1-ac36-0002a5d5c51b’.</p>
+<p>‘XXXXXXXX’ is a number in which only one bit has value ‘1’.
+In case multiple bits have value ‘1’ it means that this characteristic sends
+all the corresponding features’ values at the same time.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BASE_MASK_TO_FEATURE_DIC">
+<code class="descname">BASE_MASK_TO_FEATURE_DIC</code><em class="property"> = {4: &lt;class 'blue_st_sdk.features.feature_proximity_gesture.FeatureProximityGesture'&gt;, 16: &lt;class 'blue_st_sdk.features.feature_activity_recognition.FeatureActivityRecognition'&gt;, 8192: &lt;class 'blue_st_sdk.features.feature_stepper_motor.FeatureStepperMotor'&gt;, 65536: &lt;class 'blue_st_sdk.features.feature_temperature.FeatureTemperature'&gt;, 262144: &lt;class 'blue_st_sdk.features.feature_temperature.FeatureTemperature'&gt;, 524288: &lt;class 'blue_st_sdk.features.feature_humidity.FeatureHumidity'&gt;, 1048576: &lt;class 'blue_st_sdk.features.feature_pressure.FeaturePressure'&gt;, 2097152: &lt;class 'blue_st_sdk.features.feature_magnetometer.FeatureMagnetometer'&gt;, 4194304: &lt;class 'blue_st_sdk.features.feature_gyroscope.FeatureGyroscope'&gt;, 8388608: &lt;class 'blue_st_sdk.features.feature_accelerometer.FeatureAccelerometer'&gt;, 33554432: &lt;class 'blue_st_sdk.features.feature_proximity.FeatureProximity'&gt;, 134217728: &lt;class 'blue_st_sdk.features.feature_audio_adpcm.FeatureAudioADPCM'&gt;, 536870912: &lt;class 'blue_st_sdk.features.feature_switch.FeatureSwitch'&gt;, 1073741824: &lt;class 'blue_st_sdk.features.feature_audio_adpcm_sync.FeatureAudioADPCMSync'&gt;}</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BASE_MASK_TO_FEATURE_DIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map from base feature’s masks to feature’s classes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BLUESTSDK_BASE_FEATURES_UUID">
+<code class="descname">BLUESTSDK_BASE_FEATURES_UUID</code><em class="property"> = '-0001-11e1-ac36-0002a5d5c51b'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BLUESTSDK_BASE_FEATURES_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base feature UUIDs handled by this SDK must end with this value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BLUESTSDK_EXTENDED_FEATURES_UUID">
+<code class="descname">BLUESTSDK_EXTENDED_FEATURES_UUID</code><em class="property"> = '-0002-11e1-ac36-0002a5d5c51b'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.BLUESTSDK_EXTENDED_FEATURES_UUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended feature UUIDs handled by this SDK must end with this value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.EXTENDED_MASK_TO_FEATURE_DIC">
+<code class="descname">EXTENDED_MASK_TO_FEATURE_DIC</code><em class="property"> = {3: &lt;class 'blue_st_sdk.features.feature_audio_scene_classification.FeatureAudioSceneClassification'&gt;}</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.EXTENDED_MASK_TO_FEATURE_DIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map from extended feature’s masks to feature’s classes.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.extract_feature_mask">
+<em class="property">classmethod </em><code class="descname">extract_feature_mask</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#FeatureCharacteristic.extract_feature_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.extract_feature_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Extract the fist 32 bits from the characteristic’s UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<em>UUID</em>) – Characteristic’s UUID.
+Refer to
+<a class="reference external" href="https://ianharvey.github.io/bluepy-doc/uuid.html">UUID:</a> for
+more information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The first 32 bit of the characteristic’s UUID.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.get_extended_feature_class">
+<em class="property">classmethod </em><code class="descname">get_extended_feature_class</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#FeatureCharacteristic.get_extended_feature_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.get_extended_feature_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getting the extended feature class from a UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<em>UUID</em>) – <p>Characteristic’s UUID.
+Refer to
+<a class="reference external" href="https://ianharvey.github.io/bluepy-doc/uuid.html">UUID:</a> for
+more information.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The feature’s class if found, “None” otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.7)">type</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.is_base_feature_characteristic">
+<em class="property">classmethod </em><code class="descname">is_base_feature_characteristic</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#FeatureCharacteristic.is_base_feature_characteristic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.is_base_feature_characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the UUID is a valid feature UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Characteristic’s UUID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the UUID is a valid feature UUID, False otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.is_extended_feature_characteristic">
+<em class="property">classmethod </em><code class="descname">is_extended_feature_characteristic</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#FeatureCharacteristic.is_extended_feature_characteristic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.FeatureCharacteristic.is_extended_feature_characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the UUID is a valid extended feature UUID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Characteristic’s UUID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the UUID is a valid extended feature UUID, False
+otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Services">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.ble_node_definitions.</code><code class="descname">Services</code><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Services"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Services" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class helps to get list of services available in the BlueST devices.</p>
+<p>It defines the UUID and the name of the services available in the BlueST
+devices.</p>
+<p>A valid service UUID has the form ‘00000000-XXXX-11e1-9ab4-0002a5d5c51b’,
+where ‘XXXX’ is the service identifier.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Services.BLUESTSDK_SERVICE_UUID_FORMAT">
+<code class="descname">BLUESTSDK_SERVICE_UUID_FORMAT</code><em class="property"> = '00000000-[0-9a-fA-F]{4}-11e1-9ab4-0002a5d5c51b'</em><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Services.BLUESTSDK_SERVICE_UUID_FORMAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format of the blue_st_sdk’s service UUID.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.ble_node_definitions.Services.is_known_service">
+<em class="property">classmethod </em><code class="descname">is_known_service</code><span class="sig-paren">(</span><em>uuid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/ble_node_definitions.html#Services.is_known_service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.ble_node_definitions.Services.is_known_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the service is handled by this SDK, i.e. if the uuid has the
+‘00000000-YYYY-11e1-9ab4-0002a5d5c51b’ format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – UUID of the service under test.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the UUID ends with
+<a class="reference internal" href="#blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID" title="blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blue_st_sdk.utils.ble_node_definitions.BLENodeDefinitions.BLUESTSDK_SERVICE_UUID</span></code></a>,
+False otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.blue_st_exceptions">
+<span id="blue-st-sdk-utils-blue-st-exceptions-module"></span><h2>blue_st_sdk.utils.blue_st_exceptions module<a class="headerlink" href="#module-blue_st_sdk.utils.blue_st_exceptions" title="Permalink to this headline">¶</a></h2>
+<p>blue_st_exceptions</p>
+<p>The blue_st_exceptions module defines exceptions raised by the BlueSTSDK.</p>
+<dl class="exception">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException">
+<em class="property">exception </em><code class="descclassname">blue_st_sdk.utils.blue_st_exceptions.</code><code class="descname">InvalidBLEAdvertisingDataException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidBLEAdvertisingDataException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<p>Exception raised whenever an advertising data has a format not recognized
+by the BlueSTSDK.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidBLEAdvertisingDataException.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message to raise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidDataException">
+<em class="property">exception </em><code class="descclassname">blue_st_sdk.utils.blue_st_exceptions.</code><code class="descname">InvalidDataException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidDataException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidDataException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<p>Exception raised whenever a feature’s data are not complete.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidDataException.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidDataException.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidDataException.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message to raise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException">
+<em class="property">exception </em><code class="descclassname">blue_st_sdk.utils.blue_st_exceptions.</code><code class="descname">InvalidFeatureBitMaskException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidFeatureBitMaskException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<p>Exception raised whenever a bitmask has more than 1 bit set to “1”.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidFeatureBitMaskException.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message to raise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException">
+<em class="property">exception </em><code class="descclassname">blue_st_sdk.utils.blue_st_exceptions.</code><code class="descname">InvalidOperationException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidOperationException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<p>Exception raised whenever a feature is not enabled or the operation
+required is not supported.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/blue_st_exceptions.html#InvalidOperationException.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The message to raise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.bv_audio_sync_manager">
+<span id="blue-st-sdk-utils-bv-audio-sync-manager-module"></span><h2>blue_st_sdk.utils.bv_audio_sync_manager module<a class="headerlink" href="#module-blue_st_sdk.utils.bv_audio_sync_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.bv_audio_sync_manager.</code><code class="descname">BVAudioSyncManager</code><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The feature contains all mandatory ADPCM synchronization parameters</p>
+<p>extracted from an AudioSync received packet.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.adpcm_index_in">
+<code class="descname">adpcm_index_in</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.adpcm_index_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.adpcm_predsample_in">
+<code class="descname">adpcm_predsample_in</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.adpcm_predsample_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.get_index_in">
+<em class="property">classmethod </em><code class="descname">get_index_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager.get_index_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.get_index_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the adpcm_index_in parameter value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current adpcm index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.get_predsample_in">
+<em class="property">classmethod </em><code class="descname">get_predsample_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager.get_predsample_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.get_predsample_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns The adpcm_predsample_in parameter value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The adpcm predsample actual value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">short</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.intra_flag">
+<code class="descname">intra_flag</code><em class="property"> = False</em><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.intra_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.isIntra">
+<em class="property">classmethod </em><code class="descname">isIntra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager.isIntra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.isIntra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the intra_flag parameter state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if is activated, False elsewhere.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.reinitResetFlag">
+<em class="property">classmethod </em><code class="descname">reinitResetFlag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager.reinitResetFlag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.reinitResetFlag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.setSyncParams">
+<em class="property">classmethod </em><code class="descname">setSyncParams</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/bv_audio_sync_manager.html#BVAudioSyncManager.setSyncParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.bv_audio_sync_manager.BVAudioSyncManager.setSyncParams" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Populate all mandatory adpcm synchronization parameters from an input</dt>
+<dd>FeatureAudioADPCMSync Sample.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><em>Sample</em></a>) – A Sample exctracted from a received
+FeatureAudioADPCMSync synchronization packet (6 bytes)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.dict_put_single_element">
+<span id="blue-st-sdk-utils-dict-put-single-element-module"></span><h2>blue_st_sdk.utils.dict_put_single_element module<a class="headerlink" href="#module-blue_st_sdk.utils.dict_put_single_element" title="Permalink to this headline">¶</a></h2>
+<p>dict_put_single_element</p>
+<p>The dict_put_single_element module contains tools to map keys to list of
+elements.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.dict_put_single_element.</code><code class="descname">DictPutSingleElement</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/dict_put_single_element.html#DictPutSingleElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_abcoll.MutableMapping</span></code></p>
+<p>Utility class to map keys to list of elements.</p>
+<p>It works like a dictionary with an exception: the “put()” method inserts a
+single element at a time instead of a list of elements.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/dict_put_single_element.html#DictPutSingleElement.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.put">
+<code class="descname">put</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/dict_put_single_element.html#DictPutSingleElement.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a single element to the list associated to the given key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> – Key.</li>
+<li><strong>value</strong> – Element to be added to the list of elements associated to the
+given key.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.put_all">
+<code class="descname">put_all</code><span class="sig-paren">(</span><em>dictionary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/dict_put_single_element.html#DictPutSingleElement.put_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement.put_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add all the key-value pairs of the given dictionary to this
+dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dictionary</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – A dictionary of key-value pairs to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.number_conversion">
+<span id="blue-st-sdk-utils-number-conversion-module"></span><h2>blue_st_sdk.utils.number_conversion module<a class="headerlink" href="#module-blue_st_sdk.utils.number_conversion" title="Permalink to this headline">¶</a></h2>
+<p>number_conversion</p>
+<p>The number_conversion module contains tools to convert features’ data to
+numbers.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.number_conversion.</code><code class="descname">BigEndian</code><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class implements the conversion from array of bytes to different
+formats, and viceversa, in Big Endian base order.</p>
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.bytesToFloat">
+<em class="property">classmethod </em><code class="descname">bytesToFloat</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.bytesToFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.bytesToFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the floating point value of four bytes of the array in Big
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt16">
+<em class="property">classmethod </em><code class="descname">bytesToInt16</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.bytesToInt16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the signed short value of two bytes of the array in Big
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt32">
+<em class="property">classmethod </em><code class="descname">bytesToInt32</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.bytesToInt32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.bytesToInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the signed integer value of four bytes of the array in Big
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt16">
+<em class="property">classmethod </em><code class="descname">bytesToUInt16</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.bytesToUInt16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the unsigned short value of two bytes of the array in Big
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt32">
+<em class="property">classmethod </em><code class="descname">bytesToUInt32</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.bytesToUInt32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.bytesToUInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the unsigned integer value of four bytes of the array in Big
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.floatToBytes">
+<em class="property">classmethod </em><code class="descname">floatToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.floatToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.floatToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the floating point value
+in Big Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.int16ToBytes">
+<em class="property">classmethod </em><code class="descname">int16ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.int16ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.int16ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the two bytes array corresponding to the signed short value in
+Big Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.int32ToBytes">
+<em class="property">classmethod </em><code class="descname">int32ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.int32ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.int32ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the signed integer value
+in Big Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.uint16ToBytes">
+<em class="property">classmethod </em><code class="descname">uint16ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.uint16ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.uint16ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the two bytes array corresponding to the unsigned short value
+in Big Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.BigEndian.uint32ToBytes">
+<em class="property">classmethod </em><code class="descname">uint32ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#BigEndian.uint32ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.BigEndian.uint32ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the unsigned integer
+value in Big Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.number_conversion.</code><code class="descname">LittleEndian</code><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class implements the conversion from array of bytes to different
+formats, and viceversa, in Little Endian base order.</p>
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.bytesToFloat">
+<em class="property">classmethod </em><code class="descname">bytesToFloat</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.bytesToFloat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the floating point value of four bytes of the array in Little
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt16">
+<em class="property">classmethod </em><code class="descname">bytesToInt16</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.bytesToInt16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the signed short value of two bytes of the array in Little
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt32">
+<em class="property">classmethod </em><code class="descname">bytesToInt32</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.bytesToInt32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the signed integer value of four bytes of the array in Little
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt16">
+<em class="property">classmethod </em><code class="descname">bytesToUInt16</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.bytesToUInt16"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the unsigned short value of two bytes of the array in Little
+Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt32">
+<em class="property">classmethod </em><code class="descname">bytesToUInt32</code><span class="sig-paren">(</span><em>data</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.bytesToUInt32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.bytesToUInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the unsigned integer value of four bytes of the array in
+Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input array of bytes that contains the value to convert.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index in the array of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The corresponding numerical value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.floatToBytes">
+<em class="property">classmethod </em><code class="descname">floatToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.floatToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.floatToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the floating point value
+in Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.int16ToBytes">
+<em class="property">classmethod </em><code class="descname">int16ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.int16ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.int16ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the two bytes array corresponding to the signed short value in
+Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.int32ToBytes">
+<em class="property">classmethod </em><code class="descname">int32ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.int32ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.int32ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the signed integer value
+in Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.uint16ToBytes">
+<em class="property">classmethod </em><code class="descname">uint16ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.uint16ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.uint16ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the two bytes array corresponding to the unsigned short value
+in Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.LittleEndian.uint32ToBytes">
+<em class="property">classmethod </em><code class="descname">uint32ToBytes</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#LittleEndian.uint32ToBytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.LittleEndian.uint32ToBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the four bytes array corresponding to the unsigned integer
+value in Little Endian base order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Value to convert.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The corresponding array of bytes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.utils.number_conversion.NumberConversion">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.number_conversion.</code><code class="descname">NumberConversion</code><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#NumberConversion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.NumberConversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class helps to convert array of bytes to different formats, and
+viceversa.</p>
+<dl class="classmethod">
+<dt id="blue_st_sdk.utils.number_conversion.NumberConversion.byteToUInt8">
+<em class="property">classmethod </em><code class="descname">byteToUInt8</code><span class="sig-paren">(</span><em>data</em>, <em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/number_conversion.html#NumberConversion.byteToUInt8"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.number_conversion.NumberConversion.byteToUInt8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the short value of the unsigned byte value in position
+“index”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Array of bytes that contains the value to convert.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Position of the value to convert.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The corresponding numerical value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.unwrap_timestamp">
+<span id="blue-st-sdk-utils-unwrap-timestamp-module"></span><h2>blue_st_sdk.utils.unwrap_timestamp module<a class="headerlink" href="#module-blue_st_sdk.utils.unwrap_timestamp" title="Permalink to this headline">¶</a></h2>
+<p>unwrap_timestamp</p>
+<p>The unwrap_timestamp module contains tools to unwrap timestamp values.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.unwrap_timestamp.</code><code class="descname">UnwrapTimestamp</code><a class="reference internal" href="_modules/blue_st_sdk/utils/unwrap_timestamp.html#UnwrapTimestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that unwraps a timestamp.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/unwrap_timestamp.html#UnwrapTimestamp.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.unwrap">
+<code class="descname">unwrap</code><span class="sig-paren">(</span><em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/unwrap_timestamp.html#UnwrapTimestamp.unwrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.unwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a multiple of (1 &lt;&lt; 16) to the timestamp to reset it, if needed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Timestamp.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The unwrapped timestamp.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils.uuid_to_feature_map">
+<span id="blue-st-sdk-utils-uuid-to-feature-map-module"></span><h2>blue_st_sdk.utils.uuid_to_feature_map module<a class="headerlink" href="#module-blue_st_sdk.utils.uuid_to_feature_map" title="Permalink to this headline">¶</a></h2>
+<p>uuid_to_feature_map</p>
+<p>The uuid_to_feature_map module contains tools to map UUIDs to list of features.</p>
+<dl class="class">
+<dt id="blue_st_sdk.utils.uuid_to_feature_map.UUIDToFeatureMap">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.utils.uuid_to_feature_map.</code><code class="descname">UUIDToFeatureMap</code><a class="reference internal" href="_modules/blue_st_sdk/utils/uuid_to_feature_map.html#UUIDToFeatureMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.uuid_to_feature_map.UUIDToFeatureMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement" title="blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.utils.dict_put_single_element.DictPutSingleElement</span></code></a></p>
+<p>Utility class to map UUIDs to list of features.</p>
+<p>It works like a dictionary with an exception: the “put()” method inserts a
+single feature at a time instead of a list of features.</p>
+<dl class="method">
+<dt id="blue_st_sdk.utils.uuid_to_feature_map.UUIDToFeatureMap.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/utils/uuid_to_feature_map.html#UUIDToFeatureMap.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.utils.uuid_to_feature_map.UUIDToFeatureMap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="blue_st_sdk.firmware_upgrade.utils.html" class="btn btn-neutral" title="blue_st_sdk.firmware_upgrade.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Davide Aliprandi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
