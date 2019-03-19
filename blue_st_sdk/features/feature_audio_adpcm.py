@@ -80,7 +80,7 @@ class FeatureAudioADPCM(Feature):
         """Extract the data from the feature's raw data.
         
         Args:
-            data (byte[]): The data read from the feature (a 20 bytes array).
+            data (bytearray): The data read from the feature (a 20 bytes array).
             offset (int): Offset where to start reading data (0 by default).
         
         Returns:
@@ -89,8 +89,8 @@ class FeatureAudioADPCM(Feature):
             shorts array).
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
             raise InvalidDataException(
@@ -134,13 +134,13 @@ class FeatureAudioADPCM(Feature):
                     return audioPckt
         return audioPckt
     
-    def setAudioSyncParams(self,sample):
+    def set_audio_sync_parameters(self, sample):
         """Set the object synchronization parameters necessary to the
-		   decompression process
+		   decompression process.
+
         Args:
-            sample (Sample) extracted FeatureAudioADPCMSync Sample which
-                contains the synchronization parameters
-        
+            sample (:class:`blue_st_sdk.feature.Sample`): Extracted sample which
+                contains the synchronization parameters.
         """
         self.bvSyncManager.setSyncParams(sample)
 
@@ -148,7 +148,6 @@ class ADPCMEngine(object):
     """DPCM Engine class.
     It contains all the operations and parameters necessary to decompress the
     received audio.
-
     """
     
     def __init__(self): 

@@ -117,8 +117,8 @@ class FeatureActivityRecognition(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
             raise InvalidDataException(

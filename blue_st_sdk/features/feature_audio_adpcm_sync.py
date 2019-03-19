@@ -78,10 +78,11 @@ class FeatureAudioADPCMSync(Feature):
     
     def extract_data(self, timestamp, data, offset):
         """Extract the audio sync data from the feature's raw data.
-           in this case it read a short (adpcm_index) and an int
-           (adpcm_predsample)
+           In this case it reads a short integer (adpcm_index) and an integer
+           (adpcm_predsample).
+
         Args:
-            data (byte[]): The data read from the feature (a 6 bytes array).
+            data (bytearray): The data read from the feature (a 6 bytes array).
             offset (int): Offset where to start reading data (0 by default).
         
         Returns:
@@ -90,8 +91,8 @@ class FeatureAudioADPCMSync(Feature):
             and an int).
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
             raise InvalidDataException(

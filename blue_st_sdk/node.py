@@ -320,8 +320,8 @@ class Node(Peripheral, object):
             and they have been updated, False otherwise.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         # Getting the features corresponding to the given characteristic.
         features = self._get_corresponding_features(char_handle)
@@ -752,8 +752,8 @@ class Node(Peripheral, object):
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         if not feature.is_enabled():
             raise InvalidOperationException(
@@ -977,8 +977,8 @@ class NodeDelegate(DefaultDelegate):
             data (str): The data notified from the given characteristic.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         try:
             # Calling on-read callback.

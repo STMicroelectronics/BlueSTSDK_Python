@@ -159,7 +159,7 @@ class FirmwareUpgradeListener(object):
         """To be called whenever the firmware has been upgraded correctly.
 
         Args:
-            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole):
+            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
                 Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
                 Firmware file.
@@ -176,11 +176,12 @@ class FirmwareUpgradeListener(object):
         """To be called whenever there is an error in upgrading the firmware.
 
         Args:
-            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole):
+            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
                 Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
                 Firmware file.
-            error (): Error code.
+            error (:class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError`):
+                Error code.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
@@ -196,7 +197,7 @@ class FirmwareUpgradeListener(object):
         a new one.
 
         Args:
-            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole):
+            debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
                 Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
                 Firmware file.

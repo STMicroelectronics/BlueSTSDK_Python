@@ -97,7 +97,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node whose firmware has to be
                 updated.
-        
+
         Returns:
             :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`:
             An instance of this class if the given node implements the BlueST

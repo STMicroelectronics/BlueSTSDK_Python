@@ -70,6 +70,7 @@ class Feature(object):
             description (list): Description of the data of the feature (list of
                 :class:`blue_st_sdk.features.field.Field` objects).
         """
+
         self._name = name
         """Feature name."""
 
@@ -311,8 +312,8 @@ class Feature(object):
             int: The number of bytes read.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         # Update the feature's internal data
         sample = None
@@ -356,8 +357,8 @@ class Feature(object):
             :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         try:
             self._parent.read_feature(self)
@@ -405,8 +406,8 @@ class Feature(object):
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException` if
-                the data array has not enough data to read.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+                if the data array has not enough data to read.
         """
         raise NotImplementedError(
             'You must implement "extract_data()" to use the "Feature" class.')

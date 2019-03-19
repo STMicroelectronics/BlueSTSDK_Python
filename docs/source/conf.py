@@ -20,7 +20,7 @@ sys.path.insert(0, '../.')
 # -- Project information -----------------------------------------------------
 
 project = u'BlueSTSDK'
-copyright = u'2018, Davide Aliprandi'
+copyright = u'2019, Davide Aliprandi'
 author = u'Davide Aliprandi'
 
 # The short X.Y version

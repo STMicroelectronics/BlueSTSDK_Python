@@ -61,13 +61,14 @@ class DebugConsole():
             node (:class:`blue_st_sdk.node.Node`): Node that will send the data.
             stdinout_characteristic (Characteristic): The BLE characteristic
                 used to read/write data from/to stdin/stdout. Refer to
-                    `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                    for more information.
+                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+                for more information.
             stderr_characteristic (Characteristic): The BLE characteristic used
                 to read data from stderr. Refer to
-                    `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                    for more information.
+                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+                for more information.
         """
+
         self._node = node
         """Node that sends data to this class."""
 

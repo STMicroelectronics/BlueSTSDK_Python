@@ -214,7 +214,7 @@ class MyFeatureListenerSync(FeatureListener):
     def on_update(self, feature, sample):
         global audioFeature
         if audioFeature is not None:
-            audioFeature.setAudioSyncParams(sample)
+            audioFeature.set_audio_sync_parameters(sample)
                 
 
 # MAIN APPLICATION
