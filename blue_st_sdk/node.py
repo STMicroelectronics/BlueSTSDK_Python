@@ -861,7 +861,7 @@ class Node(Peripheral, object):
             feature.set_notify(False)
             if not self.characteristic_has_other_notifying_features(
                     characteristic, feature):
-                self.set_notification_status(characteristic, True)
+                self.set_notification_status(characteristic, False)
             return True
         return False
 
