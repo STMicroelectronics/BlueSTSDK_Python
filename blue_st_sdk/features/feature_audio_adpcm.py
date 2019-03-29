@@ -130,7 +130,7 @@ class FeatureAudioADPCM(Feature):
                     
                     for i in range(0,length):
                         if sample.data[i] != None:
-                            audioPckt[i] = LittleEndian.bytesToInt16(sample._data[i], (2*i))
+                            audioPckt[i] = LittleEndian.bytes_to_int16(sample._data[i], (2*i))
                     return audioPckt
         return audioPckt
     

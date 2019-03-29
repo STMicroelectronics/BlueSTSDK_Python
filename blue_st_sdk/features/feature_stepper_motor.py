@@ -121,7 +121,7 @@ class FeatureStepperMotor(Feature):
                 'There are no %d bytes available to read.' \
                 % (self.STATUS_DATA_LENGTH_BYTES))
         sample = Sample(
-            [NumberConversion.byteToUInt8(data, offset)],
+            [NumberConversion.byte_to_uint8(data, offset)],
             self.get_fields_description(),
             timestamp)
         return ExtractedData(sample, self.STATUS_DATA_LENGTH_BYTES)

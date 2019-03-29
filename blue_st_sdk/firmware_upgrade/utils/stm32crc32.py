@@ -116,7 +116,7 @@ class STM32Crc32(object):
                 multiple of 4 [bytes].')
 
         for i in range(0, len(data), 4):
-            tmp = LittleEndian.bytesToInt32(data, i * 4)
+            tmp = LittleEndian.bytes_to_int32(data, i * 4)
             self._current_crc = self._crc32_fast(self._current_crc, tmp)
 
     def reset(self):

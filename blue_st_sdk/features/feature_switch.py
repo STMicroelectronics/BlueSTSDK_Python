@@ -94,7 +94,7 @@ class FeatureSwitch(Feature):
                 'There is no %d byte available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
-            [NumberConversion.byteToUInt8(data, offset)],
+            [NumberConversion.byte_to_uint8(data, offset)],
             self.get_fields_description(),
             timestamp)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)

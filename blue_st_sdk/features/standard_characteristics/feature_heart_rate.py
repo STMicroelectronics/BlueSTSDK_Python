@@ -154,17 +154,17 @@ class FeatureHeartRate(DeviceTimestampFeature):
             hr = data[offset]
             offset += 1
         else:
-            hr = LittleEndian.bytesToUInt16(data, offset)
+            hr = LittleEndian.bytes_to_uint16(data, offset)
             offset += 2
 
         if self.hasEnergyExpended(flags):
-            ee = LittleEndian.bytesToUInt16(data, offset)
+            ee = LittleEndian.bytes_to_uint16(data, offset)
             offset += 2
         else:
             ee = -1
 
         if self.hasRRInterval(flags):
-            rri = LittleEndian.bytesToUInt16(data, offset) / 1024.0
+            rri = LittleEndian.bytes_to_uint16(data, offset) / 1024.0
             offset += 2
         else:
             rri = float('nan')

@@ -97,7 +97,7 @@ class FeatureProximity(Feature):
                 'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = None
-        value = LittleEndian.bytesToUInt16(data, offset)
+        value = LittleEndian.bytes_to_uint16(data, offset)
         if self._is_low_range_sensor(value):
             sample = self._get_low_range_sample(timestamp, value)
         else:

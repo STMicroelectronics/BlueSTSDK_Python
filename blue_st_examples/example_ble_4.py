@@ -188,7 +188,7 @@ class MyFeatureListener(FeatureListener):
         shortData = sample._data
         if len(shortData) != 0:
             for d in shortData:
-                byteData = LittleEndian.int16ToBytes(d)
+                byteData = LittleEndian.int16_to_bytes(d)
                 ###Save Audio File######################################
                 if saveAudioFlag == 'y' or saveAudioFlag == 'Y':
                     audioFile.write(byteData)

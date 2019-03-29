@@ -127,7 +127,7 @@ class FeatureActivityRecognition(Feature):
         if len(data) - offset == self.DATA_LENGTH_BYTES:
             # Extract the activity from the feature's raw data.
             sample = Sample(
-                [NumberConversion.byteToUInt8(data, offset),
+                [NumberConversion.byte_to_uint8(data, offset),
                  datetime.now()],
                 self.get_fields_description(),
                 timestamp)
@@ -135,9 +135,9 @@ class FeatureActivityRecognition(Feature):
         else:
             # Extract the activity and the algorithm from the feature's raw data.
             sample = Sample(
-                [NumberConversion.byteToUInt8(data, offset),
+                [NumberConversion.byte_to_uint8(data, offset),
                  datetime.now(),
-                 NumberConversion.byteToUInt8(data, offset + 1)],
+                 NumberConversion.byte_to_uint8(data, offset + 1)],
                 self.get_fields_description(),
                 timestamp)
             return ExtractedData(sample, self.DATA_LENGTH_BYTES + 1)

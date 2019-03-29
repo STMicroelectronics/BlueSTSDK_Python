@@ -330,7 +330,7 @@ class Node(Peripheral, object):
 
         # Computing the timestamp.
         timestamp = self._unwrap_timestamp.unwrap(
-            LittleEndian.bytesToUInt16(data))
+            LittleEndian.bytes_to_uint16(data))
 
         # Updating the features.
         offset = TIMESTAMP_OFFSET_BYTES  # Timestamp sixe in bytes.

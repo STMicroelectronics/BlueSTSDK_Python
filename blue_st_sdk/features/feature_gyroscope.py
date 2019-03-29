@@ -108,9 +108,9 @@ class FeatureGyroscope(Feature):
                 'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
-            [LittleEndian.bytesToInt16(data, offset) / self.SCALE_FACTOR,
-             LittleEndian.bytesToInt16(data, offset + 2) / self.SCALE_FACTOR,
-             LittleEndian.bytesToInt16(data, offset + 4) / self.SCALE_FACTOR],
+            [LittleEndian.bytes_to_int16(data, offset) / self.SCALE_FACTOR,
+             LittleEndian.bytes_to_int16(data, offset + 2) / self.SCALE_FACTOR,
+             LittleEndian.bytes_to_int16(data, offset + 4) / self.SCALE_FACTOR],
             self.get_fields_description(),
             timestamp)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)

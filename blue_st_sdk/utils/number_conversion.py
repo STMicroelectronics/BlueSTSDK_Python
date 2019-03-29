@@ -46,7 +46,7 @@ class NumberConversion(object):
     """
 
     @classmethod
-    def byteToUInt8(self, data, index = 0):
+    def byte_to_uint8(self, data, index = 0):
         """Returns the short value of the unsigned byte value in position
         "index".
 
@@ -66,7 +66,7 @@ class LittleEndian(object):
     """
 
     @classmethod
-    def bytesToInt16(self, data, start = 0):
+    def bytes_to_int16(self, data, start = 0):
         """Return the signed short value of two bytes of the array in Little
         Endian base order.
         
@@ -81,7 +81,7 @@ class LittleEndian(object):
         return struct.unpack('<h', struct.pack('cc', *data[start : start + 2]))[0]
 
     @classmethod
-    def bytesToInt32(self, data, start = 0):
+    def bytes_to_int32(self, data, start = 0):
         """Return the signed integer value of four bytes of the array in Little
         Endian base order.
         
@@ -96,7 +96,7 @@ class LittleEndian(object):
         return struct.unpack('<i', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def bytesToUInt16(self, data, start = 0):
+    def bytes_to_uint16(self, data, start = 0):
         """Return the unsigned short value of two bytes of the array in Little
         Endian base order.
         
@@ -111,7 +111,7 @@ class LittleEndian(object):
         return struct.unpack('<H', struct.pack('cc', *data[start : start + 2]))[0]
 
     @classmethod
-    def bytesToUInt32(self, data, start = 0):
+    def bytes_to_uint32(self, data, start = 0):
         """Return the unsigned integer value of four bytes of the array in
         Little Endian base order.
         
@@ -126,7 +126,7 @@ class LittleEndian(object):
         return struct.unpack('<I', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def bytesToFloat(self, data, start = 0):
+    def bytes_to_float(self, data, start = 0):
         """Return the floating point value of four bytes of the array in Little
         Endian base order.
         
@@ -137,11 +137,11 @@ class LittleEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return Float.intBitsToFloat(self.bytesToInt32(data, start))
+        #return Float.intBitsToFloat(self.bytes_to_int32(data, start))
         return struct.unpack('<f', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def int16ToBytes(self, value):
+    def int16_to_bytes(self, value):
         """Return the two bytes array corresponding to the signed short value in
         Little Endian base order.
         
@@ -155,7 +155,7 @@ class LittleEndian(object):
         return struct.pack("<i", value)[0:2]
 
     @classmethod
-    def int32ToBytes(self, value):
+    def int32_to_bytes(self, value):
         """Return the four bytes array corresponding to the signed integer value
         in Little Endian base order.
         
@@ -169,7 +169,7 @@ class LittleEndian(object):
         return struct.pack("<q", value)[0:4]
 
     @classmethod
-    def uint16ToBytes(self, value):
+    def uint16_to_bytes(self, value):
         """Return the two bytes array corresponding to the unsigned short value
         in Little Endian base order.
         
@@ -183,7 +183,7 @@ class LittleEndian(object):
         return struct.pack("<I", value)[0:2]
 
     @classmethod
-    def uint32ToBytes(self, value):
+    def uint32_to_bytes(self, value):
         """Return the four bytes array corresponding to the unsigned integer
         value in Little Endian base order.
         
@@ -197,7 +197,7 @@ class LittleEndian(object):
         return struct.pack("<Q", value)[0:4]
 
     @classmethod
-    def floatToBytes(self, value):
+    def float_to_bytes(self, value):
         """Return the four bytes array corresponding to the floating point value
         in Little Endian base order.
         
@@ -217,7 +217,7 @@ class BigEndian(object):
     """
 
     @classmethod
-    def bytesToInt16(self, data, start = 0):
+    def bytes_to_int16(self, data, start = 0):
         """Return the signed short value of two bytes of the array in Big
         Endian base order.
         
@@ -232,7 +232,7 @@ class BigEndian(object):
         return struct.unpack('>h', struct.pack('cc', *data[start : start + 2]))[0]
 
     @classmethod
-    def bytesToInt32(self, data, start = 0):
+    def bytes_to_int32(self, data, start = 0):
         """Return the signed integer value of four bytes of the array in Big
         Endian base order.
         
@@ -247,7 +247,7 @@ class BigEndian(object):
         return struct.unpack('>i', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def bytesToUInt16(self, data, start = 0):
+    def bytes_to_uint16(self, data, start = 0):
         """Return the unsigned short value of two bytes of the array in Big
         Endian base order.
         
@@ -262,7 +262,7 @@ class BigEndian(object):
         return struct.unpack('>H', struct.pack('cc', *data[start : start + 2]))[0]
 
     @classmethod
-    def bytesToUInt32(self, data, start = 0):
+    def bytes_to_uint32(self, data, start = 0):
         """Return the unsigned integer value of four bytes of the array in Big
         Endian base order.
         
@@ -277,7 +277,7 @@ class BigEndian(object):
         return struct.unpack('>I', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def bytesToFloat(self, data, start = 0):
+    def bytes_to_float(self, data, start = 0):
         """Return the floating point value of four bytes of the array in Big
         Endian base order.
         
@@ -288,11 +288,11 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return Float.intBitsToFloat(self.bytesToInt32(data, start))
+        #return Float.intBitsToFloat(self.bytes_to_int32(data, start))
         return struct.unpack('>f', struct.pack('cccc', *data[start : start + 4]))[0]
 
     @classmethod
-    def int16ToBytes(self, value):
+    def int16_to_bytes(self, value):
         """Return the two bytes array corresponding to the signed short value in
         Big Endian base order.
         
@@ -306,7 +306,7 @@ class BigEndian(object):
         return struct.pack(">i", value)[2:4]
 
     @classmethod
-    def int32ToBytes(self, value):
+    def int32_to_bytes(self, value):
         """Return the four bytes array corresponding to the signed integer value
         in Big Endian base order.
         
@@ -320,7 +320,7 @@ class BigEndian(object):
         return struct.pack(">q", value)[4:8]
 
     @classmethod
-    def uint16ToBytes(self, value):
+    def uint16_to_bytes(self, value):
         """Return the two bytes array corresponding to the unsigned short value
         in Big Endian base order.
         
@@ -334,7 +334,7 @@ class BigEndian(object):
         return struct.pack(">I", value)[2:4]
 
     @classmethod
-    def uint32ToBytes(self, value):
+    def uint32_to_bytes(self, value):
         """Return the four bytes array corresponding to the unsigned integer
         value in Big Endian base order.
         
@@ -348,7 +348,7 @@ class BigEndian(object):
         return struct.pack(">Q", value)[4:8]
 
     @classmethod
-    def floatToBytes(self, value):
+    def float_to_bytes(self, value):
         """Return the four bytes array corresponding to the floating point value
         in Big Endian base order.
         

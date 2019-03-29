@@ -290,9 +290,9 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
 
             # Creating the command to start the firmware upgrade.
             command = bytearray(self.FIRMWARE_UPGRADE_COMMAND) \
-                + bytearray(LittleEndian.uint32ToBytes(
+                + bytearray(LittleEndian.uint32_to_bytes(
                     self._firmware_file.get_size())) \
-                + bytearray(LittleEndian.uint32ToBytes(
+                + bytearray(LittleEndian.uint32_to_bytes(
                     self._firmware_crc))
         except (OSError, ValueError) as e:
             raise e
@@ -324,7 +324,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
             # Check whether the message received from the node contains the same
             # CRC code that we have sent.
             if message.encode('ISO-8859-1') != \
-                LittleEndian.uint32ToBytes(self._firmware_crc):
+                LittleEndian.uint32_to_bytes(self._firmware_crc):
                 self._on_load_error(FirmwareUpgradeError.TRANSMISSION_ERROR)
 
             # Sending firmware in blocks of packets.

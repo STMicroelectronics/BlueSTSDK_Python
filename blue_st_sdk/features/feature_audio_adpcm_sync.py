@@ -100,8 +100,8 @@ class FeatureAudioADPCMSync(Feature):
                 % (self.DATA_LENGTH_BYTES))
             
         sample = Sample(
-            [LittleEndian.bytesToInt16(data, 0),
-             LittleEndian.bytesToInt32(data, 2)],
+            [LittleEndian.bytes_to_int16(data, 0),
+             LittleEndian.bytes_to_int32(data, 2)],
             self.get_fields_description(),
             None)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)

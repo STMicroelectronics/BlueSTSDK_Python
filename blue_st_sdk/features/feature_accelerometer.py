@@ -107,9 +107,9 @@ class FeatureAccelerometer(Feature):
                 'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
-            [LittleEndian.bytesToInt16(data, offset),
-             LittleEndian.bytesToInt16(data, offset + 2),
-             LittleEndian.bytesToInt16(data, offset + 4)],
+            [LittleEndian.bytes_to_int16(data, offset),
+             LittleEndian.bytes_to_int16(data, offset + 2),
+             LittleEndian.bytes_to_int16(data, offset + 4)],
             self.get_fields_description(),
             timestamp)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
