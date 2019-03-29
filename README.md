@@ -27,7 +27,7 @@ Please follow the official instructions to install the mentioned libraries.
 ## Installation
 The BlueST SDK can be installed through the Python pip package manager.
   ```Shell
-  $ sudo pip install blue_st_sdk
+  $ sudo pip install blue-st-sdk
   ```
 
 

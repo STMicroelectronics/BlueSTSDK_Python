@@ -1,4 +1,4 @@
-bluepy==1.1.4
 futures
-blue_st_sdk
+bluepy==1.1.4
 enum34==1.1.6
+blue_st_sdk
