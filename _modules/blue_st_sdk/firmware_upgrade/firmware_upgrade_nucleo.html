@@ -443,9 +443,9 @@
 
             <span class="c1"># Creating the command to start the firmware upgrade.</span>
             <span class="n">command</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_UPGRADE_COMMAND</span><span class="p">)</span> \
-                <span class="o">+</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32ToBytes</span><span class="p">(</span>
+                <span class="o">+</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_size</span><span class="p">()))</span> \
-                <span class="o">+</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32ToBytes</span><span class="p">(</span>
+                <span class="o">+</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span><span class="p">))</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">e</span>
@@ -477,7 +477,7 @@
             <span class="c1"># Check whether the message received from the node contains the same</span>
             <span class="c1"># CRC code that we have sent.</span>
             <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span> <span class="o">!=</span> \
-                <span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32ToBytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span><span class="p">):</span>
+                <span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_error</span><span class="p">(</span><span class="n">FirmwareUpgradeError</span><span class="o">.</span><span class="n">TRANSMISSION_ERROR</span><span class="p">)</span>
 
             <span class="c1"># Sending firmware in blocks of packets.</span>

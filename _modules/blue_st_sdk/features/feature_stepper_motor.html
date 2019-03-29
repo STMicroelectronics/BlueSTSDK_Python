@@ -274,7 +274,7 @@
                 <span class="s1">&#39;There are no </span><span class="si">%d</span><span class="s1"> bytes available to read.&#39;</span> \
                 <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STATUS_DATA_LENGTH_BYTES</span><span class="p">))</span>
         <span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byteToUInt8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)],</span>
+            <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byte_to_uint8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)],</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_fields_description</span><span class="p">(),</span>
             <span class="n">timestamp</span><span class="p">)</span></div>
         <span class="k">return</span> <span class="n">ExtractedData</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">STATUS_DATA_LENGTH_BYTES</span><span class="p">)</span>

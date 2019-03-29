@@ -253,8 +253,8 @@
                 <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">))</span>
             
         <span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-             <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToInt32</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+            <span class="p">[</span><span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_int16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_int32</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_fields_description</span><span class="p">(),</span>
             <span class="kc">None</span><span class="p">)</span></div>
         <span class="k">return</span> <span class="n">ExtractedData</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">)</span>

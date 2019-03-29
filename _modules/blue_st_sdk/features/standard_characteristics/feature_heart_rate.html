@@ -307,17 +307,17 @@
             <span class="n">hr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
             <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">hr</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="n">hr</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_uint16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
             <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasEnergyExpended</span><span class="p">(</span><span class="n">flags</span><span class="p">):</span>
-            <span class="n">ee</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="n">ee</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_uint16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
             <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ee</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasRRInterval</span><span class="p">(</span><span class="n">flags</span><span class="p">):</span>
-            <span class="n">rri</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span>
+            <span class="n">rri</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_uint16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span>
             <span class="n">offset</span> <span class="o">+=</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rri</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>

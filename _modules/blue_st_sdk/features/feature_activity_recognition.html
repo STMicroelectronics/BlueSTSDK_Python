@@ -280,7 +280,7 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">:</span>
             <span class="c1"># Extract the activity from the feature&#39;s raw data.</span>
             <span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byteToUInt8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+                <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byte_to_uint8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
                  <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()],</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">get_fields_description</span><span class="p">(),</span>
                 <span class="n">timestamp</span><span class="p">)</span>
@@ -288,9 +288,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Extract the activity and the algorithm from the feature&#39;s raw data.</span>
             <span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byteToUInt8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
+                <span class="p">[</span><span class="n">NumberConversion</span><span class="o">.</span><span class="n">byte_to_uint8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span>
                  <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                 <span class="n">NumberConversion</span><span class="o">.</span><span class="n">byteToUInt8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
+                 <span class="n">NumberConversion</span><span class="o">.</span><span class="n">byte_to_uint8</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">get_fields_description</span><span class="p">(),</span>
                 <span class="n">timestamp</span><span class="p">)</span></div>
             <span class="k">return</span> <span class="n">ExtractedData</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>

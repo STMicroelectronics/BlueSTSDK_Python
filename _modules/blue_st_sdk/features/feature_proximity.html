@@ -250,7 +250,7 @@
                 <span class="s1">&#39;There are no </span><span class="si">%d</span><span class="s1"> bytes available to read.&#39;</span> \
                 <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DATA_LENGTH_BYTES</span><span class="p">))</span>
         <span class="n">sample</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_uint16</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_low_range_sensor</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
             <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_low_range_sample</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>

@@ -483,7 +483,7 @@
 
         <span class="c1"># Computing the timestamp.</span>
         <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unwrap_timestamp</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span>
-            <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytesToUInt16</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="n">LittleEndian</span><span class="o">.</span><span class="n">bytes_to_uint16</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
         <span class="c1"># Updating the features.</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">TIMESTAMP_OFFSET_BYTES</span>  <span class="c1"># Timestamp sixe in bytes.</span>
