@@ -57,9 +57,6 @@ from blue_st_sdk.python_utils import lock_for_object
 class _ScannerDelegate(DefaultDelegate):
     """Delegate class to scan Bluetooth Low Energy devices."""
 
-    SCANNING_TIME_DEFAULT_s = 10
-    """Default Bluetooth scanning timeout in seconds."""
-
     _SCANNING_TIME_PROCESS_s = 1
     """Default Bluetooth scanning timeout in seconds for a single call to
     bluepy's process() method."""
@@ -113,7 +110,7 @@ class _ScannerDelegate(DefaultDelegate):
 
             # Creating new node.
             node = Node(scan_entry)
-            manager.add_node(node)
+            manager._add_node(node)
         except (BTLEException, InvalidBLEAdvertisingDataException) as e:
             if self._show_warnings:
                 self._logger.warning(str(e))
@@ -129,21 +126,18 @@ class _StoppableScanner(threading.Thread):
     :meth:`stop()` method.
     """
 
-    def __init__(self, show_warnings=False, timeout_s=0, *args, **kwargs):
+    def __init__(self, show_warnings=False, *args, **kwargs):
         """Constructor.
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
                 discovering devices not respecting the BlueSTSDK's advertising
                 data format, nothing otherwise.
-            timeout_s (int, optional): Time in seconds to wait before stopping
-                the discovery process.
         """
         super(_StoppableScanner, self).__init__(*args, **kwargs)
         self._stop_called = threading.Event()
         self._process_done = threading.Event()
         self._scanner = Scanner().withDelegate(_ScannerDelegate(show_warnings))
-        self._timeout_s = timeout_s
 
     def run(self):
         """Run the thread."""
@@ -154,18 +148,13 @@ class _StoppableScanner(threading.Thread):
         try:
             self._exc = None
             self._scanner.start(passive=False)
-            elapsed_time_s = 0
             while True:
                 #print('.')
                 self._scanner.process(_ScannerDelegate._SCANNING_TIME_PROCESS_s)
-                elapsed_time_s += _ScannerDelegate._SCANNING_TIME_PROCESS_s
                 if self._stop_called.isSet():
                     self._process_done.set()
                     break
-                if elapsed_time_s >= self._timeout_s:
-                    self._process_done.set()
-                    self.stop()
-                    break
+ 
         except BTLEException as e:
             # Save details of the exception raised but don't re-raise, just
             # complete the function.
@@ -211,6 +200,9 @@ class Manager(object):
     :class:`blue_st_sdk.manager.ManagerListener` class.
     Each callback is performed asynchronously by a thread running in background.
     """
+
+    SCANNING_TIME_DEFAULT_s = 10
+    """Default Bluetooth scanning timeout in seconds."""
 
     _INSTANCE = None
     """Instance object."""
@@ -261,59 +253,71 @@ class Manager(object):
             self._INSTANCE = Manager()
         return self._INSTANCE
 
-    def discover(self, show_warnings=False, timeout_s=0):
+    def discover(self, timeout_s=SCANNING_TIME_DEFAULT_s, asynchronous=False,
+        show_warnings=False):
         """Perform the discovery process.
+
+        This method can be run in synchronous (blocking) or asynchronous
+        (non-blocking) way. Default is synchronous.
 
         The discovery process will last *timeout_s* seconds if provided, a
         default timeout otherwise.
 
-        Synchronous method.
-
         Args:
+            timeout_s (int, optional): Time in seconds to wait before stopping
+                the discovery process.
+            asynchronous (bool, optional): If True the method is run in
+                asynchronous way, thus non-blocking the execution of the thread,
+                the opposite otherwise.
             show_warnings (bool, optional): If True shows warnings, if any, when
                 discovering devices not respecting the BlueSTSDK's advertising
                 data format, nothing otherwise.
-            timeout_s (int, optional): Time in seconds to wait before stopping
-                the discovery process.
 
         Returns:
-            bool: True if the discovery has finished, False if a discovery is
-            already running.
+            bool: True if the synchronous discovery has finished or if the
+            asynchronous discovery has started, False if a discovery is already
+            running.
 
         Raises:
             'BTLEException' is raised if this method is not run as root.
         """
         try:
-            if self.is_discovering():
-                return False
-            if timeout_s == 0:
-                timeout_s = _ScannerDelegate.SCANNING_TIME_DEFAULT_s
-            self._discovered_nodes = []
-            self._notify_discovery_change(True)
-            self._scanner = Scanner().withDelegate(_ScannerDelegate(show_warnings))
-            self._scanner.scan(timeout_s)
-            self._notify_discovery_change(False)
-            return True
+            if not asynchronous:
+                # Synchronous version.
+                if self.is_discovering():
+                    return False
+                self._discovered_nodes = []
+                self._notify_discovery_change(True)
+                self._scanner = \
+                    Scanner().withDelegate(_ScannerDelegate(show_warnings))
+                self._scanner.scan(timeout_s)
+                self._notify_discovery_change(False)
+                return True
+            else:
+                # Asynchronous version.
+                if not self.start_discovery(show_warnings):
+                    return False
+                threading.Timer(timeout_s, self.stop_discovery).start()
+                return True
         except BTLEException as e:
             msg = '\nBluetooth scanning requires root privilege, ' \
                   'so please run the script with \"sudo\".'
             raise BTLEException(e.code, msg)
 
-    def start_discovery(self, show_warnings=False, timeout_s=0):
+    def start_discovery(self, show_warnings=False):
         """Start the discovery process.
 
-        The discovery process will last *timeout_s* seconds if provided, a
-        default timeout otherwise.
+        This is an asynchronous (non-blocking) method.
 
-        Asynchronous method, to be followed by a call to
-        :meth:`stop_discovery()`'
+        The discovery process will last indefinitely, until stopped by a call to
+        :meth:`stop_discovery()`.
+        This method can be particularly useful when starting a discovery process
+        from an interactive GUI.
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
                 discovering devices not respecting the BlueSTSDK's advertising
                 data format, nothing otherwise.
-            timeout_s (int, optional): Time in seconds to wait before stopping
-                the discovery process.
 
         Returns:
             bool: True if the discovery has started, False if a discovery is
@@ -326,11 +330,9 @@ class Manager(object):
             #print('start_discovery()')
             if self.is_discovering():
                 return False
-            if timeout_s == 0:
-                timeout_s = _ScannerDelegate.SCANNING_TIME_DEFAULT_s
             self._discovered_nodes = []
             self._notify_discovery_change(True)
-            self._scanner_thread = _StoppableScanner(show_warnings, timeout_s)
+            self._scanner_thread = _StoppableScanner(show_warnings)
             self._scanner_thread.start()
             return True
         except BTLEException as e:
@@ -339,8 +341,9 @@ class Manager(object):
     def stop_discovery(self):
         """Stop a discovery process.
 
-        Asynchronous method, to be preceeded by a call to
-        :meth:`start_discovery()`.
+        To be preceeded by a call to :meth:`start_discovery()`.
+        This method can be particularly useful when stopping a discovery process
+        from an interactive GUI.
 
         Returns:
             bool: True if the discovery has been stopped, False if there are no
@@ -408,7 +411,7 @@ class Manager(object):
             # Calling user-defined callback.
             self._thread_pool.submit(listener.on_node_discovered(self, node))
 
-    def add_node(self, new_node):
+    def _add_node(self, new_node):
         """Insert a node to the Manager, and notify the listeners about it.
 
         Args:
@@ -428,7 +431,7 @@ class Manager(object):
         return True
 
     def get_nodes(self):
-        """Get the list of the discovered nodes.
+        """Get the list of the discovered nodes until the time of invocation.
 
         Returns:
             list of :class:`blue_st_sdk.node.Node`: The list of all discovered

@@ -249,7 +249,7 @@ def main(argv):
         while True:
             # Synchronous discovery of Bluetooth devices.
             print('Scanning Bluetooth devices...\n')
-            manager.discover(False, SCANNING_TIME_s)
+            manager.discover(SCANNING_TIME_s)
 
             # Getting discovered devices.
             devices = manager.get_nodes()

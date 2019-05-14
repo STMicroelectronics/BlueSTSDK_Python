@@ -215,12 +215,7 @@ def main(argv):
 
         # Synchronous discovery of Bluetooth devices.
         print('Scanning Bluetooth devices...\n')
-        # Synchronous discovery.
-        #manager.discover(False, SCANNING_TIME_s)
-        # Asynchronous discovery.
-        manager.start_discovery(False, SCANNING_TIME_s)
-        time.sleep(SCANNING_TIME_s)
-        manager.stop_discovery()
+        manager.discover(SCANNING_TIME_s)
 
         # Getting discovered devices.
         discovered_devices = manager.get_nodes()
