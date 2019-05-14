@@ -1084,6 +1084,12 @@ Id and to register/add new features to already defined devices.</p>
 <p>It notifies a new discovered node through the
 <a class="reference internal" href="#blue_st_sdk.manager.ManagerListener" title="blue_st_sdk.manager.ManagerListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.manager.ManagerListener</span></code></a> class.
 Each callback is performed asynchronously by a thread running in background.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.manager.Manager.SCANNING_TIME_DEFAULT_s">
+<code class="descname">SCANNING_TIME_DEFAULT_s</code><em class="property"> = 10</em><a class="headerlink" href="#blue_st_sdk.manager.Manager.SCANNING_TIME_DEFAULT_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default Bluetooth scanning timeout in seconds.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="blue_st_sdk.manager.Manager.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.__init__" title="Permalink to this definition">¶</a></dt>
@@ -1137,46 +1143,32 @@ be added.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="blue_st_sdk.manager.Manager.add_node">
-<code class="descname">add_node</code><span class="sig-paren">(</span><em>new_node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.add_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.add_node" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert a node to the Manager, and notify the listeners about it.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_node</strong> (<a class="reference internal" href="#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node to add.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the node is added, False if a node with the same tag
-is already present.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="blue_st_sdk.manager.Manager.discover">
-<code class="descname">discover</code><span class="sig-paren">(</span><em>show_warnings=False</em>, <em>timeout_s=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.discover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.discover" title="Permalink to this definition">¶</a></dt>
+<code class="descname">discover</code><span class="sig-paren">(</span><em>timeout_s=10</em>, <em>asynchronous=False</em>, <em>show_warnings=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.discover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.discover" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform the discovery process.</p>
+<p>This method can be run in synchronous (blocking) or asynchronous
+(non-blocking) way. Default is synchronous.</p>
 <p>The discovery process will last <em>timeout_s</em> seconds if provided, a
 default timeout otherwise.</p>
-<p>Synchronous method.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timeout_s</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Time in seconds to wait before stopping
+the discovery process.</li>
+<li><strong>asynchronous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True the method is run in
+asynchronous way, thus non-blocking the execution of the thread,
+the opposite otherwise.</li>
 <li><strong>show_warnings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True shows warnings, if any, when
 discovering devices not respecting the BlueSTSDK’s advertising
 data format, nothing otherwise.</li>
-<li><strong>timeout_s</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Time in seconds to wait before stopping
-the discovery process.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the discovery has finished, False if a discovery is
-already running.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the synchronous discovery has finished or if the
+asynchronous discovery has started, False if a discovery is already
+running.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
@@ -1255,7 +1247,7 @@ if not found.</td>
 <dl class="method">
 <dt id="blue_st_sdk.manager.Manager.get_nodes">
 <code class="descname">get_nodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.get_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.get_nodes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of the discovered nodes.</p>
+<dd><p>Get the list of the discovered nodes until the time of invocation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1340,34 +1332,27 @@ Node already bounded with the device will be kept in the list.</p>
 
 <dl class="method">
 <dt id="blue_st_sdk.manager.Manager.start_discovery">
-<code class="descname">start_discovery</code><span class="sig-paren">(</span><em>show_warnings=False</em>, <em>timeout_s=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.start_discovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.start_discovery" title="Permalink to this definition">¶</a></dt>
+<code class="descname">start_discovery</code><span class="sig-paren">(</span><em>show_warnings=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.start_discovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.start_discovery" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the discovery process.</p>
-<p>The discovery process will last <em>timeout_s</em> seconds if provided, a
-default timeout otherwise.</p>
-<p>Asynchronous method, to be followed by a call to
-<a class="reference internal" href="#blue_st_sdk.manager.Manager.stop_discovery" title="blue_st_sdk.manager.Manager.stop_discovery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stop_discovery()</span></code></a>’</p>
+<p>This is an asynchronous (non-blocking) method.</p>
+<p>The discovery process will last indefinitely, until stopped by a call to
+<a class="reference internal" href="#blue_st_sdk.manager.Manager.stop_discovery" title="blue_st_sdk.manager.Manager.stop_discovery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stop_discovery()</span></code></a>.
+This method can be particularly useful when starting a discovery process
+from an interactive GUI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>show_warnings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True shows warnings, if any, when
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show_warnings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – If True shows warnings, if any, when
 discovering devices not respecting the BlueSTSDK’s advertising
-data format, nothing otherwise.</li>
-<li><strong>timeout_s</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Time in seconds to wait before stopping
-the discovery process.</li>
-</ul>
-</td>
+data format, nothing otherwise.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the discovery has started, False if a discovery is
-already running.</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the discovery has started, False if a discovery is
+already running.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
-</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">‘BTLEException’ is raised if this method is not run as root.</p>
-</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">‘BTLEException’ is raised if this method is not run as root.</td>
 </tr>
 </tbody>
 </table>
@@ -1377,8 +1362,9 @@ already running.</p>
 <dt id="blue_st_sdk.manager.Manager.stop_discovery">
 <code class="descname">stop_discovery</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/manager.html#Manager.stop_discovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.manager.Manager.stop_discovery" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop a discovery process.</p>
-<p>Asynchronous method, to be preceeded by a call to
-<a class="reference internal" href="#blue_st_sdk.manager.Manager.start_discovery" title="blue_st_sdk.manager.Manager.start_discovery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_discovery()</span></code></a>.</p>
+<p>To be preceeded by a call to <a class="reference internal" href="#blue_st_sdk.manager.Manager.start_discovery" title="blue_st_sdk.manager.Manager.start_discovery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_discovery()</span></code></a>.
+This method can be particularly useful when stopping a discovery process
+from an interactive GUI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
