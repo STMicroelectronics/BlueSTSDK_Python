@@ -465,7 +465,13 @@ class Node(Peripheral, object):
         self._update_node_status(NodeStatus.CONNECTED)
 
     def disconnect(self):
-        """Close the connection to the node."""
+        """Close the connection to the node and cleans up associated OS
+        resources.
+
+        This means that after a call to this method, the node is no more in a
+        clean state, and a brand new discovery has to be run in order to find
+        the available devices, and possibly the same node in case it is still in
+        a valid range."""
         if not self.is_connected():
             return
         self._update_node_status(NodeStatus.DISCONNECTING)
