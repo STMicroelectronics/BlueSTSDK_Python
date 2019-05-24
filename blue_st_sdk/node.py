@@ -968,7 +968,6 @@ class NodeDelegate(DefaultDelegate):
 
         self._logger = logging.getLogger('BlueSTSDK')
 
-
     def handleNotification(self, char_handle, data):
         """It is called whenever a notification arises.
 
@@ -990,8 +989,10 @@ class NodeDelegate(DefaultDelegate):
                     self._node._debug_console.on_update_characteristic(
                         characteristic, data)
                     return
+
             # Calling on-read callback for the other characteristics.
             self._node._update_features(char_handle, data, True)
+
         except InvalidDataException as e:
             self._logger.warning(str(e))
 
