@@ -1633,7 +1633,12 @@ True otherwise.</td>
 <dl class="method">
 <dt id="blue_st_sdk.node.Node.disconnect">
 <code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/node.html#Node.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.node.Node.disconnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the connection to the node.</p>
+<dd><p>Close the connection to the node and cleans up associated OS
+resources.</p>
+<p>This means that after a call to this method, the node is no more in a
+clean state, and a brand new discovery has to be run in order to find
+the available devices, and possibly the same node in case it is still in
+a valid range.</p>
 </dd></dl>
 
 <dl class="method">
@@ -2151,7 +2156,8 @@ changes of a node’s status.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>node</strong> (<a class="reference internal" href="#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><em>Node</em></a>) – Node that has changed its status.</li>
+<li><strong>node</strong> (<a class="reference internal" href="#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>) – Node that has changed its
+status.</li>
 <li><strong>new_status</strong> (<a class="reference internal" href="#blue_st_sdk.node.NodeStatus" title="blue_st_sdk.node.NodeStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.NodeStatus</span></code></a>) – New status.</li>
 <li><strong>old_status</strong> (<a class="reference internal" href="#blue_st_sdk.node.NodeStatus" title="blue_st_sdk.node.NodeStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.NodeStatus</span></code></a>) – Old status.</li>
 </ul>

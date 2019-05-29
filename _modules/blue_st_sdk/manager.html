@@ -455,7 +455,7 @@
         <span class="k">except</span> <span class="n">BTLEException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bluetooth scanning requires root privilege, &#39;</span> \
                   <span class="s1">&#39;so please run the script with </span><span class="se">\&quot;</span><span class="s1">sudo</span><span class="se">\&quot;</span><span class="s1">.&#39;</span></div>
-            <span class="k">raise</span> <span class="n">BTLEException</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">BTLEException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Manager.start_discovery"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.manager.Manager.start_discovery">[docs]</a>    <span class="k">def</span> <span class="nf">start_discovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Start the discovery process.</span>

@@ -618,7 +618,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_node_status</span><span class="p">(</span><span class="n">NodeStatus</span><span class="o">.</span><span class="n">CONNECTED</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Node.disconnect"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.node.Node.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Close the connection to the node.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Close the connection to the node and cleans up associated OS</span>
+<span class="sd">        resources.</span>
+
+<span class="sd">        This means that after a call to this method, the node is no more in a</span>
+<span class="sd">        clean state, and a brand new discovery has to be run in order to find</span>
+<span class="sd">        the available devices, and possibly the same node in case it is still in</span>
+<span class="sd">        a valid range.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_node_status</span><span class="p">(</span><span class="n">NodeStatus</span><span class="o">.</span><span class="n">DISCONNECTING</span><span class="p">)</span>
@@ -1121,7 +1127,6 @@
 </div>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;BlueSTSDK&#39;</span><span class="p">)</span>
 
-
 <div class="viewcode-block" id="NodeDelegate.handleNotification"><a class="viewcode-back" href="../../blue_st_sdk.html#blue_st_sdk.node.NodeDelegate.handleNotification">[docs]</a>    <span class="k">def</span> <span class="nf">handleNotification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">char_handle</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;It is called whenever a notification arises.</span>
 
@@ -1143,8 +1148,10 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">_debug_console</span><span class="o">.</span><span class="n">on_update_characteristic</span><span class="p">(</span>
                         <span class="n">characteristic</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
                     <span class="k">return</span>
+
             <span class="c1"># Calling on-read callback for the other characteristics.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_node</span><span class="o">.</span><span class="n">_update_features</span><span class="p">(</span><span class="n">char_handle</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
         <span class="k">except</span> <span class="n">InvalidDataException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></div></div>
             <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
@@ -1220,7 +1227,8 @@
         <span class="sd">&quot;&quot;&quot;To be called whenever a node changes its status.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            node (Node): Node that has changed its status.</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): Node that has changed its</span>
+<span class="sd">                status.</span>
 <span class="sd">            new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.</span>
 <span class="sd">            old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.</span>
 
