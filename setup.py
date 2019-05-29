@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blue_st_sdk",
-    version="1.2.1",
+    version="1.3.0",
     author="Davide Aliprandi",
     author_email="davide.aliprandi@gmail.com",
     description="Bluetooth Low Energy abstraction library package.",

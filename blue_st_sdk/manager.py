@@ -302,7 +302,7 @@ class Manager(object):
         except BTLEException as e:
             msg = '\nBluetooth scanning requires root privilege, ' \
                   'so please run the script with \"sudo\".'
-            raise BTLEException(e.code, msg)
+            raise BTLEException(msg)
 
     def start_discovery(self, show_warnings=False):
         """Start the discovery process.

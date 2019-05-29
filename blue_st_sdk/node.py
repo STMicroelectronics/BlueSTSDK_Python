@@ -1074,7 +1074,8 @@ class NodeListener(object):
         """To be called whenever a node changes its status.
 
         Args:
-            node (Node): Node that has changed its status.
+            node (:class:`blue_st_sdk.node.Node`): Node that has changed its
+                status.
             new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
             old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.
 

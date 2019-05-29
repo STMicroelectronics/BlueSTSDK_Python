@@ -58,15 +58,16 @@ from blue_st_sdk.utils.number_conversion import LittleEndian
 import alsaaudio
 ###Audio Stream#########################################################
 
+
 # PRECONDITIONS
 #
-# Please remember to add to the "PYTHONPATH" environment variable the parent
-# folder of the "blue_st_sdk" package.
+# In case you want to modify the SDK, clone the repository and add the location
+# of the "BlueSTSDK_Python" folder to the "PYTHONPATH" environment variable.
 #
 # On Linux:
-#   export PYTHONPATH=/home/<user>/.../<parent-of-blue_st_sdk>/
+#   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
 #
-# Install the following packages:
+# Moreover, install the following packages:
 #   libasound:
 #     sudo apt-get install libasound2-dev
 #   pyalsaaudio:  

@@ -61,8 +61,8 @@ from blue_st_sdk.features import *
 
 # PRECONDITIONS
 #
-# Please remember to add to the "PYTHONPATH" environment variable the location
-# of the "BlueSTSDK_Python" SDK.
+# In case you want to modify the SDK, clone the repository and add the location
+# of the "BlueSTSDK_Python" folder to the "PYTHONPATH" environment variable.
 #
 # On Linux:
 #   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
