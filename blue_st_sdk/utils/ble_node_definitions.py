@@ -39,6 +39,7 @@ import uuid
 import re
 
 from blue_st_sdk.features import *
+from blue_st_sdk.features.audio.adpcm import *
 
 
 # DEFINITIONS
@@ -106,8 +107,7 @@ class Services(object):
 
 
 class Debug(object):
-    """Class to access the board' stdout/stderr streams.
-    """
+    """Class to access stdout/stderr streams."""
 
     DEBUG_BLUESTSDK_SERVICE_UUID = \
         uuid.UUID('00000000' \
@@ -156,7 +156,7 @@ class Debug(object):
 
 
 class Config(object):
-    """Service that allows to configure the board parameters or the features."""
+    """Service that allows to configure device's parameters or features."""
 
     CONFIG_BLUESTSDK_SERVICE_UUID = \
         uuid.UUID('00000000' \
@@ -256,11 +256,62 @@ class FeatureCharacteristic(object):
     }
     """Map from base feature's masks to feature's classes."""
 
+    SENSOR_TILE_BOX_MASK_TO_FEATURE_DIC = {
+        #0x80000000: feature_fft_amplitude.FeatureFFTAmplitude,
+        0x40000000: feature_audio_adpcm_sync.FeatureAudioADPCMSync,
+        0x20000000: feature_switch.FeatureSwitch,
+        #0x10000000: feature_mems_normalized.FeatureMemsNormalized,
+
+        0x08000000: feature_audio_adpcm.FeatureAudioADPCM,
+        #0x04000000: feature_microphone_level.FeatureMicrophoneLevel,
+        0x02000000: feature_proximity.FeatureProximity,
+        #0x01000000: feature_luminosity.FeatureLuminosity,
+
+        0x00800000: feature_accelerometer.FeatureAccelerometer, #00e00000
+        0x00400000: feature_gyroscope.FeatureGyroscope,         #00e00000
+        0x00200000: feature_magnetometer.FeatureMagnetometer,   #00e00000
+        0x00100000: feature_pressure.FeaturePressure,           #001d0000
+
+        0x00080000: feature_humidity.FeatureHumidity,           #001d0000
+        0x00040000: feature_temperature.FeatureTemperature,     #001d0000
+        #0x00020000: feature_battery.FeatureBattery,
+        0x00010000: feature_temperature.FeatureTemperature,     #001d0000
+
+        #0x00008000: feature_gyroscope_normalized.FeatureGyroscopeNormalized,
+        #0x00004000: feature_euler_angle.FeatureEulerAngle,
+        #0x00002000: ,
+        #0x00001000: feature_sd_logging.FeatureSDLogging,
+
+        #0x00000800: feature_magnetometer_normalized.FeatureMagnetometerNormalized,
+        #0x00000400: feature_acceleration_event.FeatureAccelerometerEvent,
+        #0x00000200: feature_event_counter.FeatureEventCounter,
+        #0x00000100: feature_mems_sensor_fusion_compact.FeatureMemsSensorFusionCompact,
+
+        #0x00000080: feature_mems_sensor_fusion.FeatureMemsSensorFusion,
+        #0x00000020: feature_motion_intensity.FeatureMotionIntensity,
+        #0x00000040: feature_compass.FeatureCompass,
+        0x00000010: feature_activity_recognition.FeatureActivityRecognition,
+
+        #0x00000008: feature_carry_position.FeatureCarryPosition,
+        0x00000004: feature_proximity_gesture.FeatureProximityGesture
+        #0x00000002: feature_mems_gesture.FeatureMemsGesture,
+        #0x00000001: feature_pedometer.FeaturePedometer
+    }
+    """Map from SensorTile.box feature's masks to feature's classes."""
+
     EXTENDED_MASK_TO_FEATURE_DIC = {
+        #0x00000001: feature_audio_opus.FeatureAudioOpus,
+        #0x00000002: feature_audio_opus_configuration.FeatureAudioOpusConfiguration,
         0x00000003: feature_audio_scene_classification.FeatureAudioSceneClassification
         #0x00000004: feature_ai_logging.FeatureAILogging,
         #0x00000005: feature_fft_amplitude.FeatureFFTAmplitude,
-        #0x00000006: feature_motor_time_parameter.FeatureMotorTimeParameter
+        #0x00000006: feature_motor_time_parameter.FeatureMotorTimeParameter,
+        #0x00000007: feature_predictive_speed_status.FeaturePredictiveSpeedStatus,
+        #0x00000008: feature_predictive_acceleration_status.FeaturePredictiveAccelerationStatus,
+        #0x00000009: feature_predictive_frequency_domain_status.FeaturePredictiveFrequencyDomainStatus,
+        #0x0000000A: feature_motion_algorithm.FeatureMotionAlgorithm,
+        #0x0000000D: feature_euler_angle.FeatureEulerAngle,
+        #0x0000000E: feature_fitness_activity.FeatureFitnessActivity
     }
     """Map from extended feature's masks to feature's classes."""
 

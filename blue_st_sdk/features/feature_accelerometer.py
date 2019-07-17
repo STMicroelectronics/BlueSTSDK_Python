@@ -34,8 +34,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -99,11 +99,11 @@ class FeatureAccelerometer(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise InvalidDataException(
+            raise BlueSTInvalidDataException(
                 'There are no %s bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
@@ -173,10 +173,10 @@ class FeatureAccelerometer(Feature):
             operation is successful, <nan> values otherwise.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         try:
@@ -184,5 +184,5 @@ class FeatureAccelerometer(Feature):
             return [FeatureAccelerometer.get_accelerometer_x(self._get_sample()),
                 FeatureAccelerometer.get_accelerometer_y(self._get_sample()),
                 FeatureAccelerometer.get_accelerometer_z(self._get_sample())]
-        except (InvalidOperationException, InvalidDataException) as e:
+        except (BlueSTInvalidOperationException, BlueSTInvalidDataException) as e:
             raise e

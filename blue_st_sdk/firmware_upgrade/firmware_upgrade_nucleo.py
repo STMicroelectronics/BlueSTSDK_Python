@@ -45,13 +45,13 @@ from blue_st_sdk.debug_console import DebugConsoleListener
 from blue_st_sdk.firmware_upgrade.firmware_upgrade import FirmwareUpgrade
 from blue_st_sdk.firmware_upgrade.firmware_upgrade import FirmwareUpgradeError
 from blue_st_sdk.utils.number_conversion import LittleEndian
-from blue_st_sdk.python_utils import lock
+from blue_st_sdk.utils.python_utils import lock
 
 
 # CLASSES
 
 class FirmwareUpgradeNucleo(FirmwareUpgrade):
-    """Class that implements the firmware upgrade capability for a Nucleo board.
+    """Class that implements the firmware upgrade capability for a Nucleo device.
     """
 
     def __init__(self, debug_console):
@@ -111,7 +111,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
                 _type == NodeType.SENSOR_TILE or \
                 _type == NodeType.BLUE_COIN or \
                 _type == NodeType.STEVAL_BCN002V1 or \
-                _type == NodeType.SENSOR_TILE_101:
+                _type == NodeType.SENSOR_TILE_BOX:
                 return FirmwareUpgradeNucleo(debug)
         return None
 
@@ -145,7 +145,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
     """Class that handles the upgrade of the firmware file to a device via
     Bluetooth."""
 
-    FIRMWARE_UPGRADE_COMMAND = 'upgradeFw'
+    FIRMWARE_UPGRADE_COMMAND = b'upgradeFw'
     """Firmware upgrade command."""
 
     ACK_MSG = u'\u0001'  # Unicode character
@@ -227,17 +227,24 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
         """Notifies to the user that the upload on the file has completed."""
         for listener in self._firmware_upgrade_console._listeners:
             listener.on_upgrade_firmware_complete(self,
-                self._firmware_file)
+                self._firmware_file,
+                self._bytes_sent)
         self._firmware_upgrade_console._set_listener(None)
 
     #def _on_timeout(self):
     #    """Timeout callback."""
-    #    print('_on_timeout')
     #    self._on_load_error(FirmwareUpgradeError.TRANSMISSION_ERROR)
     #    self._block_shift += 1
 
     def _get_block_size(self):
-        return max(1, self.BLOCK_OF_PACKETS_SIZE / ( 1 << (self._block_shift)))
+        """Getting block size.
+
+        Returns:
+            int: The block size.
+        """
+        #return int(max(1,
+        #    self.BLOCK_OF_PACKETS_SIZE / ( 1 << (self._block_shift))))
+        return self.BLOCK_OF_PACKETS_SIZE
 
     def _send_block(self):
         """Sending a block of packets through the debug console.
@@ -260,13 +267,15 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
             except Exception as e:
                 return False
 
-            # Sending data throught the debug console.
+            # Chek size of data.
             if len(data) != size_to_read:
                 return False
+            
+            # Sending data throught the debug console.
+            self._bytes_sent += size_to_read
             if self._firmware_upgrade_console._debug_console.write(data) \
                 != size_to_read:
                 return False
-            self._bytes_sent += size_to_read
 
         return True
 
@@ -289,11 +298,16 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
             self._firmware_crc = self._firmware_file.get_crc_32()
 
             # Creating the command to start the firmware upgrade.
-            command = bytearray(self.FIRMWARE_UPGRADE_COMMAND) \
-                + bytearray(LittleEndian.uint32_to_bytes(
-                    self._firmware_file.get_size())) \
-                + bytearray(LittleEndian.uint32_to_bytes(
-                    self._firmware_crc))
+            # Python 2.
+            #command = bytearray(self.FIRMWARE_UPGRADE_COMMAND, encoding='utf8') \
+            #    + bytearray(LittleEndian.uint32_to_bytes(
+            #        self._firmware_file.get_size()), encoding='utf8') \
+            #    + bytearray(LittleEndian.uint32_to_bytes(
+            #        self._firmware_crc), encoding='utf8')
+            # Python 3.
+            command = self.FIRMWARE_UPGRADE_COMMAND \
+                + LittleEndian.uint32_to_bytes(self._firmware_file.get_size()) \
+                + LittleEndian.uint32_to_bytes(self._firmware_crc)
         except (OSError, ValueError) as e:
             raise e
 
@@ -332,12 +346,17 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
             self._number_of_packets_received = 0
             while self._firmware_file.get_size() - self._bytes_sent > 0:
                 if not self._send_block():
-                    self._on_load_error(FirmwareUpgradeError.CORRUPTED_FILE_ERROR)
+                    self._on_load_error(
+                        FirmwareUpgradeError.CORRUPTED_FILE_ERROR)
                     break
+
         elif self._loading_file_status == LoadingFileStatus.ACK_CHECK:
             # Transfer completed.
             #self._timeout.cancel()
-            if message.encode('ISO-8859-1').lower() == self.ACK_MSG.lower():
+            # Python 2.
+            #if message.encode('ISO-8859-1').lower() == self.ACK_MSG.lower():
+            # Python 3.
+            if message.lower() == self.ACK_MSG.lower():
                 self._on_load_complete()
             else:
                 self._on_load_error(FirmwareUpgradeError.CORRUPTED_FILE_ERROR)

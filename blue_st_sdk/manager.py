@@ -46,10 +46,11 @@ from bluepy.btle import BTLEException
 
 from blue_st_sdk.node import Node
 from blue_st_sdk.utils.ble_node_definitions import FeatureCharacteristic
-from blue_st_sdk.utils.blue_st_exceptions import InvalidFeatureBitMaskException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidBLEAdvertisingDataException
-from blue_st_sdk.python_utils import lock
-from blue_st_sdk.python_utils import lock_for_object
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidFeatureBitMaskException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidAdvertisingDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.python_utils import lock
+from blue_st_sdk.utils.python_utils import lock_for_object
 
 
 # CLASSES
@@ -74,7 +75,6 @@ class _ScannerDelegate(DefaultDelegate):
         self._logger = logging.getLogger('BlueSTSDK')
         self._show_warnings = show_warnings
 
-
     def handleDiscovery(self, scan_entry, is_new_device, is_new_data):
         """Discovery handling callback.
 
@@ -91,19 +91,21 @@ class _ScannerDelegate(DefaultDelegate):
                 otherwise.
             is_new_data (bool): True if new or updated advertising data is
                 available.
+
+        Raises:
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
+                if an advertising data has a format not recognized by the
+                BlueSTSDK.
         """
         # Getting a Manager's instance.
         manager = Manager.instance()
 
-        # Getting device's address.
-        device_address = scan_entry.addr
-
         try:
-            # If the node has already been added, skip adding it again, rather
+            # If the node has already been added skip adding it again, otherwise
             # update it.
             nodes = manager.get_nodes()[:]
             for node in nodes:
-                if node.get_tag() == device_address:
+                if node.get_tag() == scan_entry.addr:
                     node.is_alive(scan_entry.rssi)
                     node.update_advertising_data(scan_entry.getScanData())
                     return
@@ -111,7 +113,7 @@ class _ScannerDelegate(DefaultDelegate):
             # Creating new node.
             node = Node(scan_entry)
             manager._add_node(node)
-        except (BTLEException, InvalidBLEAdvertisingDataException) as e:
+        except (BlueSTInvalidAdvertisingDataException, BTLEException) as e:
             if self._show_warnings:
                 self._logger.warning(str(e))
 
@@ -134,26 +136,33 @@ class _StoppableScanner(threading.Thread):
                 discovering devices not respecting the BlueSTSDK's advertising
                 data format, nothing otherwise.
         """
-        super(_StoppableScanner, self).__init__(*args, **kwargs)
-        self._stop_called = threading.Event()
-        self._process_done = threading.Event()
-        self._scanner = Scanner().withDelegate(_ScannerDelegate(show_warnings))
+        try:
+            super(_StoppableScanner, self).__init__(*args, **kwargs)
+            self._stop_called = threading.Event()
+            self._process_done = threading.Event()
+            with lock(self):
+                self._scanner = Scanner().withDelegate(_ScannerDelegate(show_warnings))
+        except BTLEException as e:
+            # Save details of the exception raised but don't re-raise, just
+            # complete the function.
+            import sys
+            self._exc = sys.exc_info()
 
     def run(self):
         """Run the thread."""
-        #print('run()')
         self._stop_called.clear()
         self._process_done.clear()
-        self._scanner.clear()
         try:
-            self._exc = None
-            self._scanner.start(passive=False)
-            while True:
-                #print('.')
-                self._scanner.process(_ScannerDelegate._SCANNING_TIME_PROCESS_s)
-                if self._stop_called.isSet():
-                    self._process_done.set()
-                    break
+            with lock(self):
+                self._scanner.clear()
+                self._exc = None
+                self._scanner.start(passive=False)
+                while True:
+                    #print('.')
+                    self._scanner.process(_ScannerDelegate._SCANNING_TIME_PROCESS_s)
+                    if self._stop_called.isSet():
+                        self._process_done.set()
+                        break
  
         except BTLEException as e:
             # Save details of the exception raised but don't re-raise, just
@@ -163,13 +172,13 @@ class _StoppableScanner(threading.Thread):
 
     def stop(self):
         """Stop the thread."""
-        #print('stop()')
         self._stop_called.set()
         while not (self._process_done.isSet() or self._exc):
             pass
         try:
             self._exc = None
-            self._scanner.stop()
+            with lock(self):
+                self._scanner.stop()
         except BTLEException as e:
             # Save details of the exception raised but don't re-raise, just
             # complete the function.
@@ -180,13 +189,14 @@ class _StoppableScanner(threading.Thread):
         """Join the thread.
         
         Raises:
-            'BTLEException' is raised if this method is not run as root.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if this method is not run as root.
         """
         super(_StoppableScanner, self).join()
         if self._exc:
             msg = '\nBluetooth scanning requires root privilege, ' \
                   'so please run the script with \"sudo\".'
-            raise BTLEException(0, msg)
+            raise BlueSTInvalidOperationException(msg)
 
 
 class Manager(object):
@@ -217,8 +227,13 @@ class Manager(object):
     """
 
     def __init__(self):
-        """Constructor."""
-        # Raise an exception if an object has already been instantiated.
+        """Constructor.
+
+        Raises:
+            :exc:`Exception` is raised in case an instance of the same class has
+            already been instantiated.
+        """
+        # Raise an exception if an instance has already been instantiated.
         if self._INSTANCE is not None:
             raise Exception('An instance of \'Manager\' class already exists.')
 
@@ -263,6 +278,9 @@ class Manager(object):
         The discovery process will last *timeout_s* seconds if provided, a
         default timeout otherwise.
 
+        Please note that when running a discovery process, the already connected
+        devices get disconnected (limitation intrinsic to the bluepy library).
+
         Args:
             timeout_s (int, optional): Time in seconds to wait before stopping
                 the discovery process.
@@ -279,7 +297,8 @@ class Manager(object):
             running.
 
         Raises:
-            'BTLEException' is raised if this method is not run as root.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if this method is not run as root.
         """
         try:
             if not asynchronous:
@@ -288,9 +307,10 @@ class Manager(object):
                     return False
                 self._discovered_nodes = []
                 self._notify_discovery_change(True)
-                self._scanner = \
-                    Scanner().withDelegate(_ScannerDelegate(show_warnings))
-                self._scanner.scan(timeout_s)
+                with lock(self):
+                    self._scanner = \
+                        Scanner().withDelegate(_ScannerDelegate(show_warnings))
+                    self._scanner.scan(timeout_s)
                 self._notify_discovery_change(False)
                 return True
             else:
@@ -302,7 +322,7 @@ class Manager(object):
         except BTLEException as e:
             msg = '\nBluetooth scanning requires root privilege, ' \
                   'so please run the script with \"sudo\".'
-            raise BTLEException(msg)
+            raise BlueSTInvalidOperationException(msg)
 
     def start_discovery(self, show_warnings=False):
         """Start the discovery process.
@@ -314,6 +334,9 @@ class Manager(object):
         This method can be particularly useful when starting a discovery process
         from an interactive GUI.
 
+        Please note that when running a discovery process, the already connected
+        devices get disconnected (limitation intrinsic to the bluepy library).
+
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
                 discovering devices not respecting the BlueSTSDK's advertising
@@ -324,7 +347,8 @@ class Manager(object):
             already running.
 
         Raises:
-            'BTLEException' is raised if this method is not run as root.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if this method is not run as root.
         """
         try:
             #print('start_discovery()')
@@ -336,7 +360,9 @@ class Manager(object):
             self._scanner_thread.start()
             return True
         except BTLEException as e:
-            raise e
+            msg = '\nBluetooth scanning requires root privilege, ' \
+                  'so please run the script with \"sudo\".'
+            raise BlueSTInvalidOperationException(msg)
 
     def stop_discovery(self):
         """Stop a discovery process.
@@ -350,7 +376,8 @@ class Manager(object):
             running discovery processes.
 
         Raises:
-            'BTLEException' is raised if this method is not run as root.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if this method is not run as root.
         """
         try:
             #print('stop_discovery()')
@@ -361,7 +388,9 @@ class Manager(object):
                 return True
             return False
         except BTLEException as e:
-            raise e
+            msg = '\nBluetooth scanning requires root privilege, ' \
+                  'so please run the script with \"sudo\".'
+            raise BlueSTInvalidOperationException(msg)
 
     def is_discovering(self):
         """Check the discovery process.
@@ -378,14 +407,17 @@ class Manager(object):
         Node already bounded with the device will be kept in the list.
 
         Raises:
-            'BTLEException' is raised if this method is not run as root.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if this method is not run as root.
         """
         try:
             if self.is_discovering():
                 self.stop_discovery()
             self.remove_nodes()
         except BTLEException as e:
-            raise e
+            msg = '\nBluetooth scanning requires root privilege, ' \
+                  'so please run the script with \"sudo\".'
+            raise BlueSTInvalidOperationException(msg)
 
     def _notify_discovery_change(self, status):
         """Notify :class:`blue_st_sdk.manager.ManagerListener` objects that the
@@ -412,7 +444,8 @@ class Manager(object):
             self._thread_pool.submit(listener.on_node_discovered(self, node))
 
     def _add_node(self, new_node):
-        """Insert a node to the Manager, and notify the listeners about it.
+        """Add a node to the Manager and notify the listeners, or update its
+        advertising data in case it has been already discovered previously.
 
         Args:
             new_node (:class:`blue_st_sdk.node.Node`): Node to add.
@@ -422,13 +455,15 @@ class Manager(object):
             is already present.
         """
         with lock_for_object(self._discovered_nodes):
-            new_tag = new_node.get_tag()
-            for node in self._discovered_nodes:
-                if new_tag == node.get_tag():
-                    return False
-            self._discovered_nodes.append(new_node)
-        self._notify_new_node_discovered(new_node)
-        return True
+            old_node = self.get_node_with_tag(new_node.get_tag())
+            if old_node is not None:
+                old_node.is_alive(new_node.get_last_rssi())
+                old_node.update_advertising_data(new_node.get_advertising_data())
+                return False
+            else:
+                self._discovered_nodes.append(new_node)
+                self._notify_new_node_discovered(new_node)
+                return True
 
     def get_nodes(self):
         """Get the list of the discovered nodes until the time of invocation.
@@ -504,7 +539,7 @@ class Manager(object):
                 one bit set to "1".
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidFeatureBitMaskException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidFeatureBitMaskException`
                 is raised when a feature is in a non-power-of-two position.
         """
 
@@ -515,7 +550,7 @@ class Manager(object):
         # mask_to_features_dic[0x10000000] = my_feature.MyFeature
         # try:
         #     Manager.add_features_to_node(0x80, mask_to_features_dic)
-        # except InvalidFeatureBitMaskException as e:
+        # except BlueSTInvalidFeatureBitMaskException as e:
         #     print(e)
 
         # Synchronous discovery of Bluetooth devices.
@@ -538,7 +573,7 @@ class Manager(object):
             mask = mask << 1
 
         if bool(decoder_to_check):
-            raise InvalidFeatureBitMaskException('Not all keys of the '
+            raise BlueSTInvalidFeatureBitMaskException('Not all keys of the '
                 'mask-to-features dictionary have a single bit set to "1".')
 
     @classmethod

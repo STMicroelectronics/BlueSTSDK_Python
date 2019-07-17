@@ -38,27 +38,30 @@ node and allocating the needed resources.
 from abc import ABCMeta
 from abc import abstractmethod
 from concurrent.futures import ThreadPoolExecutor
+import threading
+import logging
 from datetime import datetime
 from bluepy.btle import Peripheral
 from bluepy.btle import DefaultDelegate
+from bluepy.btle import BTLEException
 from enum import Enum
 import struct
 import itertools
-import logging
+import time
 
 import blue_st_sdk.manager
-from blue_st_sdk.python_utils import lock
+from blue_st_sdk.advertising_data.blue_st_advertising_data_parser import BlueSTAdvertisingDataParser
 from blue_st_sdk.utils.ble_node_definitions import Debug
 from blue_st_sdk.utils.ble_node_definitions import FeatureCharacteristic
 from blue_st_sdk.utils.ble_node_definitions import TIMESTAMP_OFFSET_BYTES
-from blue_st_sdk.utils.ble_advertising_data_parser import BLEAdvertisingDataParser
-from blue_st_sdk.utils.blue_st_exceptions import InvalidBLEAdvertisingDataException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidAdvertisingDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 from blue_st_sdk.utils.uuid_to_feature_map import UUIDToFeatureMap
 from blue_st_sdk.utils.number_conversion import LittleEndian
 from blue_st_sdk.utils.unwrap_timestamp import UnwrapTimestamp
 from blue_st_sdk.debug_console import DebugConsole
+from blue_st_sdk.utils.python_utils import lock
 
 
 # CLASSES
@@ -89,32 +92,22 @@ class Node(Peripheral, object):
                 for more information.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException`
-                is raised if the advertising data is not well formed.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
+            is raised if the advertising data is not well formed.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
+            is raised if the operation requested is not supported.
         """
         # Creating an un-connected "Peripheral" object.
         # It is needed to call the "connect()" method on this object (passing a
         # device address) before it will be usable.
-        Peripheral.__init__(self)
-        self.withDelegate(NodeDelegate(self))
-
-        # Advertising data.
         try:
-            self._advertising_data = BLEAdvertisingDataParser(
-                scan_entry.getScanData())
-        except InvalidBLEAdvertisingDataException as e:
-            raise e
-
-        self._device = scan_entry
-        """BLE device.
-        Python's "ScanEntry" object, equivalent to Android's "BluetoothDevice"
-        object."""
+            with lock(self):
+                Peripheral.__init__(self)
+        except BTLEException as e:
+            raise BlueSTInvalidOperationException('Bluetooth invalid operation.')
 
         self._friendly_name = None
         """Friendly name."""
-
-        self._rssi = scan_entry.rssi
-        """Received Signal Strength Indication."""
 
         self._last_rssi_update = None
         """Last update to the Received Signal Strength Indication."""
@@ -167,6 +160,25 @@ class Node(Peripheral, object):
         # device. None if the device doesn't export the debug service.
         self._debug_console = None
 
+        # Advertising data.
+        try:
+            self._device = scan_entry
+            """BLE device.
+            Python's "ScanEntry" object, equivalent to Android's "BluetoothDevice"
+            object."""
+
+            with lock(self):
+                self._advertising_data = BlueSTAdvertisingDataParser.parse(
+                    scan_entry.getScanData())
+                """Advertising data."""
+
+            self._rssi = scan_entry.rssi
+            """Received Signal Strength Indication."""
+        except BlueSTInvalidAdvertisingDataException as e:
+            raise e
+        except BTLEException as e:
+            raise BlueSTInvalidOperationException('Bluetooth invalid operation.')
+
         # Updating node.
         self._update_rssi(self._rssi)
         self._update_node_status(NodeStatus.IDLE)
@@ -197,28 +209,32 @@ class Node(Peripheral, object):
                 `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
                 for more information.
         """
-        # Extracting the feature mask from the characteristic's UUID.
-        feature_mask = FeatureCharacteristic.extract_feature_mask(
-            characteristic.uuid)
-        # Looking for the exported features in reverse order to get them in the
-        # correct order in case of characteristic that exports multiple
-        # features.
-        features = []
-        mask = 1 << 31
-        for i in range(0, 32):
-            if (feature_mask & mask) != 0:
-                if mask in self._mask_to_feature_dic:
-                    feature = self._mask_to_feature_dic[mask]
-                    if feature is not None:
-                        feature.set_enable(True)
-                        features.append(feature)
-            mask = mask >> 1
+        try:
+            # Extracting the feature mask from the characteristic's UUID.
+            feature_mask = FeatureCharacteristic.extract_feature_mask(
+                characteristic.uuid)
+            # Looking for the exported features in reverse order to get them in
+            # the correct order in case of characteristic that exports multiple
+            # features.
+            features = []
+            mask = 1 << 31
+            for i in range(0, 32):
+                if (feature_mask & mask) != 0:
+                    if mask in self._mask_to_feature_dic:
+                        feature = self._mask_to_feature_dic[mask]
+                        if feature is not None:
+                            feature.set_enable(True)
+                            features.append(feature)
+                mask = mask >> 1
 
-        # If the features are valid, add an entry for the corresponding
-        # characteristic.
-        if features:
-            self._update_char_handle_to_features_dict[
-                characteristic.getHandle()] = features
+            # If the features are valid, add an entry for the corresponding
+            # characteristic.
+            if features:
+                with lock(self):
+                    self._update_char_handle_to_features_dict[
+                        characteristic.getHandle()] = features
+        except BTLEException as e:
+            self._node._unexpected_disconnect()
 
     def _build_features_known_uuid(self, characteristic, feature_classes):
         """Build the given features of a BLE characteristic.
@@ -243,9 +259,13 @@ class Node(Peripheral, object):
 
         # If the features are valid, add an entry for the corresponding
         # characteristic.
-        if features:
-            self._update_char_handle_to_features_dict[
-                characteristic.getHandle()] = features
+        try:
+            if features:
+                with lock(self):
+                    self._update_char_handle_to_features_dict[
+                        characteristic.getHandle()] = features
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def _build_available_features(self):
         """Build available features as claimed by the advertising data.
@@ -320,7 +340,7 @@ class Node(Peripheral, object):
             and they have been updated, False otherwise.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         # Getting the features corresponding to the given characteristic.
@@ -337,7 +357,7 @@ class Node(Peripheral, object):
         try:
             for feature in features:
                 offset += feature.update(timestamp, data, offset, notify_update)
-        except InvalidDataException as e:
+        except BlueSTInvalidDataException as e:
             raise e
         return True
 
@@ -355,19 +375,27 @@ class Node(Peripheral, object):
             return self._update_char_handle_to_features_dict[char_handle]
         return None
 
-    def _update_node_status(self, new_status):
+    def _update_node_status(self, new_status, unexpected=False):
         """Update the status of the node.
 
         Args:
             new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
+            unexpected (bool, optional): True if the new status is unexpected,
+                False otherwise.
         """
         old_status = self._status
         self._status = new_status
         for listener in self._listeners:
             # Calling user-defined callback.
-            self._thread_pool.submit(
-                listener.on_status_change(
-                    self, new_status.value, old_status.value))
+            # self._thread_pool.submit(
+            #     listener.on_status_change(
+            #         self, new_status.value, old_status.value))
+            if new_status == NodeStatus.CONNECTED:
+                self._thread_pool.submit(
+                    listener.on_connect(self))
+            elif new_status == NodeStatus.IDLE:
+                self._thread_pool.submit(
+                    listener.on_disconnect(self, unexpected))
 
     def _update_rssi(self, rssi):
         """Update the RSSI value.
@@ -377,8 +405,8 @@ class Node(Peripheral, object):
         """
         self._rssi = rssi
         self._last_rssi_update = datetime.now()
-        if self._status == NodeStatus.LOST:
-            self._update_node_status(NodeStatus.IDLE)
+        #if self._status == NodeStatus.LOST:
+        #    self._update_node_status(NodeStatus.IDLE)
 
     def _build_debug_console(self, debug_service):
         """Build a debug console used to read/write debug messages from/to the
@@ -394,89 +422,141 @@ class Node(Peripheral, object):
             used to read/write debug messages from/to the Bluetooth device.
             None if the device doesn't export the needed characteristics.
         """
-        stdinout = None
-        stderr = None
-        for characteristic in debug_service.getCharacteristics():
-            if str(characteristic.uuid) == str(Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID):
-                stdinout = characteristic
-            elif str(characteristic.uuid) == str(Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID):
-                stderr = characteristic
-            if stdinout and stderr:
-                return DebugConsole(self, stdinout, stderr)
-        return None
+        try:
+            stdinout = None
+            stderr = None
+            with lock(self):
+                characteristics = debug_service.getCharacteristics()
+            for characteristic in characteristics:
+                if str(characteristic.uuid) == \
+                    str(Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID):
+                    stdinout = characteristic
+                elif str(characteristic.uuid) == \
+                    str(Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID):
+                    stderr = characteristic
+                if stdinout and stderr:
+                    return DebugConsole(self, stdinout, stderr)
+            return None
+        except BTLEException as e:
+            self._unexpected_disconnect()
+
+    def _unexpected_disconnect(self):
+        """Handle an unexpected disconnection."""
+        try:
+            # Disconnecting.
+            self._update_node_status(NodeStatus.UNREACHABLE)
+            with lock(self):
+                super(Node, self).disconnect()
+            self._update_node_status(NodeStatus.IDLE, True)
+        except BTLEException as e:
+            pass
 
     def connect(self, user_defined_features=None):
         """Open a connection to the node.
 
+        Please note that there is no supervision timeout API within the SDK,
+        hence it is not possible to detect immediately an unexpected
+        disconnection; it is detected and notified via listeners as soon as a
+        read/write/notify operation is executed on the device (limitation
+        intrinsic to the bluepy library).
+
         Args:
             user_defined_features (dict, optional): User-defined feature to be
                 added.
+
+        Returns:
+            bool: True if the connection to the node has been successful, False
+            otherwise.
         """
-        self._update_node_status(NodeStatus.CONNECTING)
-        self.add_external_features(user_defined_features)
-        super(Node, self).connect(self.get_tag(), self._device.addrType)
+        try:
+            if not self._status == NodeStatus.IDLE:
+                return False
 
-        # Getting services.
-        services = self.getServices()
-        if not services:
-            self._update_node_status(NodeStatus.DEAD)
-            return
+            # Creating a delegate object, which is called when asynchronous
+            # events such as Bluetooth notifications occur.
+            self.withDelegate(NodeDelegate(self))
 
-        # Handling Debug, Config, and Feature characteristics.
-        for service in services:
-            if Debug.is_debug_service(str(service.uuid)):
-                # Handling Debug.
-                self._debug_console = self._build_debug_console(service)
-            #elif Config.is_config_service(str(service.uuid)):
-                # Handling Config.
-            #    pass
-            #else:
-            # Getting characteristics.
-            characteristics = service.getCharacteristics()
-            for characteristic in characteristics:
+            # Connecting.
+            self._update_node_status(NodeStatus.CONNECTING)
+            self.add_external_features(user_defined_features)
+            with lock(self):
+                super(Node, self).connect(self.get_tag(), self._device.addrType)
 
-                # Storing characteristics' handle to characteristic mapping.
-                self._char_handle_to_characteristic_dict[
-                    characteristic.getHandle()] = characteristic
+            # Getting services.
+            with lock(self):
+                services = self.getServices()
+            if not services:
+                self.disconnect()
+                return False
 
-                # Building characteristics' features.
-                if FeatureCharacteristic.is_base_feature_characteristic(
-                    str(characteristic.uuid)):
-                    self._build_features(characteristic)
-                elif FeatureCharacteristic.is_extended_feature_characteristic(
-                    str(characteristic.uuid)):
-                    self._build_features_known_uuid(
-                        characteristic,
-                        [FeatureCharacteristic.get_extended_feature_class(
-                            characteristic.uuid)])
-                elif bool(self._external_uuid_to_features_dic) \
-                    and characteristic.uuid in self._external_uuid_to_features_dic:
-                    self._build_features_known_uuid(
-                        characteristic,
-                        [self._external_uuid_to_features_dic[
-                        characteristic.uuid]])
+            # Handling Debug, Config, and Feature characteristics.
+            for service in services:
+                if Debug.is_debug_service(str(service.uuid)):
+                    # Handling Debug.
+                    self._debug_console = self._build_debug_console(service)
+                #elif Config.is_config_service(str(service.uuid)):
+                    # Handling Config.
+                #    pass
+                #else:
+                # Getting characteristics.
+                with lock(self):
+                    characteristics = service.getCharacteristics()
+                for characteristic in characteristics:
 
-        # For each feature store a reference to the characteristic offering the
-        # feature, useful to enable/disable notifications on the characteristic
-        # itself.
-        self._set_features_characteristics()
+                    # Storing characteristics' handle to characteristic mapping.
+                    with lock(self):
+                        self._char_handle_to_characteristic_dict[
+                            characteristic.getHandle()] = characteristic
 
-        # Change node's status.
-        self._update_node_status(NodeStatus.CONNECTED)
+                    # Building characteristics' features.
+                    if FeatureCharacteristic.is_base_feature_characteristic(
+                        str(characteristic.uuid)):
+                        self._build_features(characteristic)
+                    elif FeatureCharacteristic.is_extended_feature_characteristic(
+                        str(characteristic.uuid)):
+                        self._build_features_known_uuid(
+                            characteristic,
+                            [FeatureCharacteristic.get_extended_feature_class(
+                                characteristic.uuid)])
+                    elif bool(self._external_uuid_to_features_dic) \
+                        and characteristic.uuid in self._external_uuid_to_features_dic:
+                        self._build_features_known_uuid(
+                            characteristic,
+                            [self._external_uuid_to_features_dic[
+                            characteristic.uuid]])
+
+            # For each feature store a reference to the characteristic offering the
+            # feature, useful to enable/disable notifications on the characteristic
+            # itself.
+            self._set_features_characteristics()
+
+            # Change node's status.
+            self._update_node_status(NodeStatus.CONNECTED)
+
+            return self._status == NodeStatus.CONNECTED
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def disconnect(self):
-        """Close the connection to the node and cleans up associated OS
-        resources.
+        """Close the connection to the node.
 
-        This means that after a call to this method, the node is no more in a
-        clean state, and a brand new discovery has to be run in order to find
-        the available devices, and possibly the same node in case it is still in
-        a valid range."""
-        if not self.is_connected():
-            return
-        self._update_node_status(NodeStatus.DISCONNECTING)
-        super(Node, self).disconnect()
-        self._update_node_status(NodeStatus.IDLE)
+        Returns:
+            bool: True if the disconnection to the node has been successful,
+            False otherwise.
+        """
+        try:
+            if not self.is_connected():
+                return False
+
+            # Disconnecting.
+            self._update_node_status(NodeStatus.DISCONNECTING)
+            with lock(self):
+                super(Node, self).disconnect()
+            self._update_node_status(NodeStatus.IDLE)
+
+            return self._status == NodeStatus.IDLE
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def add_external_features(self, user_defined_features):
         """Add available features to an already discovered device.
@@ -517,7 +597,10 @@ class Node(Peripheral, object):
             str: The MAC address of the node (hexadecimal string separated by
             colons).
         """
-        return self._device.addr
+        try:
+            return self._device.addr
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def get_status(self):
         """Get the status of the node.
@@ -560,10 +643,10 @@ class Node(Peripheral, object):
             :class:`blue_st_sdk.node.NodeType`: The type of the node.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException`
-                if the board type is unknown.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
+                if the device type is unknown.
         """
-        return self._advertising_data.get_board_type()
+        return self._advertising_data.get_device_type()
 
     def get_type_id(self):
         """Get the type identifier of the node.
@@ -659,7 +742,7 @@ class Node(Peripheral, object):
         Returns:
             bool: True if the node is sleeping, False otherwise.
         """
-        return self._advertising_data.get_board_sleeping()
+        return self._advertising_data.is_board_sleeping()
 
     def is_alive(self, rssi):
         """Check whether the node is alive.
@@ -672,6 +755,15 @@ class Node(Peripheral, object):
         """
         self._update_rssi(rssi)
 
+    def get_advertising_data(self):
+        """Update advertising data.
+
+        Returns:
+            :class:`blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData`:
+            Formatted Blue ST Advertising Data object.
+        """
+        return self._advertising_data
+
     def update_advertising_data(self, advertising_data):
         """Update advertising data.
 
@@ -682,12 +774,13 @@ class Node(Peripheral, object):
                 class for more information.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidBLEAdvertisingDataException`
-                is raised if the advertising data is not well formed.
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
+            is raised if the advertising data is not well formed.
         """
         try:
-            self._advertising_data = BLEAdvertisingDataParser(advertising_data)
-        except InvalidBLEAdvertisingDataException as e:
+            self._advertising_data = BlueSTAdvertisingDataParser.parse(
+                advertising_data)
+        except BlueSTInvalidAdvertisingDataException as e:
             raise e
 
     def equals(self, node):
@@ -712,9 +805,13 @@ class Node(Peripheral, object):
         Returns:
             bool: True if the characteristic can be read, False otherwise.
         """
-        if characteristic is not None:
-            return "READ" in characteristic.propertiesToString()
-        return False
+        try:
+            if characteristic is not None:
+                with lock(self):
+                    return "READ" in characteristic.propertiesToString()
+            return False
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def characteristic_can_be_written(self, characteristic):
         """Check if a characteristics can be written.
@@ -728,9 +825,13 @@ class Node(Peripheral, object):
         Returns:
             bool: True if the characteristic can be written, False otherwise.
         """
-        if characteristic is not None:
-            return "WRITE" in characteristic.propertiesToString()
-        return False
+        try:
+            if characteristic is not None:
+                with lock(self):
+                    return "WRITE" in characteristic.propertiesToString()
+            return False
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def characteristic_can_be_notified(self, characteristic):
         """Check if a characteristics can be notified.
@@ -744,9 +845,13 @@ class Node(Peripheral, object):
         Returns:
             bool: True if the characteristic can be notified, False otherwise.
         """
-        if characteristic is not None:
-            return "NOTIFY" in characteristic.propertiesToString()
-        return False
+        try:
+            if characteristic is not None:
+                with lock(self):
+                    return "NOTIFY" in characteristic.propertiesToString()
+            return False
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def read_feature(self, feature):
         """Synchronous request to read a feature.
@@ -755,37 +860,40 @@ class Node(Peripheral, object):
             feature (:class:`blue_st_sdk.feature.Feature`): The feature to read.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if not feature.is_enabled():
-            raise InvalidOperationException(
+            raise BlueSTInvalidOperationException(
                 ' The "' + feature.get_name() + '" feature is not enabled.')
 
         characteristic = feature.get_characteristic()
         if not self.characteristic_can_be_read(characteristic):
-            raise InvalidOperationException(
+            raise BlueSTInvalidOperationException(
                 ' The "' + feature.get_name() + '" feature is not readable.')
 
         # Reading data.
-        char_handle = characteristic.getHandle()
-        data = self.readCharacteristic(char_handle)
+        try:
+            with lock(self):
+                char_handle = characteristic.getHandle()
+                data = self.readCharacteristic(char_handle)
 
-        # Calling on-read callback.
-        if self._debug_console and \
-            Debug.is_debug_characteristic(str(characteristic.uuid)):
-            # Calling on-read callback for a debug characteristic.
-            self._debug_console.on_update_characteristic(
-                characteristic, data)
-        else:
-            # Calling on-read callback for the other characteristics.
-            try:
+            # Calling on-read callback.
+            if self._debug_console and \
+                Debug.is_debug_characteristic(str(characteristic.uuid)):
+                # Calling on-read callback for a debug characteristic.
+                self._debug_console.on_update_characteristic(
+                    characteristic, data)
+            else:
+                # Calling on-read callback for the other characteristics.
                 self._update_features(char_handle, data, False)
-            except InvalidDataException as e:
-                raise e
+        except BlueSTInvalidDataException as e:
+            raise e
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def write_feature(self, feature, data):
         """Synchronous request to write a feature.
@@ -796,21 +904,25 @@ class Node(Peripheral, object):
             data (str): The data to be written.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
         """
         if not feature.is_enabled():
-            raise InvalidOperationException(
+            raise BlueSTInvalidOperationException(
                 ' The "' + feature.get_name() + '" feature is not enabled.')
 
         characteristic = feature.get_characteristic()
         if not self.characteristic_can_be_written(characteristic):
-            raise InvalidOperationException(
+            raise BlueSTInvalidOperationException(
                 ' The "' + feature.get_name() + '" feature is not writeable.')
 
-        char_handle = characteristic.getHandle()
-        self.writeCharacteristic(char_handle, data, True)
+        try:
+            with lock(self):
+                char_handle = characteristic.getHandle()
+                self.writeCharacteristic(char_handle, data, True)
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def set_notification_status(self, characteristic, status):
         """Ask the node to set the notification status of the given
@@ -824,8 +936,12 @@ class Node(Peripheral, object):
             status (bool): True if the notifications have to be turned on, False
                 otherwise.
         """
-        self.writeCharacteristic(characteristic.getHandle() + 1,
-            self._NOTIFICATION_ON if status else self._NOTIFICATION_OFF, True)
+        try:
+            with lock(self):
+                self.writeCharacteristic(characteristic.getHandle() + 1,
+                    self._NOTIFICATION_ON if status else self._NOTIFICATION_OFF, True)
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def enable_notifications(self, feature):
         """Ask the node to notify when a feature updates its value.
@@ -883,7 +999,7 @@ class Node(Peripheral, object):
         return feature.is_notifying()
 
     def wait_for_notifications(self, timeout_s):
-        """Blocks until a notification is received from the peripheral, or until
+        """Block until a notification is received from the peripheral, or until
         the given timeout has elapsed.
 
         If a notification is received, the
@@ -892,12 +1008,18 @@ class Node(Peripheral, object):
 
         Args:
             timeout_s (float): Time in seconds to wait before returning.
-        
+
         Returns:
             bool: True if a notification is received before the timeout elapses,
             False otherwise.
         """
-        return self.waitForNotifications(timeout_s)
+        try:
+            if self.is_connected():
+                with lock(self):
+                    return self.waitForNotifications(timeout_s)
+            return False
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
     def characteristic_has_other_notifying_features(self, characteristic, feature):
         """Check whether a characteristic has other enabled features beyond the
@@ -914,7 +1036,9 @@ class Node(Peripheral, object):
             True if the characteristic has other enabled features beyond the
             given one, False otherwise.
         """
-        features = self._get_corresponding_features(characteristic.getHandle())
+        with lock(self):
+            features = self._get_corresponding_features(
+                characteristic.getHandle())
         for feature_entry in features:
             if feature_entry == feature:
                 pass
@@ -971,7 +1095,6 @@ class NodeDelegate(DefaultDelegate):
         DefaultDelegate.__init__(self)
 
         self._node = node
-
         self._logger = logging.getLogger('BlueSTSDK')
 
     def handleNotification(self, char_handle, data):
@@ -980,10 +1103,6 @@ class NodeDelegate(DefaultDelegate):
         Args:
             char_handle (int): The characteristic's handle to look for.
             data (str): The data notified from the given characteristic.
-
-        Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
-                if the data array has not enough data to read.
         """
         try:
             # Calling on-read callback.
@@ -998,37 +1117,41 @@ class NodeDelegate(DefaultDelegate):
 
             # Calling on-read callback for the other characteristics.
             self._node._update_features(char_handle, data, True)
-
-        except InvalidDataException as e:
+        except BlueSTInvalidDataException as e:
             self._logger.warning(str(e))
+        except BTLEException as e:
+            self._unexpected_disconnect()
 
 
 class NodeType(Enum):
     """Type of node."""
 
     GENERIC = 0x00
-    """Unknown board type."""
+    """Unknown device type."""
 
     STEVAL_WESU1 = 0x01
-    """STEVAL-WESU1 board."""
+    """STEVAL-WESU1."""
 
     SENSOR_TILE = 0x02
-    """SensorTile board."""
+    """SensorTile."""
 
     BLUE_COIN = 0x03
-    """BlueCoin board."""
+    """BlueCoin."""
 
     STEVAL_IDB008VX = 0x04
-    """BlueNRG1 / BlueNRG2 STEVAL board."""
+    """BlueNRG1 / BlueNRG2 STEVAL."""
 
     STEVAL_BCN002V1 = 0x05
-    """BlueNRG-Tile STEVAL board."""
+    """BlueNRG-Tile STEVAL."""
     
-    SENSOR_TILE_101 = 0x06
-    """SensorTile 101 board."""
+    SENSOR_TILE_BOX = 0x06
+    """SensorTile.box."""
 
-    NUCLEO = 0x07
-    """NUCLEO-based board."""
+    DISCOVERY_IOT01A = 0x07
+    """B-L475E-IOT01A."""
+
+    NUCLEO = 0x08
+    """NUCLEO-based."""
 
 
 class NodeStatus(Enum):
@@ -1083,4 +1206,34 @@ class NodeListener(object):
             :exc:`NotImplementedError` if the method has not been implemented.
         """
         raise NotImplementedError('You must implement "on_status_change()" to '
+                                  'use the "NodeListener" class.')
+
+    @abstractmethod
+    def on_connect(self, node):
+        """To be called whenever a node connects to a host.
+
+        Args:
+            node (:class:`blue_st_sdk.node.Node`): Node that has connected to a
+                host.
+
+        Raises:
+            :exc:`NotImplementedError` if the method has not been implemented.
+        """
+        raise NotImplementedError('You must implement "on_connect()" to '
+                                  'use the "NodeListener" class.')
+
+    @abstractmethod
+    def on_disconnect(self, node, unexpected=False):
+        """To be called whenever a node disconnects from a host.
+
+        Args:
+            node (:class:`blue_st_sdk.node.Node`): Node that has disconnected
+                from a host.
+            unexpected (bool, optional): True if the disconnection is unexpected,
+                False otherwise (called by the user).
+
+        Raises:
+            :exc:`NotImplementedError` if the method has not been implemented.
+        """
+        raise NotImplementedError('You must implement "on_disconnect()" to '
                                   'use the "NodeListener" class.')

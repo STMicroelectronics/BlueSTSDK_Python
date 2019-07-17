@@ -27,11 +27,19 @@
 # POSSIBILITY OF SUCH DAMAGE.                                                  #
 ################################################################################
 
+################################################################################
+# Author:  Davide Aliprandi, STMicroelectronics                                #
+################################################################################
+
 
 # DESCRIPTION
 #
-# This application example shows how to connect to a Bluetooth Low Energy (BLE)
-# device exporting audio features, and to use it.
+# This application example shows how to connect to two Bluetooth Low Energy
+# (BLE) devices exporting a "Switch" feature, and to get/set the status of the
+# feature.
+#
+# Please set the "IOT_DEVICE_(1|2)_MAC" variables properly (you can get the MAC
+# address of your devices through an application running on your mobile).
 
 
 # IMPORT
@@ -40,23 +48,16 @@ from __future__ import print_function
 import sys
 import os
 import time
-import datetime
-import click
-from abc import abstractmethod
-from threading import Thread
-from bluepy.btle import BTLEException
+import getopt
+import json
+from enum import Enum
 
 from blue_st_sdk.manager import Manager
 from blue_st_sdk.manager import ManagerListener
 from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
-from blue_st_sdk.features.feature_audio_adpcm import FeatureAudioADPCM
-from blue_st_sdk.features.feature_audio_adpcm_sync import FeatureAudioADPCMSync
-from blue_st_sdk.utils.number_conversion import LittleEndian
-
-###Audio Stream#########################################################
-import alsaaudio
-###Audio Stream#########################################################
+from blue_st_sdk.features import *
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
 
 
 # PRECONDITIONS
@@ -66,58 +67,39 @@ import alsaaudio
 #
 # On Linux:
 #   export PYTHONPATH=/home/<user>/BlueSTSDK_Python
-#
-# Moreover, install the following packages:
-#   libasound:
-#     sudo apt-get install libasound2-dev
-#   pyalsaaudio:  
-#     sudo pip install pyalsaaudio
-# 
-# Troubleshooting
-#   Prevent audio out garbling caused by the audio out peripheral:
-#      sudo bash -c "echo disable_audio_dither=1 >> /boot/config.txt"
-#      sudo bash -c "echo pwm_mode=2 >> /boot/config.txt" 
 
 
 # CONSTANTS
 
+# Presentation message.
 INTRO = """##################
 # BlueST Example #
 ##################"""
 
-# Paths and File names
-AUDIO_DUMPS_PATH = "/home/pi/audioDumps/"
-AUDIO_DUMP_SUFFIX = "_audioDump.raw"
-
-# Notifications per second.
-NPS = 200
-
-# Number of channels.
-CHANNELS = 1
-
-# Sampling frequency.
-SAMPLING_FREQ = 8000
-
-# Global Audio Raw file.
-audioFile=None
-saveAudioFlag = 0
-
-# Bluetooth Scanning time in seconds.
+# Bluetooth Scanning time in seconds (optional).
 SCANNING_TIME_s = 5
 
-# Global stream control index.
-nIdx = 0
+# Bluetooth Low Energy devices' MAC address.
+IOT_DEVICE_1_MAC = 'd1:07:fd:84:30:8c'
+IOT_DEVICE_2_MAC = 'd7:90:95:be:58:7e'
 
-# Global audio features.
-audioFeature = None
-audioSyncFeature = None
+
+# CLASSES
+
+# Status of the switch.
+class SwitchStatus(Enum):
+    OFF = 0
+    ON = 1
 
 
 # FUNCTIONS
 
-# Printing intro
+#
+# Printing intro.
+#
 def print_intro():
     print('\n' + INTRO + '\n')
+
 
 # INTERFACES
 
@@ -155,253 +137,159 @@ class MyManagerListener(ManagerListener):
 class MyNodeListener(NodeListener):
 
     #
-    # To be called whenever a node changes its status.
+    # To be called whenever a node connects to a host.
     #
-    # @param node       Node that has changed its status.
-    # @param new_status New node status.
-    # @param old_status Old node status.
+    # @param node Node that has connected to a host.
     #
-    def on_status_change(self, node, new_status, old_status):
-        print('Device %s from %s to %s.' %
-            (node.get_name(), str(old_status), str(new_status)))
-
-#
-# Implementation of the interface used by the Feature class to notify that a
-# feature has updated its data.
-#
-class MyFeatureListener(FeatureListener):
+    def on_connect(self, node):
+        print('Device %s connected.' % (node.get_name()))
 
     #
-    # To be called whenever the feature updates its data.
+    # To be called whenever a node disconnects from a host.
     #
-    # @param feature Feature that has updated.
-    # @param sample  Data extracted from the feature.
+    # @param node       Node that has disconnected from a host.
+    # @param unexpected True if the disconnection is unexpected, False otherwise
+    #                   (called by the user).
     #
-    def on_update(self, feature, sample):        
-        global nIdx
-        ###Audio Stream#################################################
-        global stream
-        ###Audio Stream#################################################
-        ###Save Audio File##############################################
-        global audioFile
-        global saveAudioFlag
-        ###Save Audio File##############################################
-        shortData = sample._data
-        if len(shortData) != 0:
-            for d in shortData:
-                byteData = LittleEndian.int16_to_bytes(d)
-                ###Save Audio File######################################
-                if saveAudioFlag == 'y' or saveAudioFlag == 'Y':
-                    audioFile.write(byteData)
-                ###Save Audio File######################################
-                ###Audio Stream#########################################
-                stream.write(byteData)
-                ###Audio Stream#########################################
-            nIdx += 1
+    def on_disconnect(self, node, unexpected=False):
+        print('Device %s disconnected%s.' % \
+            (node.get_name(), ' unexpectedly' if unexpected else ''))
 
 
 #
 # Implementation of the interface used by the Feature class to notify that a
-# feature has updated its data.
+# feature has updated its status.
 #
-class MyFeatureListenerSync(FeatureListener):
+class MyFeatureSwitchDevice1Listener(FeatureListener):
 
-    #
-    # To be called whenever the feature updates its data.
-    #
-    # @param feature Feature that has updated.
-    # @param sample  Data extracted from the feature.
-    #
     def on_update(self, feature, sample):
-        global audioFeature
-        if audioFeature is not None:
-            audioFeature.set_audio_sync_parameters(sample)
-                
+        global iot_device_2, iot_device_2_feature_switch, iot_device_2_status
+
+        # Getting value.
+        switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
+
+        # Toggle switch status.
+        iot_device_2_status = SwitchStatus.ON if switch_status != 0 else SwitchStatus.OFF
+        
+        # Writing switch status.
+        iot_device_2.disable_notifications(iot_device_2_feature_switch)
+        iot_device_2_feature_switch.write_switch_status(iot_device_2_status.value)
+        iot_device_2.enable_notifications(iot_device_2_feature_switch)
+
+
+#
+# Implementation of the interface used by the Feature class to notify that a
+# feature has updated its status.
+#
+class MyFeatureSwitchDevice2Listener(FeatureListener):
+
+    def on_update(self, feature, sample):
+        global iot_device_1, iot_device_1_feature_switch, iot_device_1_status
+
+        # Getting value.
+        switch_status = feature_switch.FeatureSwitch.get_switch_status(sample)
+
+        # Toggle switch status.
+        iot_device_1_status = SwitchStatus.ON if switch_status != 0 else SwitchStatus.OFF
+        
+        # Writing switch status.
+        iot_device_1.disable_notifications(iot_device_1_feature_switch)
+        iot_device_1_feature_switch.write_switch_status(iot_device_1_status.value)
+        iot_device_1.enable_notifications(iot_device_1_feature_switch)
+
 
 # MAIN APPLICATION
 
-# This application example connects to a Bluetooth Low Energy device, retrieves
-# its exported features, and let the user get data from those supporting
-# notifications.
+#
+# Main application.
+#
 def main(argv):
-    
-    global nIdx
- 
-    ###Audio Stream#####################################################
-    global stream
-    ###Audio Stream#####################################################
-    ###Save Audio File##################################################
-    global audioFile
-    global saveAudioFlag
-    ###Save Audio File##################################################
-    
-    global audioFeature
-    global audioSyncFeature
-    
+
+    # Global variables.
+    global iot_device_1, iot_device_2
+    global iot_device_1_feature_switch, iot_device_2_feature_switch
+    global iot_device_1_status, iot_device_2_status
+
+    # Initial state.
+    iot_device_1_status = SwitchStatus.OFF
+    iot_device_2_status = SwitchStatus.OFF
+
     # Printing intro.
     print_intro()
-    
+
     try:
         # Creating Bluetooth Manager.
         manager = Manager.instance()
         manager_listener = MyManagerListener()
         manager.add_listener(manager_listener)
 
+        # Synchronous discovery of Bluetooth devices.
+        print('Scanning Bluetooth devices...\n')
+        manager.discover(SCANNING_TIME_s)
+
+        # Getting discovered devices.
+        discovered_devices = manager.get_nodes()
+        if not discovered_devices:
+            print('No Bluetooth devices found. Exiting...\n')
+            sys.exit(0)
+
+        # Checking discovered devices.
+        devices = []
+        for discovered in discovered_devices:
+            if discovered.get_tag() == IOT_DEVICE_1_MAC:
+                iot_device_1 = discovered
+                devices.append(iot_device_1)
+            elif discovered.get_tag() == IOT_DEVICE_2_MAC:
+                iot_device_2 = discovered
+                devices.append(iot_device_2)
+            if len(devices) == 2:
+                break
+        if len(devices) < 2:
+            print('Bluetooth setup incomplete. Exiting...\n')
+            sys.exit(0)
+
+        # Connecting to the devices.
+        for device in devices:
+            device.add_listener(MyNodeListener())
+            print('Connecting to %s...' % (device.get_name()))
+            if not device.connect():
+                print('Connection failed.\n')
+                print('Bluetooth setup incomplete. Exiting...\n')
+                sys.exit(0)
+            print('Connection done.')
+
+        # Getting features.
+        print('\nGetting features...')
+        iot_device_1_feature_switch = iot_device_1.get_feature(feature_switch.FeatureSwitch)
+        iot_device_2_feature_switch = iot_device_2.get_feature(feature_switch.FeatureSwitch)
+
+        # Resetting switches.
+        print('Resetting switches...')
+        iot_device_1_feature_switch.write_switch_status(iot_device_1_status.value)
+        iot_device_2_feature_switch.write_switch_status(iot_device_2_status.value)
+
+        # Handling sensing and actuation of switch devices.
+        iot_device_1_feature_switch.add_listener(MyFeatureSwitchDevice1Listener())
+        iot_device_2_feature_switch.add_listener(MyFeatureSwitchDevice2Listener())
+
+        # Enabling notifications.
+        print('Enabling Bluetooth notifications...')
+        iot_device_1.enable_notifications(iot_device_1_feature_switch)
+        iot_device_2.enable_notifications(iot_device_2_feature_switch)
+
+        # Bluetooth setup complete.
+        print('\nBluetooth setup complete.')
+
+        # Demo running.
+        print('\nDemo running (\"CTRL+C\" to quit)...\n')
+
+        # Getting notifications.
         while True:
-            # Synchronous discovery of Bluetooth devices.
-            print('Scanning Bluetooth devices...\n')
-            manager.discover(SCANNING_TIME_s)
+            if iot_device_1.wait_for_notifications(0.05) or iot_device_2.wait_for_notifications(0.05):
+                continue
 
-            # Getting discovered devices.
-            devices = manager.get_nodes()
-
-            # Listing discovered devices.
-            if not devices:
-                print('\nNo Bluetooth devices found.')
-                sys.exit(0)
-            print('\nAvailable Bluetooth devices:')
-            i = 1
-            for device in devices:
-                print('%d) %s: [%s]' % (i, device.get_name(), device.get_tag()))
-                i += 1
-
-            # Selecting a device.
-            while True:
-                choice = int(input("\nSelect a device (\'0\' to quit): "))
-                if choice >= 0 and choice <= len(devices):
-                    break
-            if choice == 0:
-                # Exiting.
-                manager.remove_listener(manager_listener)
-                print()
-                sys.exit(0)
-            device = devices[choice - 1]
-            
-            hasAudioFeats = [False,False]
-            
-            i = 1
-            features = device.get_features()
-            for feature in features:
-                if feature.get_name() == FeatureAudioADPCM.FEATURE_NAME:
-                    audioFeature = feature
-                    hasAudioFeats[0]=True
-                elif feature.get_name() == FeatureAudioADPCMSync.FEATURE_NAME:
-                    audioSyncFeature = feature
-                    hasAudioFeats[1]=True
-                i += 1
-            
-            if all(hasAudioFeats):
-                # Connecting to the device.
-                node_listener = MyNodeListener()
-                device.add_listener(node_listener)
-                print('\nConnecting to %s...' % (device.get_name()))
-                device.connect()
-                print('Connection done.')
-                
-                while True:
-                    
-                    saveAudioFlag = raw_input('\nDo you want to save the audio stream?'
-                                               '\'y\' - Yes, \'n\' - No (\'0\' to quit): ')
-                    
-                    if saveAudioFlag == 'y' or saveAudioFlag == 'Y' or saveAudioFlag == 'n' or saveAudioFlag == 'N':
-                        if saveAudioFlag == 'y' or saveAudioFlag == 'Y':
-                            ts = time.time()
-                            st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
-                            if not os.path.exists(AUDIO_DUMPS_PATH):
-                                os.makedirs(AUDIO_DUMPS_PATH)
-                            fileName = AUDIO_DUMPS_PATH + st + AUDIO_DUMP_SUFFIX
-                            audioFile = open(fileName,"w+")
-                        
-                        nOfSeconds = int(input('\nHow many seconds do you want to stream?'
-                                                   ' Value must be > 0 (\'0\' to quit): '))
-                        
-                        nOfNotifications = nOfSeconds * NPS             
-
-                        if nOfSeconds > 0:                        
-                            print("Streaming Started")
-                            
-                            ###Audio Stream#####################################
-                            stream = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK,'default')
-                            stream.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-                            stream.setchannels(CHANNELS)
-                            stream.setrate(SAMPLING_FREQ)
-                            ###Audio Stream#####################################
-                            
-                            #Enabling Notifications
-                            audioFeature_listener = MyFeatureListener()
-                            audioFeature.add_listener(audioFeature_listener)
-                            device.enable_notifications(audioFeature)
-                            audioSyncFeature_listener = MyFeatureListenerSync()
-                            audioSyncFeature.add_listener(audioSyncFeature_listener)
-                            device.enable_notifications(audioSyncFeature)
-                            
-                            nIdx = 0
-                            while nIdx < nOfNotifications:
-                                device.wait_for_notifications(0.05)
-                                    
-                            print("End of Streaming")
-                            # Disabling notifications.
-                            device.disable_notifications(audioFeature)
-                            audioFeature.remove_listener(audioFeature_listener)
-                            device.disable_notifications(audioSyncFeature)
-                            audioSyncFeature.remove_listener(audioSyncFeature_listener)
-                            ###Save Audio File##################################
-                            if saveAudioFlag == 'y' or saveAudioFlag == 'Y':
-                                audioFile.close()
-                            ###Save Audio File##################################
-                            ###Audio Stream#####################################
-                            stream.close()
-                            ###Audio Stream#####################################
-                        elif nOfSeconds == 0:
-                            # Disabling notifications.
-                            if audioFeature.is_notifying():
-                                device.disable_notifications(audioFeature)
-                                audioFeature.remove_listener(audioFeature_listener)
-                            if audioSyncFeature.is_notifying():
-                                device.disable_notifications(audioSyncFeature)
-                                audioSyncFeature.remove_listener(audioSyncFeature_listener)
-                            ###Save Audio File##################################
-                            if saveAudioFlag == 'y' or saveAudioFlag == 'Y':
-                                audioFile.close()
-                            ###Save Audio File##################################
-                            # Disconnecting from the device.
-                            print('\nDisconnecting from %s...' % (device.get_name()))
-                            device.disconnect()
-                            print('Disconnection done.')
-                            device.remove_listener(node_listener)
-                            # Reset discovery.
-                            manager.reset_discovery()
-                            # Going back to the list of devices.
-                            break
-                    elif saveAudioFlag == '0':
-                        # Disconnecting from the device.
-                        print('\nDisconnecting from %s...' % (device.get_name()))
-                        device.disconnect()
-                        print('Disconnection done.')
-                        device.remove_listener(node_listener)
-                        # Reset discovery.
-                        manager.reset_discovery()
-                        # Going back to the list of devices.
-                        break
-            else:
-                print("No Audio Features are Exposed from your BLE Node!")
-                while True:
-                    restartDiscovery = int(input('\nPress \'1\' to restart scanning for BLE devices '
-                                           '(\'0\' to quit): '))
-                    if restartDiscovery == 1:
-                        # Reset discovery.
-                        manager.reset_discovery()
-                        break;
-                    elif restartDiscovery == 0:
-                        # Exiting.
-                        print('\nExiting...\n')
-                        sys.exit(0)
-                        
-    except BTLEException as e:
+    except BlueSTInvalidOperationException as e:
         print(e)
-        # Exiting.
-        print('Exiting...\n')
-        sys.exit(0)
     except KeyboardInterrupt:
         try:
             # Exiting.
@@ -413,4 +301,10 @@ def main(argv):
 
 if __name__ == "__main__":
 
-    main(sys.argv[1:])
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)

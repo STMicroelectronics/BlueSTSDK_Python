@@ -30,6 +30,7 @@
 
 from enum import Enum
 import struct
+from bluepy.btle import BTLEException
 
 from blue_st_sdk.feature import Feature
 from blue_st_sdk.feature import Sample
@@ -37,8 +38,8 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import NumberConversion
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -113,11 +114,11 @@ class FeatureStepperMotor(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if len(data) - offset < self.STATUS_DATA_LENGTH_BYTES:
-            raise InvalidDataException(
+            raise BlueSTInvalidDataException(
                 'There are no %d bytes available to read.' \
                 % (self.STATUS_DATA_LENGTH_BYTES))
         sample = Sample(
@@ -150,16 +151,16 @@ class FeatureStepperMotor(Feature):
             :class:`StepperMotorStatus`: The motor status.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         try:
             self._read_data()
             return self.get_motor_status(self._get_sample())
-        except (InvalidOperationException, InvalidDataException) as e:
+        except (BlueSTInvalidOperationException, BlueSTInvalidDataException) as e:
             raise e
 
     def write_motor_command(self, command, steps=0):
@@ -172,7 +173,7 @@ class FeatureStepperMotor(Feature):
                 command.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
         """
@@ -193,8 +194,10 @@ class FeatureStepperMotor(Feature):
             characteristic = self.get_characteristic()
             char_handle = characteristic.getHandle()
             data = self._parent.readCharacteristic(char_handle)
-        except InvalidOperationException as e:
+        except BlueSTInvalidOperationException as e:
             raise e
+        except BTLEException as e:
+            self._parent._unexpected_disconnect()
 
     def __str__(self):
         """Get a string representing the last sample.

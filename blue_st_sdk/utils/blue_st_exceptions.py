@@ -34,7 +34,7 @@ The blue_st_exceptions module defines exceptions raised by the BlueSTSDK.
 
 # CLASSES
 
-class InvalidBLEAdvertisingDataException(Exception):
+class BlueSTInvalidAdvertisingDataException(Exception):
     """Exception raised whenever an advertising data has a format not recognized
     by the BlueSTSDK."""
 
@@ -44,10 +44,10 @@ class InvalidBLEAdvertisingDataException(Exception):
         Args:
             msg (str): The message to raise.
         """
-        super(InvalidBLEAdvertisingDataException, self).__init__(msg)
+        super(BlueSTInvalidAdvertisingDataException, self).__init__(msg)
 
 
-class InvalidFeatureBitMaskException(Exception):
+class BlueSTInvalidFeatureBitMaskException(Exception):
     """Exception raised whenever a bitmask has more than 1 bit set to "1"."""
 
     def __init__(self, msg):
@@ -56,12 +56,11 @@ class InvalidFeatureBitMaskException(Exception):
         Args:
             msg (str): The message to raise.
         """
-        super(InvalidFeatureBitMaskException, self).__init__(msg)
+        super(BlueSTInvalidFeatureBitMaskException, self).__init__(msg)
 
 
-class InvalidOperationException(Exception):
-    """Exception raised whenever a feature is not enabled or the operation
-    required is not supported."""
+class BlueSTInvalidOperationException(Exception):
+    """Exception raised whenever the operation requested is not supported."""
 
     def __init__(self, msg):
         """Constructor
@@ -69,10 +68,10 @@ class InvalidOperationException(Exception):
         Args:
             msg (str): The message to raise.
         """
-        super(InvalidOperationException, self).__init__(msg)
+        super(BlueSTInvalidOperationException, self).__init__(msg)
 
 
-class InvalidDataException(Exception):
+class BlueSTInvalidDataException(Exception):
     """Exception raised whenever a feature's data are not complete."""
 
     def __init__(self, msg):
@@ -81,4 +80,4 @@ class InvalidDataException(Exception):
         Args:
             msg (str): The message to raise.
         """
-        super(InvalidDataException, self).__init__(msg)
+        super(BlueSTInvalidDataException, self).__init__(msg)

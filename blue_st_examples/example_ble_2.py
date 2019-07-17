@@ -34,9 +34,9 @@
 
 # DESCRIPTION
 #
-# This application example shows how to connect to a Bluetooth Low Energy (BLE)
-# device exporting a "Stepper Motor" feature, to get its status, and to send
-# commands to it.
+# This application example shows how to perform a Bluetooth Low Energy (BLE)
+# scan, connect to a number of devices handled though dedicated threads, and get
+# push notifications from all their features.
 
 
 # IMPORT
@@ -45,16 +45,15 @@ from __future__ import print_function
 import sys
 import os
 import time
+import threading
 from abc import abstractmethod
-from bluepy.btle import BTLEException
 
 from blue_st_sdk.manager import Manager
 from blue_st_sdk.manager import ManagerListener
 from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
-from blue_st_sdk.features import *
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm import FeatureAudioADPCM
+from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync import FeatureAudioADPCMSync
 
 
 # PRECONDITIONS
@@ -73,11 +72,8 @@ INTRO = """##################
 # BlueST Example #
 ##################"""
 
-# Bluetooth Scanning time in seconds.
+# Bluetooth Scanning time in seconds (optional).
 SCANNING_TIME_s = 5
-
-# Bluetooth Low Energy devices' MAC address.
-IOT_DEVICE_MAC = 'e8:83:80:11:e2:37'
 
 
 # FUNCTIONS
@@ -125,15 +121,23 @@ class MyManagerListener(ManagerListener):
 class MyNodeListener(NodeListener):
 
     #
-    # To be called whenever a node changes its status.
+    # To be called whenever a node connects to a host.
     #
-    # @param node       Node that has changed its status.
-    # @param new_status New node status.
-    # @param old_status Old node status.
+    # @param node Node that has connected to a host.
     #
-    def on_status_change(self, node, new_status, old_status):
-        print('Device %s from %s to %s.' %
-            (node.get_name(), str(old_status), str(new_status)))
+    def on_connect(self, node):
+        print('Device %s connected.' % (node.get_name()))
+
+    #
+    # To be called whenever a node disconnects from a host.
+    #
+    # @param node       Node that has disconnected from a host.
+    # @param unexpected True if the disconnection is unexpected, False otherwise
+    #                   (called by the user).
+    #
+    def on_disconnect(self, node, unexpected=False):
+        print('Device %s disconnected%s.' % \
+            (node.get_name(), ' unexpectedly' if unexpected else ''))
 
 
 #
@@ -149,7 +153,52 @@ class MyFeatureListener(FeatureListener):
     # @param sample  Data extracted from the feature.
     #
     def on_update(self, feature, sample):
+        print('[%s %s]' % (feature.get_parent_node().get_name(), \
+            feature.get_parent_node().get_tag()))
         print(feature)
+
+
+class DeviceThread(threading.Thread):
+    """Class to handle a device in a thread."""
+
+    def __init__(self, device, *args, **kwargs):
+        """Constructor.
+
+        Args:
+            device (:class:`blue_st_sdk.node.Node`): The device to handle.
+        """
+        super(DeviceThread, self).__init__(*args, **kwargs)
+        self._device = device
+
+    def run(self):
+        """Run the thread."""
+
+        # Connecting to the device.
+        self._device.add_listener(MyNodeListener())
+        print('Connecting to %s...' % (self._device.get_name()))
+        if not self._device.connect():
+            print('Connection failed.\n')
+            return
+
+        # Getting features.
+        features = self._device.get_features()
+
+        # Enabling notifications.
+        for feature in features:
+            # For simplicity let's skip audio features.
+            if not isinstance(feature, FeatureAudioADPCM) and \
+                not isinstance(feature, FeatureAudioADPCMSync):
+                feature.add_listener(MyFeatureListener())
+                self._device.enable_notifications(feature)
+
+        # Getting notifications.
+        while True:
+            if self._device.wait_for_notifications(0.05):
+                pass
+
+    def get_device(self):
+        """Get the handled device."""
+        return self._device
 
 
 # MAIN APPLICATION
@@ -163,7 +212,7 @@ def main(argv):
     print_intro()
 
     try:
-       # Creating Bluetooth Manager.
+        # Creating Bluetooth Manager.
         manager = Manager.instance()
         manager_listener = MyManagerListener()
         manager.add_listener(manager_listener)
@@ -174,64 +223,50 @@ def main(argv):
 
         # Getting discovered devices.
         discovered_devices = manager.get_nodes()
+
+        # Listing discovered devices.
         if not discovered_devices:
-            print('\nNo Bluetooth devices found. Exiting...\n')
+            print('No Bluetooth devices found. Exiting...\n')
             sys.exit(0)
+        print('Available Bluetooth devices:')
+        i = 1
+        for device in discovered_devices:
+            print('%d) %s: [%s]' % (i, device.get_name(), device.get_tag()))
+            i += 1
 
-        # Checking discovered devices.
-        iot_device = None
-        for discovered in discovered_devices:
-            if discovered.get_tag() == IOT_DEVICE_MAC:
-                iot_device = discovered
+        # Selecting devices to connect.
+        selected_devices = []
+        while True:
+            while True:
+                choice = int(
+                    input('\nSelect a device to connect to (\'0\' to finish): '))
+                if choice >= 0 and choice <= len(discovered_devices):
+                    break
+
+            if choice == 0:
                 break
-        if not iot_device:
-            print('\nBluetooth setup incomplete. Exiting...\n')
-            sys.exit(0)
+            else:
+                device = discovered_devices[choice - 1]
+                selected_devices.append(device)
+                print('Device %s added.' % (device.get_name()))
 
-        # Connecting to the devices.
-        node_listener = MyNodeListener()
-        iot_device.add_listener(node_listener)
-        print('Connecting to %s...' % (iot_device.get_name()))
-        iot_device.connect()
-        print('Connection done.')
-
-        # Getting features.
-        print('\nGetting features...')
-        iot_device_feature_stepper_motor = \
-            iot_device.get_feature(feature_stepper_motor.FeatureStepperMotor)
-        print('\nStepper motor feature found.')
-
-        try:
-            # Managing feature.
-            iot_device_feature_stepper_motor.write_motor_command(
-                feature_stepper_motor.StepperMotorCommands.MOTOR_STOP_RUNNING_WITHOUT_TORQUE)
-            print('\nStepper motor status:')
-            print(iot_device_feature_stepper_motor.read_motor_status())
-            print('\nStepper motor moving...')
-            iot_device_feature_stepper_motor.write_motor_command(
-                feature_stepper_motor.StepperMotorCommands.MOTOR_MOVE_STEPS_FORWARD,
-                3000
-            )
-            print('\nStepper motor status:')
-            print(iot_device_feature_stepper_motor.read_motor_status())
-        except (InvalidOperationException, InvalidDataException) as e:
-            print(e)
+        device_threads = []
+        if len(selected_devices) > 0:
+            # Starting threads.
+            print('\nConnecting to selected devices and getting notifications '
+                  'from all their features ("CTRL+C" to exit)...\n')
+            for device in selected_devices:
+                device_threads.append(DeviceThread(device).start())
+        else:
             # Exiting.
+            manager.remove_listener(manager_listener)
             print('Exiting...\n')
             sys.exit(0)
 
-        # Disconnecting from the device.
-        print('\nDisconnecting from %s...' % (iot_device.get_name()))
-        iot_device.disconnect()
-        print('Disconnection done.')
-        iot_device.remove_listener(node_listener)
-        print('\nExiting...\n')
+        # Getting notifications.
+        while True:
+            pass
 
-    except BTLEException as e:
-        print(e)
-        # Exiting.
-        print('Exiting...\n')
-        sys.exit(0)
     except KeyboardInterrupt:
         try:
             # Exiting.

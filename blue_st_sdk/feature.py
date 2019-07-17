@@ -40,9 +40,9 @@ from abc import abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
-from blue_st_sdk.python_utils import lock
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.python_utils import lock
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -312,7 +312,7 @@ class Feature(object):
             int: The number of bytes read.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         # Update the feature's internal data
@@ -320,7 +320,7 @@ class Feature(object):
         with lock(self):
             try:
                 extracted_data = self.extract_data(timestamp, data, offset)
-            except InvalidDataException as e:
+            except BlueSTInvalidDataException as e:
                 raise e
             sample = self._last_sample = extracted_data.get_sample()
             read_bytes = extracted_data.get_read_bytes()
@@ -354,15 +354,15 @@ class Feature(object):
         """Read data from the feature.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         try:
             self._parent.read_feature(self)
-        except (InvalidOperationException, InvalidDataException) as e:
+        except (BlueSTInvalidOperationException, BlueSTInvalidDataException) as e:
             raise e
 
     def _write_data(self, data):
@@ -372,13 +372,13 @@ class Feature(object):
             data (str): Raw data to write.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
         """
         try:
             self._parent.write_feature(self, data)
-        except InvalidOperationException as e:
+        except BlueSTInvalidOperationException as e:
             raise e
 
     @abstractmethod
@@ -406,7 +406,7 @@ class Feature(object):
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         raise NotImplementedError(

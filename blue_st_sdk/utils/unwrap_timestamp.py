@@ -34,7 +34,7 @@ The unwrap_timestamp module contains tools to unwrap timestamp values.
 
 # IMPORT
 
-from blue_st_sdk.python_utils import synchronized
+from blue_st_sdk.utils.python_utils import synchronized
 
 
 # CLASSES
@@ -53,7 +53,7 @@ class UnwrapTimestamp(object):
         # smaller value.
         self._reset_times = 0
 
-        # Last raw timestamp received from the board.
+        # Last raw timestamp received.
         # It is a number between "0" and "2^16-1".
         self._last_timestamp = 0
 
@@ -71,4 +71,5 @@ class UnwrapTimestamp(object):
             and self._last_timestamp > timestamp:
             self._reset_times += 1
         self._last_timestamp = timestamp
-        return long(self._reset_times) * (1 << 16) + long(timestamp)
+        #return long(self._reset_times) * (1 << 16) + long(timestamp)  #Python 2
+        return int(self._reset_times) * (1 << 16) + int(timestamp)  #Python 3

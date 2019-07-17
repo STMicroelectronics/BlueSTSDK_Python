@@ -8,7 +8,7 @@ Documentation can be found [here](https://stmicroelectronics.github.io/BlueSTSDK
 
 
 ## Compatibility
-This version of the SDK is compatible with [Python](https://www.python.org/) 2.7 and runs on a Linux system.
+This version of the SDK is compatible with [Python](https://www.python.org/) 3.5 and runs on a Linux system.
 
 
 ## Preconditions
@@ -22,6 +22,12 @@ Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/con
   ```
 
 
+## Limitations
+The BlueST SDK currently suffers from the following limitations, which are intrinsic to the [bluepy](https://github.com/IanHarvey/bluepy) library:
+ * When running a discovery process, the already connected devices get disconnected.
+ * There is no supervision timeout API within the SDK, hence it is not possible to detect immediately an unexpected disconnection; it is detected and notified via listeners as soon as a read/write/notify operation is executed on the device.
+
+
 ## Installation
 The BlueST SDK can be installed through the Python pip package manager.
   ```Shell
@@ -30,22 +36,23 @@ The BlueST SDK can be installed through the Python pip package manager.
 
 
 ## Setting up the application examples
-Before running the application examples, please prepare your devices as described here below:
- * The [example_ble_1.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_1.py) application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics/BlueSTSDK_Python#bluest-protocol), e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
- * The [example_ble_2.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_2.py) application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
-   * A [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development board
-   * An [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion board
-   * An [X-NUCLEO-IHM01A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-move-actuate-hw/x-nucleo-ihm01a1.html) Stepper Motor Driver expansion board, plus a proper stepper motor
-   * Import the [Node_BLE_StepperMotor_Device](https://os.mbed.com/teams/ST/code/Node_BLE_StepperMotor_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
-   * Edit the application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application)
- * The [example_ble_3.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_3.py) application example shows how to handle two BLE devices exporting a "Switch" feature in such a way that pressing the user button on a device makes the LED of the other device toggle its state, through a logic defined within the application itself. The application requires to set up two devices equipped with BLE connectivity, e.g.:
+Before running the application examples, please prepare your devices as described here below. They need to be equipped with BLE connectivity and a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics/BlueSTSDK_Python#bluest-protocol).
+ * The [example_ble_1.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_1.py) application example shows how to perform a BLE scan, connect to a device, retrieve its exported features, and get push notifications from it. You can use, for example, the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-MOTENV1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-motenv1.html) function pack.
+ * The [example_ble_2.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_2.py) application example shows how to perform a BLE scan, connect to a number of devices handled though dedicated threads, and get push notifications from all their features. 
+ * The [example_ble_3.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_3.py) application example shows how to connect to a BLE device exporting a "Stepper Motor" feature, to get its status, and to send commands to it. The application requires to set up a device equipped with BLE connectivity and a stepper motor control, e.g.:
+   * A [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development board.
+   * An [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion board.
+   * An [X-NUCLEO-IHM01A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-move-actuate-hw/x-nucleo-ihm01a1.html) Stepper Motor Driver expansion board, plus a proper stepper motor.
+   * Import the [Node_BLE_StepperMotor_Device](https://os.mbed.com/teams/ST/code/Node_BLE_StepperMotor_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board.
+   * Edit the application example and set the "MOTOR_DEVICE_MAC" global variable with the proper MAC address of your stepper motor enabled BLE device (which you can retrieve for example through a smartphone application).
+ * The [example_ble_4.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_4.py) application example shows how to handle two BLE devices exporting a "Switch" feature in such a way that pressing the user button on a device makes the LED of the other device toggle its state, through a logic defined within the application itself. The application requires to set up two devices equipped with BLE connectivity, e.g.:
    * Two [NUCLEO-F401RE](http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-nucleo/nucleo-f401re.html) development boards
    * Two [X-NUCLEO-IDB05A1](http://www.st.com/content/st_com/en/products/ecosystems/stm32-open-development-environment/stm32-nucleo-expansion-boards/stm32-ode-connect-hw/x-nucleo-idb05a1.html) Bluetooth Low Energy expansion boards
    * Import the [Node_BLE_Switch_Device](https://os.mbed.com/teams/ST/code/Node_BLE_Switch_Device/) mbed OS application to your ARM mbed account, compile, and flash it onto the MCU board
    * Edit the application example and set the "IOT_DEVICE_X_MAC" global variables properly (you can use a smartphone application to retrieve the MAC address)
- * The [example_ble_4.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_4.py) application example shows how to connect to a microphone-enabled device exporting the "ADPCM Audio" and "ADPCM Sync" features, and allows to reproduce the recorded audio and to dump it on a file. The application requires to set up a device equipped with BLE connectivity and a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics/BlueSTSDK_Python#bluest-protocol), e.g. the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-ALLMEMS1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-allmems1.html) function pack.
+ * The [example_ble_5.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_5.py) application example shows how to connect to a microphone-enabled device exporting the "ADPCM Audio" and "ADPCM Sync" features, and allows to reproduce the recorded audio and to dump it on a file. You can use, for example, the [SensorTile](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) development kit and the [FP-SNS-ALLMEMS1](http://www.st.com/content/st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-ode-function-pack-sw/fp-sns-allmems1.html) function pack.
    Please refer to the application example file for the software requirements.
- * The [example_ble_5.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_5.py) application example shows how to connect to a device and perform a firmware upgrade. The application requires to set up a device equipped with a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics/BlueSTSDK_Python#bluest-protocol) that embeds a bootloader. Note that only the first time it is required a firmware that embeds a bootloader, while the firmware that can be upgraded to the device do not have to embed a bootloader. Please use, for example, the firmware available within the [FP-AI-SENSING1](https://www.st.com/b/en/embedded-software/fp-ai-sensing1.html) function pack, which is allows you to connect to IoT nodes and get Activity Recognition and Audio Scene Classification features. The function pack provides already binaries, both with and without the bootloader; just flash any of the firmware with the bootloader once, and put another without the bootloader on your gateway to be upgraded to your BLE device.
+ * The [example_ble_6.py](https://github.com/STMicroelectronics/BlueSTSDK_Python/blob/master/blue_st_examples/example_ble_6.py) application example shows how to connect to a device and perform a firmware upgrade. The application requires to set up a device equipped with a FW compatible with the [BlueST Protocol](https://github.com/STMicroelectronics/BlueSTSDK_Python#bluest-protocol) that embeds a bootloader. Note that only when flashing manually the board the first time a firmware that embeds a bootloader is required, while the firmware that can be upgraded via BLE to the device does not have to embed any bootloader. Please use, for example, the firmware available within the [FP-AI-SENSING1](https://www.st.com/b/en/embedded-software/fp-ai-sensing1.html) function pack, which allows you to connect to IoT nodes and get Activity Recognition and Audio Scene Classification features. The function pack provides already binaries, both with and without the bootloader; just flash any of the firmware with the bootloader the first time, and try to upgrade it with another firmware without the bootloader previously stored on your gateway.
 
 Other application examples can be found within the [EdgeST SDK](https://github.com/STMicroelectronics/EdgeSTSDK_Python) for Linux, an IoT edge computing abstraction library for Linux gateways.
 
@@ -59,7 +66,7 @@ To run the application examples please follow the steps below:
     ```
  3. Enter the "blue_st_examples" folder and run the desired script:
     ```Shell
-    $ sudo python example_ble_x.py
+    $ sudo python3 example_ble_x.py
     ```
 
 
@@ -77,16 +84,19 @@ The library shows only the devices that have a vendor-specific field formatted i
  - The Field Length must be 7 or 13 bytes long.
  
  - The Device Id is a number that identifies the type of device:
-    - 0x00 for a generic device
-    - 0x01 is reserved for the [STEVAL-WESU1](http://www.st.com/en/evaluation-tools/steval-wesu1.html) board
-    - 0x02 is reserved for the [STEVAL-STLKT01V1 (SensorTile)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) board
-    - 0x03 is reserved for the [STEVAL-BCNKT01V1 (BlueCoin)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-bcnkt01v1.html) board
-    - 0x04 is reserved for the [STEVAL-IDB007VX (BlueNRG1)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/communication-and-connectivity-solution-eval-boards/steval-idb007v1.html) and [STEVAL-IDB008VX (BlueNRG2)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/communication-and-connectivity-solution-eval-boards/steval-idb008v1.html) boards
-    - 0x80 for a generic Nucleo board
+    - 0x00 for a generic device.
+    - 0x01 is reserved for the [STEVAL-WESU1](http://www.st.com/en/evaluation-tools/steval-wesu1.html) board.
+    - 0x02 is reserved for the [STEVAL-STLKT01V1 (SensorTile)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-stlkt01v1.html) board.
+    - 0x03 is reserved for the [STEVAL-BCNKT01V1 (BlueCoin)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/sensor-solution-eval-boards/steval-bcnkt01v1.html) board.
+    - 0x04 is reserved for the [STEVAL-IDB007VX (BlueNRG1)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/communication-and-connectivity-solution-eval-boards/steval-idb007v1.html) and [STEVAL-IDB008VX (BlueNRG2)](http://www.st.com/content/st_com/en/products/evaluation-tools/solution-evaluation-tools/communication-and-connectivity-solution-eval-boards/steval-idb008v1.html) boards.
+    - 0x05 is reserved for the [STEVAL-BCN002V1 (BlueTile)](https://www.st.com/en/evaluation-tools/steval-bcn002v1b.html) board.
+    - 0x06 is reserved for the [STEVAL-MKSBOX1V1 (SensorTile.box)](https://www.st.com/en/evaluation-tools/steval-mksbox1v1.html) board.
+    - 0x07 is reserved for the [B-L475E-IOT01A (STM32L4 Discovery kit IoT node)](https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-discovery-kits/b-l475e-iot01a.html) board.
+    - 0x80 for a generic Nucleo board.
 
   In case you need to define your own custom boards, you should use Device Id values not yet assigned. Moreover, please note that values between 0x80 and 0xFF are reserved for ST Nucleo boards.
  
- - The feature mask is a bit field that provides information about which features are exported by the board. Currently, bits are mapped in the following way:
+ - The feature mask is a bit field that provides information about the features exported by the board. Currently, bits are mapped in the following way:
   
    |Bit|31|30|29|28|27|26|25|24|23|22|21|20|19|18|17|16|
    |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -152,7 +162,7 @@ A node notifies its RSSI (signal strength) when created.
 
 A node can be in one of following status:
 - **Init**: dummy initial status.
-- **Idle**: the node is waiting for a connection and sending an advertising data message.
+- **Idle**: the node is waiting for a connection and sending an advertising data message (i.e. disconnected).
 - **Connecting**: a connection with the node was triggered, the node is performing the discovery of device services/characteristics.
 - **Connected**: connection with the node was successful.
 - **Disconnecting**: ongoing disconnection; once disconnected the node goes back to the Idle status.
@@ -190,7 +200,7 @@ Available features can be retrieved from Features package.
     mask_to_features_dic[0x10000000] = my_feature.MyFeature
     try:
         Manager.add_features_to_node(0x80, mask_to_features_dic)
-    except InvalidFeatureBitMaskException as e:
+    except BlueSTInvalidFeatureBitMaskException as e:
         print e
     # Synchronous discovery of Bluetooth devices.
     manager.discover(False, SCANNING_TIME_s)

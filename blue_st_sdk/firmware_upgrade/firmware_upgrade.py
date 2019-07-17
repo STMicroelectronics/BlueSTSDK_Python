@@ -42,13 +42,13 @@ from abc import ABCMeta
 from abc import abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 
-from blue_st_sdk.python_utils import lock
+from blue_st_sdk.utils.python_utils import lock
 
 
 # CLASSES
 
 class FirmwareUpgrade(object):
-    """Class to handle the firmware upgrade capability for a board running the
+    """Class to handle the firmware upgrade capability for a device running the
     BlueST Protocol.
     """
 
@@ -155,7 +155,8 @@ class FirmwareUpgradeListener(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def on_upgrade_firmware_complete(self, debug_console, firmware_file):
+    def on_upgrade_firmware_complete(self, debug_console, firmware_file, \
+        bytes_sent):
         """To be called whenever the firmware has been upgraded correctly.
 
         Args:
@@ -163,11 +164,13 @@ class FirmwareUpgradeListener(object):
                 Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
                 Firmware file.
+            bytes_sent (int): Data sent in bytes.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must implement "on_upgrade_firmware_complete()" to '
+        raise NotImplementedError('You must implement '
+                                  '"on_upgrade_firmware_complete()" to '
                                   'use the "FirmwareUpgradeListener" class.')
 
     
@@ -186,7 +189,8 @@ class FirmwareUpgradeListener(object):
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must implement "on_upgrade_firmware_error()" to '
+        raise NotImplementedError('You must implement '
+                                  '"on_upgrade_firmware_error()" to '
                                   'use the "FirmwareUpgradeListener" class.')
 
     
@@ -207,5 +211,6 @@ class FirmwareUpgradeListener(object):
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
         """
-        raise NotImplementedError('You must implement "on_upgrade_firmware_progress()" to '
+        raise NotImplementedError('You must implement '
+                                  '"on_upgrade_firmware_progress()" to '
                                   'use the "FirmwareUpgradeListener" class.')

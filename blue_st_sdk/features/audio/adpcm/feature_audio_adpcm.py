@@ -33,9 +33,9 @@ from blue_st_sdk.feature import Sample
 from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
+from blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager import BVAudioSyncManager
 from blue_st_sdk.utils.number_conversion import LittleEndian
-from blue_st_sdk.utils.bv_audio_sync_manager import BVAudioSyncManager
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -43,7 +43,7 @@ from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
 class FeatureAudioADPCM(Feature):
     """The feature handles the compressed audio data acquired from a microphone.
 
-    Data is a twenty bytes array
+    Data is a twenty bytes array.
     """
     FEATURE_NAME = "ADPCM Audio"
     FEATURE_UNIT = None
@@ -59,8 +59,8 @@ class FeatureAudioADPCM(Feature):
     DATA_LENGTH_BYTES = 20
     AUDIO_PACKAGE_SIZE = 40
     
-    bvSyncManager = None
-    engineADPCM = None
+    bv_sync_manager = None
+    engine_adpcm = None
     
     def __init__(self, node):
         """Constructor.
@@ -69,16 +69,16 @@ class FeatureAudioADPCM(Feature):
             node (:class:`blue_st_sdk.node.Node`): Node that will send data to
                 this feature.
         """
-        global bvSyncManager
+        global bv_sync_manager
         super(FeatureAudioADPCM, self).__init__(
             self.FEATURE_NAME, node, [self.FEATURE_FIELDS])
             
-        FeatureAudioADPCM.bvSyncManager=BVAudioSyncManager()
-        FeatureAudioADPCM.engineADPCM=ADPCMEngine()
+        FeatureAudioADPCM.bv_sync_manager = BVAudioSyncManager()
+        FeatureAudioADPCM.engine_adpcm = ADPCMEngine()
             
     def extract_data(self, timestamp, data, offset):
         """Extract the data from the feature's raw data.
-        
+
         Args:
             data (bytearray): The data read from the feature (a 20 bytes array).
             offset (int): Offset where to start reading data (0 by default).
@@ -89,27 +89,29 @@ class FeatureAudioADPCM(Feature):
             shorts array).
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
-            raise InvalidDataException(
+            raise BlueSTInvalidDataException(
                 'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         
-        dataByte = bytearray(data)
+        data_byte = bytearray(data)
         
-        dataPkt = [None] * self.AUDIO_PACKAGE_SIZE
-        for x in range(0,self.AUDIO_PACKAGE_SIZE/2):
-            dataPkt[2*x] = self.engineADPCM.decode((dataByte[x] & 0x0F), self.bvSyncManager)
-            dataPkt[(2*x)+1] = self.engineADPCM.decode(((dataByte[x] >> 4) & 0x0F), self.bvSyncManager)
+        data_pkt = [None] * self.AUDIO_PACKAGE_SIZE
+        for x in range(0, int(self.AUDIO_PACKAGE_SIZE / 2)):
+            data_pkt[2*x] = self.engine_adpcm.decode((data_byte[x] & 0x0F), \
+                self.bv_sync_manager)
+            data_pkt[(2*x)+1] = self.engine_adpcm.decode(((data_byte[x] >> 4) \
+                & 0x0F), self.bv_sync_manager)
         
         sample = Sample(
-            dataPkt,
+            data_pkt,
             self.get_fields_description(),
             None)
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
-    
+
     @classmethod
     def get_audio(self, sample):
         """Get the audio data from a sample.
@@ -142,7 +144,7 @@ class FeatureAudioADPCM(Feature):
             sample (:class:`blue_st_sdk.feature.Sample`): Extracted sample which
                 contains the synchronization parameters.
         """
-        self.bvSyncManager.setSyncParams(sample)
+        self.bv_sync_manager.set_synchronization_parameters(sample)
 
 class ADPCMEngine(object):
     """DPCM Engine class.
@@ -153,8 +155,8 @@ class ADPCMEngine(object):
     def __init__(self): 
         """Constructor."""
 
-        #Quantizer step size lookup table 
-        self.StepSizeTable=[7,8,9,10,11,12,13,14,16,17,
+        # Quantizer step size lookup table .
+        self._step_size_table=[7,8,9,10,11,12,13,14,16,17,
             19,21,23,25,28,31,34,37,41,45,
             50,55,60,66,73,80,88,97,107,118,
             130,143,157,173,190,209,230,253,279,307,
@@ -164,13 +166,13 @@ class ADPCMEngine(object):
             5894,6484,7132,7845,8630,9493,10442,11487,12635,13899,
             15289,16818,18500,20350,22385,24623,27086,29794,32767]
 
-        # Table of index changes 
-        self.IndexTable = [-1,-1,-1,-1,2,4,6,8,-1,-1,-1,-1,2,4,6,8]
+        # Table of index changes.
+        self._index_table = [-1,-1,-1,-1,2,4,6,8,-1,-1,-1,-1,2,4,6,8]
         
-        self.index = 0
-        self.predsample = 0
+        self._index = 0
+        self._pred_sample = 0
 
-    def decode(self, code, syncManager): 
+    def decode(self, code, sync_manager): 
         """ADPCM_Decode.
         
         Args:
@@ -180,11 +182,11 @@ class ADPCMEngine(object):
             int: A 16-bit ADPCM sample.
         """
         # 1. get sample
-        if (syncManager is not None and syncManager.isIntra()):
-            self.index = syncManager.get_index_in()
-            self.predsample = syncManager.get_predsample_in()
-            syncManager.reinitResetFlag()
-        step = self.StepSizeTable[self.index]
+        if (sync_manager is not None and sync_manager.is_intra()):
+            self._index = sync_manager.get_index_in()
+            self._pred_sample = sync_manager.get_pred_sample_in()
+            sync_manager.initialize_reset_flag()
+        step = self._step_size_table[self._index]
 
         # 2. inverse code into diff 
         diffq = step>> 3
@@ -200,29 +202,29 @@ class ADPCMEngine(object):
 
         # 3. add diff to predicted sample
         if ((code&8)!=0):
-            self.predsample -= diffq
+            self._pred_sample -= diffq
         
         else:
-            self.predsample += diffq
+            self._pred_sample += diffq
         
         # check for overflow
-        if (self.predsample > 32767):
-            self.predsample = 32767
+        if (self._pred_sample > 32767):
+            self._pred_sample = 32767
 
-        elif (self.predsample < -32768):
-            self.predsample = -32768
+        elif (self._pred_sample < -32768):
+            self._pred_sample = -32768
 
         # 4. find new quantizer step size 
-        self.index += self.IndexTable [code]
+        self._index += self._index_table [code]
         #check for overflow
-        if (self.index < 0):
-            self.index = 0
+        if (self._index < 0):
+            self._index = 0
             
-        if (self.index > 88):
-            self.index = 88
+        if (self._index > 88):
+            self._index = 88
 
         # 5. save predict sample and index for next iteration 
         # done! static variables 
 
         # 6. return speech sample
-        return self.predsample
+        return self._pred_sample

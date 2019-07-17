@@ -34,9 +34,12 @@
 
 # DESCRIPTION
 #
-# This application example shows how to perform a Bluetooth Low Energy (BLE)
-# scan, connect to a device, retrieve its exported features, and get push
-# notifications from it.
+# This application example shows how to connect to a Bluetooth Low Energy (BLE)
+# device that exports "Debug" service and features, and supports the "Firmware
+# Update" capability, and how to upgrade the device's firmware.
+#
+# Please set the "IOT_DEVICE_NAME" variable and the "Firmware file paths"
+# section properly to fit your setup.
 
 
 # IMPORT
@@ -45,14 +48,17 @@ from __future__ import print_function
 import sys
 import os
 import time
+import getopt
 from abc import abstractmethod
 
 from blue_st_sdk.manager import Manager
 from blue_st_sdk.manager import ManagerListener
 from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
-from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm import FeatureAudioADPCM
-from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync import FeatureAudioADPCMSync
+from blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo import FirmwareUpgradeNucleo
+from blue_st_sdk.firmware_upgrade.firmware_upgrade import FirmwareUpgradeListener
+from blue_st_sdk.firmware_upgrade.utils.firmware_file import FirmwareFile
+from blue_st_sdk.features import *
 
 
 # PRECONDITIONS
@@ -76,6 +82,17 @@ SCANNING_TIME_s = 5
 
 # Number of notifications to get before disabling them.
 NOTIFICATIONS = 10
+
+# Bluetooth Low Energy devices' name.
+IOT_DEVICE_NAME = 'TAI_110'
+
+# Firmware file paths.
+FIRMWARE_FOLDER = '/home/_user_/LinuxGW/SensorTile_Binaries/AI/'
+FIRMWARE_EXTENSION = '.bin'
+FIRMWARE_FILENAMES = [
+    'SENSING1_ASC', \
+    'SENSING1_HAR_GMP'
+]
 
 
 # FUNCTIONS
@@ -140,10 +157,6 @@ class MyNodeListener(NodeListener):
     def on_disconnect(self, node, unexpected=False):
         print('Device %s disconnected%s.' % \
             (node.get_name(), ' unexpectedly' if unexpected else ''))
-        if unexpected:
-            # Exiting.
-            print('\nExiting...\n')
-            sys.exit(0)
 
 
 #
@@ -152,9 +165,6 @@ class MyNodeListener(NodeListener):
 #
 class MyFeatureListener(FeatureListener):
 
-    _notifications = 0
-    """Counting notifications to print only the desired ones."""
-
     #
     # To be called whenever the feature updates its data.
     #
@@ -162,9 +172,53 @@ class MyFeatureListener(FeatureListener):
     # @param sample  Data extracted from the feature.
     #
     def on_update(self, feature, sample):
-        if self._notifications < NOTIFICATIONS:
-            self._notifications += 1
-            print(feature)
+        print(feature)
+
+
+#
+# Implementation of the interface used by the FirmwareUpgrade class to notify
+# changes when upgrading the firmware.
+#
+class MyFirmwareUpgradeListener(FirmwareUpgradeListener):
+
+    #
+    # To be called whenever the firmware has been upgraded correctly.
+    #
+    # @param debug_console Debug console.
+    # @param firmware_file Firmware file.
+    # @param bytes_sent    Data sent in bytes.
+    #
+    def on_upgrade_firmware_complete(self, debug_console, firmware_file, \
+        bytes_sent):
+        global firmware_upgrade_completed
+
+        print('%d bytes out of %d sent...' % (bytes_sent, bytes_sent))
+        print('Firmware upgrade completed successfully.')
+        firmware_upgrade_completed = True
+
+    #
+    # To be called whenever there is an error in upgrading the firmware.
+    #
+    # @param debug_console Debug console.
+    # @param firmware_file Firmware file.
+    # @param error         Error code.
+    #
+    def on_upgrade_firmware_error(self, debug_console, firmware_file, error):
+        print('Firmware upgrade error: %s.' % (str(error)))
+        firmware_upgrade_completed = True
+
+    #
+    # To be called whenever there is an update in upgrading the firmware, i.e. a
+    # block of data has been correctly sent and it is possible to send a new one.
+    #
+    # @param debug_console Debug console.
+    # @param firmware_file Firmware file.
+    # @param bytes_sent    Data sent in bytes.
+    # @param bytes_to_send Data to send in bytes.
+    #
+    def on_upgrade_firmware_progress(self, debug_console, firmware_file, \
+        bytes_sent, bytes_to_send):
+        print('%d bytes out of %d sent...' % (bytes_sent, bytes_to_send))
 
 
 # MAIN APPLICATION
@@ -173,12 +227,13 @@ class MyFeatureListener(FeatureListener):
 # Main application.
 #
 def main(argv):
+    global firmware_upgrade_completed
 
     # Printing intro.
     print_intro()
 
     try:
-        # Creating Bluetooth Manager.
+       # Creating Bluetooth Manager.
         manager = Manager.instance()
         manager_listener = MyManagerListener()
         manager.add_listener(manager_listener)
@@ -188,81 +243,111 @@ def main(argv):
             print('Scanning Bluetooth devices...\n')
             manager.discover(SCANNING_TIME_s)
 
-            # Alternative 1: Asynchronous discovery of Bluetooth devices.
-            #manager.discover(SCANNING_TIME_s, True)
-
-            # Alternative 2: Asynchronous discovery of Bluetooth devices.
-            #manager.start_discovery()
-            #time.sleep(SCANNING_TIME_s)
-            #manager.stop_discovery()
-
             # Getting discovered devices.
             discovered_devices = manager.get_nodes()
-
-            # Listing discovered devices.
             if not discovered_devices:
                 print('No Bluetooth devices found. Exiting...\n')
                 sys.exit(0)
-            print('Available Bluetooth devices:')
-            i = 1
-            for device in discovered_devices:
-                print('%d) %s: [%s]' % (i, device.get_name(), device.get_tag()))
-                i += 1
 
-            # Selecting a device.
-            while True:
-                choice = int(
-                    input("\nSelect a device to connect to (\'0\' to quit): "))
-                if choice >= 0 and choice <= len(discovered_devices):
+            # Checking discovered devices.
+            device = None
+            for discovered in discovered_devices:
+                if discovered.get_name() == IOT_DEVICE_NAME:
+                    device = discovered
                     break
+            if not device:
+                print('Bluetooth setup incomplete. Exiting...\n')
+                sys.exit(0)
+
+            # Connecting to the devices.
+            node_listener = MyNodeListener()
+            device.add_listener(node_listener)
+            print('Connecting to %s...' % (device.get_name()))
+            if not device.connect():
+                print('Connection failed.\n')
+                print('Bluetooth setup incomplete. Exiting...\n')
+                sys.exit(0)
+            print('Connection done.')
+
+            # Getting features.
+            print('\nFeatures:')
+            i = 1
+            features = []
+            for desired_feature in [
+                feature_audio_scene_classification.FeatureAudioSceneClassification,
+                feature_activity_recognition.FeatureActivityRecognition]:
+                feature = device.get_feature(desired_feature)
+                if feature:
+                    features.append(feature)
+                    print('%d) %s' % (i, feature.get_name()))
+                    i += 1
+            if not features:
+                print('No features found.')
+            print('%d) Firmware upgrade' % (i))
+
+            # Selecting an action.
+            while True:
+                choice = int(input('\nSelect an action '
+                                   '(\'0\' to quit): '))
+                if choice >= 0 and choice <= len(features) + 1:
+                    break
+
             if choice == 0:
+                # Disconnecting from the device.
+                print('\nDisconnecting from %s...' % (device.get_name()))
+                device.disconnect()
+                print('Disconnection done.')
+                device.remove_listener(node_listener)
                 # Exiting.
                 manager.remove_listener(manager_listener)
                 print('Exiting...\n')
                 sys.exit(0)
-            device = discovered_devices[choice - 1]
-            node_listener = MyNodeListener()
-            device.add_listener(node_listener)
 
-            # Connecting to the device.
-            print('Connecting to %s...' % (device.get_name()))
-            if not device.connect():
-                print('Connection failed.\n')
-                continue
+            elif choice == i:
+                try:
+                    # Selecting firmware.
+                    i = 1
+                    for filename in FIRMWARE_FILENAMES:
+                        print('%d) %s' % (i, filename))
+                        i += 1
+                    while True:
+                        choice = int(input("\nSelect a firmware (\'0\' to cancel): "))
+                        if choice >= 0 and choice <= len(FIRMWARE_FILENAMES):
+                            break
 
-            while True:
-                # Getting features.
-                features = device.get_features()
-                print('\nFeatures:')
-                i = 1
-                for feature in features:
-                    if isinstance(feature, FeatureAudioADPCM):
-                        audio_feature = feature
-                        print('%d,%d) %s' % (i,i+1, "Audio & Sync"))
-                        i+=1
-                    elif isinstance(feature, FeatureAudioADPCMSync):
-                        audio_sync_feature = feature
-                    else:
-                        print('%d) %s' % (i, feature.get_name()))
-                        i+=1
+                    # Upgrading firmware.
+                    if choice != 0:
+                        print('\nUpgrading firmware...')
+                        upgrade_console = FirmwareUpgradeNucleo.get_console(device)
+                        upgrade_console_listener = MyFirmwareUpgradeListener()
+                        upgrade_console.add_listener(upgrade_console_listener)
+                        firmware = FirmwareFile(
+                            FIRMWARE_FOLDER +
+                            FIRMWARE_FILENAMES[choice - 1] +
+                            FIRMWARE_EXTENSION)
+                        upgrade_console.upgrade_firmware(firmware)
 
-                # Selecting a feature.
-                while True:
-                    choice = int(input('\nSelect a feature '
-                                       '(\'0\' to disconnect): '))
-                    if choice >= 0 and choice <= len(features):
-                        break
-                if choice == 0:
+                        # Getting notifications about firmware upgrade process.
+                        while not firmware_upgrade_completed:
+                            if device.wait_for_notifications(0.05):
+                                continue
+
+                except (OSError, ValueError) as e:
+                    print(e)
+
+                finally:
                     # Disconnecting from the device.
+                    if 'upgrade_console' in locals():
+                        upgrade_console.remove_listener(upgrade_console_listener)
                     print('\nDisconnecting from %s...' % (device.get_name()))
-                    if not device.disconnect():
-                        print('Disconnection failed.\n')
-                        continue
+                    device.disconnect()
+                    print('Disconnection done.')
                     device.remove_listener(node_listener)
-                    # Resetting discovery.
-                    manager.reset_discovery()
-                    # Going back to the list of devices.
-                    break
+                    print('\nDevice is rebooting...\n')
+                    time.sleep(20)
+
+            else:
+                # Testing features.
                 feature = features[choice - 1]
 
                 # Enabling notifications.
@@ -270,33 +355,21 @@ def main(argv):
                 feature.add_listener(feature_listener)
                 device.enable_notifications(feature)
 
-                # Handling audio case (both audio features have to be enabled).
-                if isinstance(feature, FeatureAudioADPCM):
-                    audio_sync_feature_listener = MyFeatureListener()
-                    audio_sync_feature.add_listener(audio_sync_feature_listener)
-                    device.enable_notifications(audio_sync_feature)
-                elif isinstance(feature, FeatureAudioADPCMSync):
-                    audio_feature_listener = MyFeatureListener()
-                    audio_feature.add_listener(audio_feature_listener)
-                    device.enable_notifications(audio_feature)
-
                 # Getting notifications.
-                notifications = 0
-                while notifications < NOTIFICATIONS:
+                n = 0
+                while n < NOTIFICATIONS:
                     if device.wait_for_notifications(0.05):
-                        notifications += 1
+                        n += 1
 
                 # Disabling notifications.
                 device.disable_notifications(feature)
                 feature.remove_listener(feature_listener)
-                
-                # Handling audio case (both audio features have to be disabled).
-                if isinstance(feature, FeatureAudioADPCM):
-                    device.disable_notifications(audio_sync_feature)
-                    audio_sync_feature.remove_listener(audio_sync_feature_listener)
-                elif isinstance(feature, FeatureAudioADPCMSync):
-                    device.disable_notifications(audio_feature)
-                    audio_feature.remove_listener(audio_feature_listener)
+
+                # Disconnecting from the device.
+                print('\nDisconnecting from %s...' % (device.get_name()))
+                device.disconnect()
+                print('Disconnection done.\n')
+                device.remove_listener(node_listener)
 
     except KeyboardInterrupt:
         try:
@@ -309,4 +382,5 @@ def main(argv):
 
 if __name__ == "__main__":
 
+    firmware_upgrade_completed = False
     main(sys.argv[1:])

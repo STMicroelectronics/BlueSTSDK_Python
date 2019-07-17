@@ -4,8 +4,6 @@ __all__ = [
     'feature_accelerometer', \
     'feature_activity_recognition', \
     #'feature_analog', \
-    'feature_audio_adpcm', \
-    'feature_audio_adpcm_sync', \
     'feature_audio_scene_classification', \
     #'feature_battery', \
     #'feature_beamforming', \

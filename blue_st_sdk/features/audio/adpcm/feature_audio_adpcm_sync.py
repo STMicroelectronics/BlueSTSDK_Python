@@ -34,7 +34,7 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import LittleEndian
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -91,11 +91,11 @@ class FeatureAudioADPCMSync(Feature):
             and an int).
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if len(data) != self.DATA_LENGTH_BYTES:
-            raise InvalidDataException(
+            raise BlueSTInvalidDataException(
                 'There are no %d bytes available to read.' \
                 % (self.DATA_LENGTH_BYTES))
             
@@ -107,7 +107,7 @@ class FeatureAudioADPCMSync(Feature):
         return ExtractedData(sample, self.DATA_LENGTH_BYTES)
     
     @staticmethod
-    def getIndex(sample):
+    def get_index(sample):
         """Method which extract the index synchronization parameter from a buffer
            passed as parameter
 
@@ -124,7 +124,7 @@ class FeatureAudioADPCMSync(Feature):
         return None
     
     @staticmethod
-    def getPredictedSample(sample):
+    def get_predicted_sample(sample):
         """Method which extract the predsample synchronization parameter from a
            buffer passed as parameter
 

@@ -36,9 +36,9 @@ from blue_st_sdk.feature import ExtractedData
 from blue_st_sdk.features.field import Field
 from blue_st_sdk.features.field import FieldType
 from blue_st_sdk.utils.number_conversion import NumberConversion
-from blue_st_sdk.python_utils import lock
-from blue_st_sdk.utils.blue_st_exceptions import InvalidOperationException
-from blue_st_sdk.utils.blue_st_exceptions import InvalidDataException
+from blue_st_sdk.utils.python_utils import lock
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidOperationException
+from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidDataException
 
 
 # CLASSES
@@ -86,11 +86,11 @@ class FeatureSwitch(Feature):
             of bytes read and the extracted data.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         if len(data) - offset < self.DATA_LENGTH_BYTES:
-            raise InvalidDataException(
+            raise BlueSTInvalidDataException(
                 'There is no %d byte available to read.' \
                 % (self.DATA_LENGTH_BYTES))
         sample = Sample(
@@ -122,16 +122,16 @@ class FeatureSwitch(Feature):
             int: The switch status.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidDataException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
                 if the data array has not enough data to read.
         """
         try:
             self._read_data()
             return self.get_switch_status(self._get_sample())
-        except (InvalidOperationException, InvalidDataException) as e:
+        except (BlueSTInvalidOperationException, BlueSTInvalidDataException) as e:
             raise e
 
     def write_switch_status(self, status):
@@ -141,7 +141,7 @@ class FeatureSwitch(Feature):
             status (int): The switch status.
 
         Raises:
-            :exc:`blue_st_sdk.utils.blue_st_exceptions.InvalidOperationException`
+            :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
                 is raised if the feature is not enabled or the operation
                 required is not supported.
         """
@@ -149,7 +149,7 @@ class FeatureSwitch(Feature):
             ts = 0
             status_str = struct.pack('<HB', ts, status)
             self._write_data(status_str)
-        except InvalidOperationException as e:
+        except BlueSTInvalidOperationException as e:
             raise e
 
     def __str__(self):

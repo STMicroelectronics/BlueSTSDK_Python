@@ -52,7 +52,7 @@ blue\_st\_sdk.node module
 blue\_st\_sdk.python\_utils module
 ----------------------------------
 
-.. automodule:: blue_st_sdk.python_utils
+.. automodule:: blue_st_sdk.utils.python_utils
     :special-members: __init__
     :members:
     :undoc-members:

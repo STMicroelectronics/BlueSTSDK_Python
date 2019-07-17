@@ -57,7 +57,10 @@ class NumberConversion(object):
         Returns:
             int: The corresponding numerical value.      
         """
-        return struct.unpack('B', data[index])[0]
+        # Python 2
+        #return struct.unpack('B', data[index])[0]
+        # Python 3
+        return data[index]
 
 
 class LittleEndian(object):
@@ -69,7 +72,7 @@ class LittleEndian(object):
     def bytes_to_int16(self, data, start = 0):
         """Return the signed short value of two bytes of the array in Little
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -77,137 +80,142 @@ class LittleEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 2).order(ByteOrder.LITTLE_ENDIAN).getShort()
-        return struct.unpack('<h', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 2
+        #return struct.unpack('<h', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 3
+        return struct.unpack('<h', data[start : start + 2])[0]
 
     @classmethod
     def bytes_to_int32(self, data, start = 0):
         """Return the signed integer value of four bytes of the array in Little
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
-        
+
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
-        return struct.unpack('<i', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('<i', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('<i', data[start : start + 4])[0]
 
     @classmethod
     def bytes_to_uint16(self, data, start = 0):
         """Return the unsigned short value of two bytes of the array in Little
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
-        
+
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 2).order(ByteOrder.LITTLE_ENDIAN).getShort() & 0xFFFF
-        return struct.unpack('<H', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 2
+        #return struct.unpack('<H', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 3
+        return struct.unpack('<H', data[start : start + 2])[0]
 
     @classmethod
     def bytes_to_uint32(self, data, start = 0):
         """Return the unsigned integer value of four bytes of the array in
         Little Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
-        
+
         Returns:
             The corresponding numerical value.
         """
-        #return ((long(ByteBuffer.wrap(data, start, 4).order(ByteOrder.LITTLE_ENDIAN).getInt())) & 0xFFFFFFFFL)
-        return struct.unpack('<I', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('<I', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('<I', data[start : start + 4])[0]
 
     @classmethod
     def bytes_to_float(self, data, start = 0):
         """Return the floating point value of four bytes of the array in Little
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
-        
+
         Returns:
             The corresponding numerical value.
         """
-        #return Float.intBitsToFloat(self.bytes_to_int32(data, start))
-        return struct.unpack('<f', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('<f', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('<f', data[start : start + 4])[0]
 
     @classmethod
     def int16_to_bytes(self, value):
         """Return the two bytes array corresponding to the signed short value in
         Little Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(value).array()
         return struct.pack("<i", value)[0:2]
 
     @classmethod
     def int32_to_bytes(self, value):
         """Return the four bytes array corresponding to the signed integer value
         in Little Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array()
         return struct.pack("<q", value)[0:4]
 
     @classmethod
     def uint16_to_bytes(self, value):
         """Return the two bytes array corresponding to the unsigned short value
         in Little Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort(int((value & 0xFFFF))).array()
         return struct.pack("<I", value)[0:2]
 
     @classmethod
     def uint32_to_bytes(self, value):
         """Return the four bytes array corresponding to the unsigned integer
         value in Little Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(int((value & 0xFFFFFFFFL))).array()
         return struct.pack("<Q", value)[0:4]
 
     @classmethod
     def float_to_bytes(self, value):
         """Return the four bytes array corresponding to the floating point value
         in Little Endian base order.
-        
+
         Args:
             value (float): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(value).array()
         return struct.pack("<f", value)
 
 
@@ -220,7 +228,7 @@ class BigEndian(object):
     def bytes_to_int16(self, data, start = 0):
         """Return the signed short value of two bytes of the array in Big
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -228,14 +236,16 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 2).order(ByteOrder.BIG_ENDIAN).getShort()
-        return struct.unpack('>h', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 2
+        #return struct.unpack('>h', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 3
+        return struct.unpack('>h', data[start : start + 2])[0]
 
     @classmethod
     def bytes_to_int32(self, data, start = 0):
         """Return the signed integer value of four bytes of the array in Big
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -243,14 +253,16 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 4).order(ByteOrder.BIG_ENDIAN).getInt()
-        return struct.unpack('>i', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('>i', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('>i', data[start : start + 4])[0]
 
     @classmethod
     def bytes_to_uint16(self, data, start = 0):
         """Return the unsigned short value of two bytes of the array in Big
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -258,14 +270,16 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return ByteBuffer.wrap(data, start, 2).order(ByteOrder.BIG_ENDIAN).getShort() & 0xFFFF
-        return struct.unpack('>H', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 2
+        #return struct.unpack('>H', struct.pack('cc', *data[start : start + 2]))[0]
+        # Python 3
+        return struct.unpack('>H', data[start : start + 2])[0]
 
     @classmethod
     def bytes_to_uint32(self, data, start = 0):
         """Return the unsigned integer value of four bytes of the array in Big
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -273,14 +287,16 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return ((long(ByteBuffer.wrap(data, start, 4).order(ByteOrder.BIG_ENDIAN).getInt())) & 0xFFFFFFFFL)
-        return struct.unpack('>I', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('>I', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('>I', data[start : start + 4])[0]
 
     @classmethod
     def bytes_to_float(self, data, start = 0):
         """Return the floating point value of four bytes of the array in Big
         Endian base order.
-        
+
         Args:
             data (str): Input array of bytes that contains the value to convert.
             start (int): Start index in the array of the value to convert.
@@ -288,75 +304,72 @@ class BigEndian(object):
         Returns:
             The corresponding numerical value.
         """
-        #return Float.intBitsToFloat(self.bytes_to_int32(data, start))
-        return struct.unpack('>f', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 2
+        #return struct.unpack('>f', struct.pack('cccc', *data[start : start + 4]))[0]
+        # Python 3
+        return struct.unpack('>f', data[start : start + 4])[0]
 
     @classmethod
     def int16_to_bytes(self, value):
         """Return the two bytes array corresponding to the signed short value in
         Big Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(2).order(ByteOrder.BIG_ENDIAN).putShort(value).array()
         return struct.pack(">i", value)[2:4]
 
     @classmethod
     def int32_to_bytes(self, value):
         """Return the four bytes array corresponding to the signed integer value
         in Big Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(value).array()
         return struct.pack(">q", value)[4:8]
 
     @classmethod
     def uint16_to_bytes(self, value):
         """Return the two bytes array corresponding to the unsigned short value
         in Big Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(2).order(ByteOrder.BIG_ENDIAN).putShort(int((value & 0xFFFF))).array()
         return struct.pack(">I", value)[2:4]
 
     @classmethod
     def uint32_to_bytes(self, value):
         """Return the four bytes array corresponding to the unsigned integer
         value in Big Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putInt(int((value & 0xFFFFFFFFL))).array()
         return struct.pack(">Q", value)[4:8]
 
     @classmethod
     def float_to_bytes(self, value):
         """Return the four bytes array corresponding to the floating point value
         in Big Endian base order.
-        
+
         Args:
             value (int): Value to convert.
-        
+
         Returns:
             The corresponding array of bytes.
         """
-        #return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putFloat(value).array()
         return struct.pack(">f", value)

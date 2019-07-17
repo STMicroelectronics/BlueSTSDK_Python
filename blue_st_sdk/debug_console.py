@@ -39,8 +39,9 @@ from abc import ABCMeta
 from abc import abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 
+from bluepy.btle import BTLEException
 from blue_st_sdk.utils.ble_node_definitions import Debug
-from blue_st_sdk.python_utils import lock
+from blue_st_sdk.utils.python_utils import lock
 
 
 # CLASSES
@@ -110,28 +111,32 @@ class DebugConsole():
             int: The number of bytes sent to the stdin/stdout standard
             characteristic.
         """
-        char_handle = self._stdinout_characteristic.getHandle()
-        bytes_sent = 0
-        while bytes_sent < len(data):
-            # Computing data to send.
-            bytes_to_send = min(
-                self._MAXIMUM_MESSAGE_SIZE_BYTES,
-                len(data) - bytes_sent
-            )
-            data_to_send = data[bytes_sent:bytes_sent + bytes_to_send]
+        try:
+            char_handle = self._stdinout_characteristic.getHandle()
+            bytes_sent = 0
+            while bytes_sent < len(data):
+                # Computing data to send.
+                bytes_to_send = min(
+                    self._MAXIMUM_MESSAGE_SIZE_BYTES,
+                    len(data) - bytes_sent
+                )
+                data_to_send = data[bytes_sent:bytes_sent + bytes_to_send]
 
-            # Writing data.
-            self._node.writeCharacteristic(
-                char_handle,
-                data_to_send,
-                True)
-            bytes_sent += bytes_to_send
+                # Writing data.
+                self._node.writeCharacteristic(
+                    char_handle,
+                    data_to_send,
+                    True)
+                bytes_sent += bytes_to_send
 
-            # Calling on-write callback for a debug characteristic.
-            self.on_write_characteristic(
-                self._stdinout_characteristic, data_to_send, True)
+                # Calling on-write callback for a debug characteristic.
+                self.on_write_characteristic(
+                    self._stdinout_characteristic, data_to_send, True)
 
-        return bytes_sent
+            return bytes_sent
+
+        except BTLEException as e:
+            self._node._unexpected_disconnect()
 
     def add_listener(self, listener):
         """Adding a listener.
@@ -181,24 +186,27 @@ class DebugConsole():
                 for more information.
             data (str): The data notified from the given characteristic.
         """
-        if len(self._listeners) == 0:
-            return
+        try:
+            if len(self._listeners) == 0:
+                return
 
-        data_str = self._decode_data(data)
+            data_str = self._decode_data(data)
 
-        if characteristic.uuid == \
-            Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID:
-            for listener in self._listeners:
-                # Calling user-defined callback.
-                self._thread_pool.submit(listener.on_stdout_receive(
-                    self, data_str))
+            if characteristic.uuid == \
+                Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID:
+                for listener in self._listeners:
+                    # Calling user-defined callback.
+                    self._thread_pool.submit(listener.on_stdout_receive(
+                        self, data_str))
 
-        elif characteristic.uuid == \
-            Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID:
-            for listener in self._listeners:
-                # Calling user-defined callback.
-                self._thread_pool.submit(listener.on_stderr_receive(
-                    self, data_str))
+            elif characteristic.uuid == \
+                Debug.DEBUG_STDERR_BLUESTSDK_SERVICE_UUID:
+                for listener in self._listeners:
+                    # Calling user-defined callback.
+                    self._thread_pool.submit(listener.on_stderr_receive(
+                        self, data_str))
+        except BTLEException as e:
+            self._node._unexpected_disconnect()
 
     def on_write_characteristic(self, characteristic, data, status):
         """The characteristic has been written.
@@ -210,20 +218,22 @@ class DebugConsole():
             status (bool): True if the writing operation was successfully, False
                 otherwise.
         """
-        if len(self._listeners) == 0:
-            return
+        try:
+            if len(self._listeners) == 0:
+                return
 
-        data_str = self._decode_data(data)
+            data_str = self._decode_data(data)
 
-        if characteristic.uuid == \
-            Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID:
-            for listener in self._listeners:
-                # Calling user-defined callback.
-                self._thread_pool.submit(listener.on_stdin_send(
-                    self,
-                    data_str[0:self._MAXIMUM_MESSAGE_SIZE_BYTES],
-                    #data[0:self._MAXIMUM_MESSAGE_SIZE_BYTES],
-                    status))
+            if characteristic.uuid == \
+                Debug.DEBUG_STDINOUT_BLUESTSDK_SERVICE_UUID:
+                for listener in self._listeners:
+                    # Calling user-defined callback.
+                    self._thread_pool.submit(listener.on_stdin_send(
+                        self,
+                        data_str[0:self._MAXIMUM_MESSAGE_SIZE_BYTES],
+                        status))
+        except BTLEException as e:
+            self._node._unexpected_disconnect()        
 
     def get_node(self):
         """Getting the node that listen to / write to this debug console.

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="blue_st_sdk",
-    version="1.3.0",
+    version="1.4.0",
     author="Davide Aliprandi",
     author_email="davide.aliprandi@gmail.com",
     description="Bluetooth Low Energy abstraction library package.",
@@ -17,7 +17,7 @@ setuptools.setup(
     classifiers=[
         "License :: OSI Approved :: BSD License",
         "Operating System :: POSIX :: Linux",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
         "Topic :: Software Development :: Embedded Systems"
     ],
 )
