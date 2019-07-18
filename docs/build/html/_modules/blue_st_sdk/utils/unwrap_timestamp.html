@@ -1,0 +1,152 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.utils.unwrap_timestamp &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for blue_st_sdk.utils.unwrap_timestamp</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;unwrap_timestamp</span>
+
+<span class="sd">The unwrap_timestamp module contains tools to unwrap timestamp values.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.python_utils</span> <span class="k">import</span> <span class="n">synchronized</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="UnwrapTimestamp"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp">[docs]</a><span class="k">class</span> <span class="nc">UnwrapTimestamp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that unwraps a timestamp.&quot;&quot;&quot;</span>
+
+    <span class="n">_NEAR_TO_END_TH</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">100</span>
+    <span class="sd">&quot;&quot;&quot;Threshold.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UnwrapTimestamp.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.&quot;&quot;&quot;</span>
+        <span class="c1"># Number of times the timestamp has reset.</span>
+        <span class="c1"># The timestamp is reset whenever the received timestamp has a value</span>
+        <span class="c1"># greater than &quot;2^16 - 100&quot; and it is followed by a package with a</span>
+        <span class="c1"># smaller value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_times</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Last raw timestamp received.</span>
+        <span class="c1"># It is a number between &quot;0&quot; and &quot;2^16-1&quot;.</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_timestamp</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="UnwrapTimestamp.unwrap"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.unwrap_timestamp.UnwrapTimestamp.unwrap">[docs]</a>    <span class="nd">@synchronized</span>
+    <span class="k">def</span> <span class="nf">unwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a multiple of (1 &lt;&lt; 16) to the timestamp to reset it, if needed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timestamp (int): Timestamp.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The unwrapped timestamp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_timestamp</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_NEAR_TO_END_TH</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_timestamp</span> <span class="o">&gt;</span> <span class="n">timestamp</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reset_times</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="c1">#return long(self._reset_times) * (1 &lt;&lt; 16) + long(timestamp)  #Python 2</span></div></div>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_reset_times</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>  <span class="c1">#Python 3</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

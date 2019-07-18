@@ -48,7 +48,7 @@ class DeviceTimestampFeature(Feature):
         Args:
             name (str): Name of the feature.
             node (:class:`blue_st_sdk.node.Node`): Node that will update the
-                feature.
+            feature.
             description (str): Description of the data of the feature.
         """
         super(DeviceTimestampFeature, self).__init__(name, node, description)

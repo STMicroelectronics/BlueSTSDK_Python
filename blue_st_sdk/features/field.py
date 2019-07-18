@@ -38,21 +38,21 @@ class Field(object):
     """Class that describes a feature data field.
     """
 
-    def __init__(self, name_, unit_, type_, max_, min_):
+    def __init__(self, name, unit, data_type, maximum, minimum):
         """Constructor.
 
         Args:
-            name_ (str): Name.
-            unit_ (str): Unit.
-            type_ (:class:`blue_st_sdk.features.field.FieldType`): Type.
-            max_: Maximum value. 
-            min_: Minimum value.
+            name (str): Name.
+            unit (str): Unit.
+            data_type (:class:`blue_st_sdk.features.field.FieldType`): Data type.
+            maximum: Maximum value. 
+            minimum: Minimum value.
         """
-        self._name = name_
-        self._unit = unit_
-        self._type = type_
-        self._max  = max_
-        self._min  = min_
+        self._name = name
+        self._unit = unit
+        self._data_type = data_type
+        self._maximum = maximum
+        self._minimum = minimum
 
     def get_name(self):
         """Get the name.
@@ -70,21 +70,21 @@ class Field(object):
         """
         return self._unit
 
-    def get_type(self):
-        """Get the type.
+    def get_data_type(self):
+        """Get the data type.
 
         Returns:
-            :class:`blue_st_sdk.features.field.FieldType`: The type.
+            :class:`blue_st_sdk.features.field.FieldType`: The data type.
         """
-        return self._type
+        return self._data_type
 
-    def get_max(self):
+    def get_maximum(self):
         """Get the maximum value.
 
         Returns:
             The maximum value.
         """
-        return self._max
+        return self._maximum
 
     def get_min(self):
         """Get the minimum value.
@@ -92,7 +92,7 @@ class Field(object):
         Returns:
             The minimum value.
         """
-        return self._min
+        return self._minimum
 
 class FieldType(Enum):
     """Type of field."""

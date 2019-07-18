@@ -53,10 +53,10 @@ class BlueSTAdvertisingData(BLEAdvertisingData):
             address (str): The device MAC address.
             device_id (int): The device identifier.
             device_type (:class:`blue_st_sdk.node.NodeType`): The type of the
-                node.
+            node.
             protocol_version (int): The device Protocol Version.
             feature_mask (int): The bitmask that keeps track of the available
-                features.
+            features.
             sleeping (bool): The device sleeping status.
         """
         # Device name.

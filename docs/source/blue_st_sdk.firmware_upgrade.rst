@@ -15,26 +15,26 @@ blue\_st\_sdk.firmware\_upgrade.firmware\_upgrade module
 --------------------------------------------------------
 
 .. automodule:: blue_st_sdk.firmware_upgrade.firmware_upgrade
-    :special-members: __init__
     :members:
     :undoc-members:
     :show-inheritance:
+    :special-members: __init__
 
 blue\_st\_sdk.firmware\_upgrade.firmware\_upgrade\_nucleo module
 ----------------------------------------------------------------
 
 .. automodule:: blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo
-    :special-members: __init__
     :members:
     :undoc-members:
     :show-inheritance:
+    :special-members: __init__
 
 
 Module contents
 ---------------
 
 .. automodule:: blue_st_sdk.firmware_upgrade
-    :special-members: __init__
     :members:
     :undoc-members:
     :show-inheritance:
+    :special-members: __init__

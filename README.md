@@ -14,15 +14,15 @@ This version of the SDK is compatible with [Python](https://www.python.org/) 3.5
 ## Preconditions
 The BlueST SDK makes use of the [bluepy](https://github.com/IanHarvey/bluepy) Python interface to Bluetooth Low Energy on Linux.
   ```Shell
-  $ sudo pip install bluepy
+  $ sudo pip3 install bluepy
   ```
 Moreover, it uses the [concurrent.futures](https://docs.python.org/3/library/concurrent.futures.html) module to run pools of threads in background, that serve listeners' callbacks.
   ```Shell
-  $ sudo pip install futures
+  $ sudo pip3 install futures
   ```
 
 
-## Limitations
+## Known Limitations
 The BlueST SDK currently suffers from the following limitations, which are intrinsic to the [bluepy](https://github.com/IanHarvey/bluepy) library:
  * When running a discovery process, the already connected devices get disconnected.
  * There is no supervision timeout API within the SDK, hence it is not possible to detect immediately an unexpected disconnection; it is detected and notified via listeners as soon as a read/write/notify operation is executed on the device.
@@ -31,7 +31,7 @@ The BlueST SDK currently suffers from the following limitations, which are intri
 ## Installation
 The BlueST SDK can be installed through the Python pip package manager.
   ```Shell
-  $ sudo pip install blue-st-sdk
+  $ sudo pip3 install blue-st-sdk
   ```
 
 

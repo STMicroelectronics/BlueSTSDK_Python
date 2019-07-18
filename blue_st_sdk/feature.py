@@ -66,9 +66,9 @@ class Feature(object):
         Args:
             name (str): Name of the feature.
             node (:class:`blue_st_sdk.node.Node`): Node that will update the
-                feature.
+            feature.
             description (list): Description of the data of the feature (list of
-                :class:`blue_st_sdk.features.field.Field` objects).
+            :class:`blue_st_sdk.features.field.Field` objects).
         """
 
         self._name = name
@@ -116,7 +116,7 @@ class Feature(object):
         
         Args:
             listener (:class:`blue_st_sdk.feature.FeatureListener`): Listener to
-                be added.
+            be added.
         """
         if listener is not None:
             with lock(self):
@@ -128,7 +128,7 @@ class Feature(object):
         
         Args:
             listener (:class:`blue_st_sdk.feature.FeatureListener`): Listener to
-                be removed.
+            be removed.
         """
         if listener is not None:
             with lock(self):
@@ -140,7 +140,7 @@ class Feature(object):
         
         Args:
             logger (:class:`blue_st_sdk.feature.FeatureLogger`): Logger to
-                be added.
+            be added.
         """
         if logger is not None:
             with lock(self):
@@ -152,7 +152,7 @@ class Feature(object):
         
         Args:
             logger (:class:`blue_st_sdk.feature.FeatureLogger`): Logger to
-                be removed.
+            be removed.
         """
         if logger is not None:
             with lock(self):
@@ -284,7 +284,7 @@ class Feature(object):
 
         Args:
             raw_data: Raw data used to extract the feature field. It can be
-                "None".
+            "None".
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data to log.
         """
         for logger in self._loggers:
@@ -306,14 +306,14 @@ class Feature(object):
             data (list): Feature's data.
             offset (int): Offset position to start reading data.
             notify_update (bool, optional): If True all the registered listeners
-                are notified about the new data.
+            are notified about the new data.
 
         Returns:
             int: The number of bytes read.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
-                if the data array has not enough data to read.
+            if the data array has not enough data to read.
         """
         # Update the feature's internal data
         sample = None
@@ -373,8 +373,8 @@ class Feature(object):
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
-                is raised if the feature is not enabled or the operation
-                required is not supported.
+            is raised if the feature is not enabled or the operation
+            required is not supported.
         """
         try:
             self._parent.write_feature(self, data)
@@ -407,7 +407,7 @@ class Feature(object):
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
-                if the data array has not enough data to read.
+            if the data array has not enough data to read.
         """
         raise NotImplementedError(
             'You must implement "extract_data()" to use the "Feature" class.')
@@ -468,9 +468,9 @@ class FeatureListener(object):
 
         Args:
             feature (:class:`blue_st_sdk.feature.Feature`): Feature that has
-                updated.
+            updated.
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data extracted
-                from the feature.
+            from the feature.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
@@ -491,10 +491,10 @@ class FeatureLogger(object):
 
         Args:
             feature (:class:`blue_st_sdk.feature.Feature`): Feature that has
-                updated.
+            updated.
             raw_data (str): Raw data used to update the feature.
             sample (:class:`blue_st_sdk.feature.Sample`): Sample data extracted
-                from the feature.
+            from the feature.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
@@ -549,7 +549,7 @@ class Sample(object):
         Args:
             data (list): Feature's data.
             description (list): Description of the data of the feature (list
-                of :class:`blue_st_sdk.features.field.Field` objects).
+            of :class:`blue_st_sdk.features.field.Field` objects).
             timestamp (int): Data's timestamp.
         """
         self._data = data

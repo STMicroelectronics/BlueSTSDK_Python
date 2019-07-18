@@ -1,0 +1,639 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk package &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="blue_st_sdk.advertising_data package" href="blue_st_sdk.advertising_data.html" />
+    <link rel="prev" title="Welcome to BlueSTSDK’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="blue-st-sdk-package">
+<h1>blue_st_sdk package<a class="headerlink" href="#blue-st-sdk-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.advertising_data.html">blue_st_sdk.advertising_data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#module-blue_st_sdk.advertising_data.ble_advertising_data">blue_st_sdk.advertising_data.ble_advertising_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#module-blue_st_sdk.advertising_data.ble_advertising_data_parser">blue_st_sdk.advertising_data.ble_advertising_data_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#module-blue_st_sdk.advertising_data.blue_st_advertising_data">blue_st_sdk.advertising_data.blue_st_advertising_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#blue-st-sdk-advertising-data-blue-st-advertising-data-parser-module">blue_st_sdk.advertising_data.blue_st_advertising_data_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.advertising_data.html#module-blue_st_sdk.advertising_data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.features.html">blue_st_sdk.features package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html">blue_st_sdk.features.standard_characteristics package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics.feature_heart_rate">blue_st_sdk.features.standard_characteristics.feature_heart_rate module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics.standard_characteristic_to_feature_map">blue_st_sdk.features.standard_characteristics.standard_characteristic_to_feature_map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.features.standard_characteristics.html#module-blue_st_sdk.features.standard_characteristics">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.device_timestamp_feature">blue_st_sdk.features.device_timestamp_feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_accelerometer">blue_st_sdk.features.feature_accelerometer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_activity_recognition">blue_st_sdk.features.feature_activity_recognition module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_audio_scene_classification">blue_st_sdk.features.feature_audio_scene_classification module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_gyroscope">blue_st_sdk.features.feature_gyroscope module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_humidity">blue_st_sdk.features.feature_humidity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_magnetometer">blue_st_sdk.features.feature_magnetometer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_pressure">blue_st_sdk.features.feature_pressure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_proximity">blue_st_sdk.features.feature_proximity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_proximity_gesture">blue_st_sdk.features.feature_proximity_gesture module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#blue-st-sdk-features-feature-stepper-motor-module">blue_st_sdk.features.feature_stepper_motor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_switch">blue_st_sdk.features.feature_switch module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.feature_temperature">blue_st_sdk.features.feature_temperature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features.field">blue_st_sdk.features.field module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.features.html#module-blue_st_sdk.features">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html">blue_st_sdk.firmware_upgrade package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html">blue_st_sdk.firmware_upgrade.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils.firmware_file">blue_st_sdk.firmware_upgrade.utils.firmware_file module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils.stm32crc32">blue_st_sdk.firmware_upgrade.utils.stm32crc32 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.utils.html#module-blue_st_sdk.firmware_upgrade.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#module-blue_st_sdk.firmware_upgrade.firmware_upgrade">blue_st_sdk.firmware_upgrade.firmware_upgrade module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#blue-st-sdk-firmware-upgrade-firmware-upgrade-nucleo-module">blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.firmware_upgrade.html#module-blue_st_sdk.firmware_upgrade">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="blue_st_sdk.utils.html">blue_st_sdk.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#blue-st-sdk-utils-ble-node-definitions-module">blue_st_sdk.utils.ble_node_definitions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.blue_st_exceptions">blue_st_sdk.utils.blue_st_exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.dict_put_single_element">blue_st_sdk.utils.dict_put_single_element module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.number_conversion">blue_st_sdk.utils.number_conversion module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.python_utils">blue_st_sdk.utils.python_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.unwrap_timestamp">blue_st_sdk.utils.unwrap_timestamp module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils.uuid_to_feature_map">blue_st_sdk.utils.uuid_to_feature_map module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blue_st_sdk.utils.html#module-blue_st_sdk.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="blue-st-sdk-debug-console-module">
+<h2>blue_st_sdk.debug_console module<a class="headerlink" href="#blue-st-sdk-debug-console-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.feature">
+<span id="blue-st-sdk-feature-module"></span><h2>blue_st_sdk.feature module<a class="headerlink" href="#module-blue_st_sdk.feature" title="Permalink to this headline">¶</a></h2>
+<p>feature</p>
+<p>The feature module represents a feature exported by a Bluetooth Low Energy (BLE)
+device.</p>
+<dl class="class">
+<dt id="blue_st_sdk.feature.ExtractedData">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.feature.</code><code class="descname">ExtractedData</code><span class="sig-paren">(</span><em>sample</em>, <em>read_bytes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#ExtractedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.ExtractedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class used to return the data and the number of bytes read after
+extracting data with the <a class="reference internal" href="#blue_st_sdk.feature.Feature.extract_data" title="blue_st_sdk.feature.Feature.extract_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature.extract_data()</span></code></a>
+method.</p>
+<dl class="method">
+<dt id="blue_st_sdk.feature.ExtractedData.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>sample</em>, <em>read_bytes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#ExtractedData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.ExtractedData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): A sample object.
+read_bytes (int): The number of bytes read after extracting data.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.ExtractedData.get_read_bytes">
+<code class="descname">get_read_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#ExtractedData.get_read_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.ExtractedData.get_read_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of bytes read.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The number of bytes read.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.ExtractedData.get_sample">
+<code class="descname">get_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#ExtractedData.get_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.ExtractedData.get_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data extracted from the byte stream.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>: The data extracted from the
+byte stream.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.feature.Feature">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.feature.</code><code class="descname">Feature</code><span class="sig-paren">(</span><em>name</em>, <em>node</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class contains description and data exported by a node.</p>
+<p>Adding a new sensor in a node implies extending this class and implementing
+the <a class="reference internal" href="#blue_st_sdk.feature.Feature.extract_data" title="blue_st_sdk.feature.Feature.extract_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature.extract_data()</span></code></a> method to extract the
+information from the raw data coming from the node.</p>
+<p>This class manages notifications and listeners’ subscriptions.</p>
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>node</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">name (str): Name of the feature.
+node (<code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code>): Node that will update the</p>
+<blockquote>
+<div>feature.</div></blockquote>
+<dl class="last docutils">
+<dt>description (list): Description of the data of the feature (list of</dt>
+<dd><a class="reference internal" href="blue_st_sdk.features.html#blue_st_sdk.features.field.Field" title="blue_st_sdk.features.field.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.Field</span></code></a> objects).</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.add_listener">
+<code class="descname">add_listener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.add_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.add_listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a listener.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>listener (<a class="reference internal" href="#blue_st_sdk.feature.FeatureListener" title="blue_st_sdk.feature.FeatureListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.FeatureListener</span></code></a>): Listener to</dt>
+<dd>be added.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.add_logger">
+<code class="descname">add_logger</code><span class="sig-paren">(</span><em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.add_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.add_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a logger.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>logger (<a class="reference internal" href="#blue_st_sdk.feature.FeatureLogger" title="blue_st_sdk.feature.FeatureLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.FeatureLogger</span></code></a>): Logger to</dt>
+<dd>be added.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<p>You have to parse the data inside the “data” field and skip the first
+“offset” byte.</p>
+<p>This method has to extract the data, create a
+<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a> object, and return an
+<a class="reference internal" href="#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a> object containing it.</p>
+<p>The method that calls this one has to manage the lock
+acquisition/release and to notify the user about the new sample.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>timestamp (int): Data’s timestamp.
+data (str): The data read from the feature.
+offset (int): Offset where to start reading data.</dd>
+<dt>Returns:</dt>
+<dd><a class="reference internal" href="#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a>: An object containing the
+number of bytes read and the extracted data.</dd>
+<dt>Raises:</dt>
+<dd><p class="first"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.
+<a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException" title="blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException</span></code></a></p>
+<blockquote class="last">
+<div>if the data array has not enough data to read.</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.get_characteristic">
+<code class="descname">get_characteristic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.get_characteristic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.get_characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the characteristic that offers the feature.</p>
+<dl class="docutils">
+<dt>Note:</dt>
+<dd>By design, it is the characteristic that offers more features beyond
+the current one, among those offering the current one.</dd>
+<dt>Returns:</dt>
+<dd>characteristic: The characteristic that offers the feature. Refer to
+<a class="reference external" href="https://ianharvey.github.io/bluepy-doc/characteristic.html">Characteristic</a>
+for more information.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.get_fields_description">
+<code class="descname">get_fields_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.get_fields_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.get_fields_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Get the description of the data fields of the feature.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>list: The description of the data fields of the feature (list of
+<a class="reference internal" href="blue_st_sdk.features.html#blue_st_sdk.features.field.Field" title="blue_st_sdk.features.field.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.Field</span></code></a> objects).</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.get_last_update">
+<code class="descname">get_last_update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.get_last_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.get_last_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the time of the last update.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>datetime: The time of the last update received. Refer to
+<a class="reference external" href="https://docs.python.org/2/library/datetime.html">datetime</a>
+for more information.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the feature name.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: The feature name.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.get_parent_node">
+<code class="descname">get_parent_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.get_parent_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.get_parent_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the node that updates the feature.</p>
+<dl class="docutils">
+<dt>Return:</dt>
+<dd><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code>: The node that updates the feature.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.feature.Feature.has_valid_index">
+<em class="property">classmethod </em><code class="descname">has_valid_index</code><span class="sig-paren">(</span><em>sample</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.has_valid_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.has_valid_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the sample has valid data at the index position.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data.
+index (int): Position to be tested.</dd>
+<dt>Returns:</dt>
+<dd>bool: True if the sample is not null and has a non null value at the
+index position, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.is_enabled">
+<code class="descname">is_enabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.is_enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the node exports the data of the feature.</p>
+<p>A node can export a feature in the advertising data without having the
+equivalent characteristic.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>bool: True if the node exports the data of the feature, False
+otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.is_notifying">
+<code class="descname">is_notifying</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.is_notifying"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.is_notifying" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checking whether the notifications for the feature are enabled.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>bool: True if the feature is notifying, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.remove_listener">
+<code class="descname">remove_listener</code><span class="sig-paren">(</span><em>listener</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.remove_listener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.remove_listener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a listener.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>listener (<a class="reference internal" href="#blue_st_sdk.feature.FeatureListener" title="blue_st_sdk.feature.FeatureListener"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.FeatureListener</span></code></a>): Listener to</dt>
+<dd>be removed.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.remove_logger">
+<code class="descname">remove_logger</code><span class="sig-paren">(</span><em>logger</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.remove_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.remove_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a logger.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>logger (<a class="reference internal" href="#blue_st_sdk.feature.FeatureLogger" title="blue_st_sdk.feature.FeatureLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.FeatureLogger</span></code></a>): Logger to</dt>
+<dd>be removed.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.set_enable">
+<code class="descname">set_enable</code><span class="sig-paren">(</span><em>flag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.set_enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.set_enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the enable status of the feature.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>flag (bool): New enable status: True to enable, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.set_notify">
+<code class="descname">set_notify</code><span class="sig-paren">(</span><em>flag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.set_notify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.set_notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the notification status of the feature.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>flag (bool): New notification status: True to enable, False
+otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Feature.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em>, <em>notify_update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Feature.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Feature.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update feature’s internal data through an atomic operation, and
+notify the registered listeners about the update, if needed.</p>
+<p>This method has to be called by a node whenever it receives new data
+from the feature, not by the application.</p>
+<p>When overriding this method, please remember to update the timestamp and
+the last-updated value, and to acquire the write-lock.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">timestamp (int): Package’s timestamp.
+data (list): Feature’s data.
+offset (int): Offset position to start reading data.
+notify_update (bool, optional): If True all the registered listeners</p>
+<blockquote class="last">
+<div>are notified about the new data.</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd>int: The number of bytes read.</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException" title="blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException</span></code></a></dt>
+<dd>if the data array has not enough data to read.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.feature.FeatureListener">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.feature.</code><code class="descname">FeatureListener</code><a class="reference internal" href="_modules/blue_st_sdk/feature.html#FeatureListener"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.FeatureListener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Interface used by the <a class="reference internal" href="#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a> class to
+notify changes of a feature’s data.</p>
+<dl class="method">
+<dt id="blue_st_sdk.feature.FeatureListener.on_update">
+<code class="descname">on_update</code><span class="sig-paren">(</span><em>feature</em>, <em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#FeatureListener.on_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.FeatureListener.on_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called whenever the feature updates its data.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>feature (<a class="reference internal" href="#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a>): Feature that has</dt>
+<dd>updated.</dd>
+<dt>sample (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data extracted</dt>
+<dd>from the feature.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.feature.FeatureLogger">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.feature.</code><code class="descname">FeatureLogger</code><a class="reference internal" href="_modules/blue_st_sdk/feature.html#FeatureLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.FeatureLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Interface used by the <a class="reference internal" href="#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a> class to
+log changes of a feature’s data.</p>
+<dl class="method">
+<dt id="blue_st_sdk.feature.FeatureLogger.log_update">
+<code class="descname">log_update</code><span class="sig-paren">(</span><em>feature</em>, <em>raw_data</em>, <em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#FeatureLogger.log_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.FeatureLogger.log_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called to log the updates of the feature.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>feature (<a class="reference internal" href="#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a>): Feature that has</dt>
+<dd>updated.</dd>
+</dl>
+<p>raw_data (str): Raw data used to update the feature.
+sample (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data extracted</p>
+<blockquote class="last">
+<div>from the feature.</div></blockquote>
+</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.feature.Sample">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.feature.</code><code class="descname">Sample</code><span class="sig-paren">(</span><em>data</em>, <em>description</em>, <em>timestamp=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that contains the last data from the node.</p>
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>description</em>, <em>timestamp=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">data (list): Feature’s data.
+description (list): Description of the data of the feature (list</p>
+<blockquote>
+<div>of <a class="reference internal" href="blue_st_sdk.features.html#blue_st_sdk.features.field.Field" title="blue_st_sdk.features.field.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.Field</span></code></a> objects).</div></blockquote>
+<p class="last">timestamp (int): Data’s timestamp.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.equals">
+<code class="descname">equals</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.equals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the equality of the sample w.r.t. the given one.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): A sample object.</dd>
+<dt>Returns:</dt>
+<dd>bool: True if the objects are equal (timestamp and data), False
+otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.feature.Sample.from_sample">
+<em class="property">classmethod </em><code class="descname">from_sample</code><span class="sig-paren">(</span><em>copy_me</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.from_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.from_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a copy of a sample.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>copy_me (<a class="reference internal" href="#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): A given sample.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The data of the sample.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.get_description">
+<code class="descname">get_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.get_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.get_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the description.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>list: A list of <a class="reference internal" href="blue_st_sdk.features.html#blue_st_sdk.features.field.Field" title="blue_st_sdk.features.field.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.features.field.Field</span></code></a> describing
+the sample.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.get_notification_time">
+<code class="descname">get_notification_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.get_notification_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.get_notification_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the notification time.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The notification time.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.feature.Sample.get_timestamp">
+<code class="descname">get_timestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/feature.html#Sample.get_timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.feature.Sample.get_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the timestamp.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The timestamp of the sample.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="blue-st-sdk-manager-module">
+<h2>blue_st_sdk.manager module<a class="headerlink" href="#blue-st-sdk-manager-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="blue-st-sdk-node-module">
+<h2>blue_st_sdk.node module<a class="headerlink" href="#blue-st-sdk-node-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">blue_st_sdk package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#blue-st-sdk-debug-console-module">blue_st_sdk.debug_console module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.feature">blue_st_sdk.feature module</a></li>
+<li><a class="reference internal" href="#blue-st-sdk-manager-module">blue_st_sdk.manager module</a></li>
+<li><a class="reference internal" href="#blue-st-sdk-node-module">blue_st_sdk.node module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to BlueSTSDK’s documentation!</a></li>
+      <li>Next: <a href="blue_st_sdk.advertising_data.html" title="next chapter">blue_st_sdk.advertising_data package</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/blue_st_sdk.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/blue_st_sdk.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

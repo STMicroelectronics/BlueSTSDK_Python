@@ -321,9 +321,9 @@ class FeatureCharacteristic(object):
         
         Args:
             uuid (UUID): Characteristic's UUID.
-                Refer to
-                `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
-                more information.
+            Refer to
+            `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
+            more information.
 
         Returns:
             int: The first 32 bit of the characteristic's UUID.
@@ -363,9 +363,9 @@ class FeatureCharacteristic(object):
 
         Args:
             uuid (UUID): Characteristic's UUID.
-                Refer to
-                `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
-                more information.
+            Refer to
+            `UUID: <https://ianharvey.github.io/bluepy-doc/uuid.html>`_ for
+            more information.
         
         Returns:
             type: The feature's class if found, "None" otherwise.

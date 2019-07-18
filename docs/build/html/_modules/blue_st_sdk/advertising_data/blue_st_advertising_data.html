@@ -1,0 +1,237 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.advertising_data.blue_st_advertising_data &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for blue_st_sdk.advertising_data.blue_st_advertising_data</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;blue_st_advertising_data</span>
+
+<span class="sd">The blue_st_advertising_data module keeps the information contained within the</span>
+<span class="sd">advertising data coming from Bluetooth devices implementing the Blue ST protocol.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.advertising_data.ble_advertising_data</span> <span class="k">import</span> <span class="n">BLEAdvertisingData</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData">[docs]</a><span class="k">class</span> <span class="nc">BlueSTAdvertisingData</span><span class="p">(</span><span class="n">BLEAdvertisingData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Advertising data sent by a device that follows the BlueST protocol.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tx_power</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">device_type</span><span class="p">,</span>
+        <span class="n">protocol_version</span><span class="p">,</span> <span class="n">feature_mask</span><span class="p">,</span> <span class="n">sleeping</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The device name.</span>
+<span class="sd">            tx_power (int): The device transmission power.</span>
+<span class="sd">            address (str): The device MAC address.</span>
+<span class="sd">            device_id (int): The device identifier.</span>
+<span class="sd">            device_type (:class:`blue_st_sdk.node.NodeType`): The type of the</span>
+<span class="sd">                node.</span>
+<span class="sd">            protocol_version (int): The device Protocol Version.</span>
+<span class="sd">            feature_mask (int): The bitmask that keeps track of the available</span>
+<span class="sd">                features.</span>
+<span class="sd">            sleeping (bool): The device sleeping status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Device name.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="c1"># Device transmission power.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tx_power</span> <span class="o">=</span> <span class="n">tx_power</span>
+
+        <span class="c1"># Device MAC address.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">address</span>
+
+        <span class="c1"># Device identifier.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_id</span> <span class="o">=</span> <span class="n">device_id</span>
+
+        <span class="c1"># Device type.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_type</span> <span class="o">=</span> <span class="n">device_type</span>
+
+        <span class="c1"># Device Protocol Version.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_protocol_version</span> <span class="o">=</span> <span class="n">protocol_version</span>
+
+        <span class="c1"># Bitmask that keeps track of the available features.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_feature_mask</span> <span class="o">=</span> <span class="n">feature_mask</span>
+
+        <span class="c1"># Sleeping status.</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleeping</span> <span class="o">=</span> <span class="n">sleeping</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_name"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device name.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The device name.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_tx_power"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_tx_power">[docs]</a>    <span class="k">def</span> <span class="nf">get_tx_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device transmission power in mdb.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The device transmission power in mdb.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx_power</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_address"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_address">[docs]</a>    <span class="k">def</span> <span class="nf">get_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device MAC address.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The device MAC address.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_device_id"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device identifier.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The device identifier.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_id</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_device_type"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device&#39;s type.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The device&#39;s type.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_type</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_protocol_version"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_protocol_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_protocol_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the device protocol version.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The device protocol version.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol_version</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.get_feature_mask"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_feature_mask">[docs]</a>    <span class="k">def</span> <span class="nf">get_feature_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the bitmask that keeps track of the available features.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The bitmask that keeps track of the available features.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_mask</span>
+
+<div class="viewcode-block" id="BlueSTAdvertisingData.is_sleeping"><a class="viewcode-back" href="../../../blue_st_sdk.advertising_data.html#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.is_sleeping">[docs]</a>    <span class="k">def</span> <span class="nf">is_sleeping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check whether the device is sleeping.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the device is sleeping, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleeping</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print the advertising_data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string that contains the advertising_data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">TxPower: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tx_power</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Address: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Protocol Version: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_protocol_version</span> <span class="o">+</span> \</div>
+               <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Feature Mask: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feature_mask</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

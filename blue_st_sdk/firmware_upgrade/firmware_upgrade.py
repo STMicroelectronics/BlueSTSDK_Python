@@ -71,7 +71,7 @@ class FirmwareUpgrade(object):
         
         Args:
             listener (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener`):
-                Listener to be added.
+            Listener to be added.
         """
         if listener is not None:
             with lock(self):
@@ -83,7 +83,7 @@ class FirmwareUpgrade(object):
 
         Args:
             listener (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener`):
-                Listener to be removed.
+            Listener to be removed.
         """
         if listener is not None:
             with lock(self):
@@ -96,7 +96,7 @@ class FirmwareUpgrade(object):
 
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node whose firmware has to be
-                updated.
+            updated.
         
         Returns:
             :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`:
@@ -116,7 +116,7 @@ class FirmwareUpgrade(object):
 
         Args:
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
@@ -161,9 +161,9 @@ class FirmwareUpgradeListener(object):
 
         Args:
             debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
-                Debug console.
+            Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
             bytes_sent (int): Data sent in bytes.
 
         Raises:
@@ -180,11 +180,11 @@ class FirmwareUpgradeListener(object):
 
         Args:
             debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
-                Debug console.
+            Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
             error (:class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError`):
-                Error code.
+            Error code.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
@@ -202,9 +202,9 @@ class FirmwareUpgradeListener(object):
 
         Args:
             debug_console (:class:`blue_st_sdk.debug_console.DebugConsole`):
-                Debug console.
+            Debug console.
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
             bytes_sent (int): Data sent in bytes.
             bytes_to_send (int): Data to send in bytes.
 

@@ -1,0 +1,367 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.advertising_data package &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="blue_st_sdk.features package" href="blue_st_sdk.features.html" />
+    <link rel="prev" title="blue_st_sdk package" href="blue_st_sdk.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="blue-st-sdk-advertising-data-package">
+<h1>blue_st_sdk.advertising_data package<a class="headerlink" href="#blue-st-sdk-advertising-data-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.advertising_data.ble_advertising_data">
+<span id="blue-st-sdk-advertising-data-ble-advertising-data-module"></span><h2>blue_st_sdk.advertising_data.ble_advertising_data module<a class="headerlink" href="#module-blue_st_sdk.advertising_data.ble_advertising_data" title="Permalink to this headline">¶</a></h2>
+<p>ble_advertising_data</p>
+<p>The ble_advertising_data module keeps the information contained within the
+advertising data coming from Bluetooth devices.</p>
+<dl class="class">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.advertising_data.ble_advertising_data.</code><code class="descname">BLEAdvertisingData</code><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Interface that defines the advertising data.</p>
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_address">
+<code class="descname">get_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device MAC address.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: The device MAC address.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_device_id">
+<code class="descname">get_device_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_device_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_device_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device identifier.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device identifier.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_device_type">
+<code class="descname">get_device_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_device_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_device_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device’s type.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The device’s type.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_feature_mask">
+<code class="descname">get_feature_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_feature_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_feature_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the bitmask that keeps track of the available features.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The bitmask that keeps track of the available features.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device name.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: The device name.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_protocol_version">
+<code class="descname">get_protocol_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_protocol_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_protocol_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device protocol version.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device protocol version.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_tx_power">
+<code class="descname">get_tx_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.get_tx_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.get_tx_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device transmission power in mdb.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device transmission power in mdb.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.is_device_sleeping">
+<code class="descname">is_device_sleeping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data.html#BLEAdvertisingData.is_device_sleeping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData.is_device_sleeping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the device is sleeping.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>True if the device is sleeping, False otherwise.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.advertising_data.ble_advertising_data_parser">
+<span id="blue-st-sdk-advertising-data-ble-advertising-data-parser-module"></span><h2>blue_st_sdk.advertising_data.ble_advertising_data_parser module<a class="headerlink" href="#module-blue_st_sdk.advertising_data.ble_advertising_data_parser" title="Permalink to this headline">¶</a></h2>
+<p>ble_advertising_data_parser</p>
+<p>The ble_advertising_data_parser module contains tools to parse the advertising
+data coming from Bluetooth devices.</p>
+<dl class="class">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data_parser.BLEAdvertisingDataParser">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.advertising_data.ble_advertising_data_parser.</code><code class="descname">BLEAdvertisingDataParser</code><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data_parser.html#BLEAdvertisingDataParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data_parser.BLEAdvertisingDataParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Interface to parse the advertising data sent by a Bluetooth device.</p>
+<dl class="classmethod">
+<dt id="blue_st_sdk.advertising_data.ble_advertising_data_parser.BLEAdvertisingDataParser.parse">
+<em class="property">classmethod </em><code class="descname">parse</code><span class="sig-paren">(</span><em>advertising_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/ble_advertising_data_parser.html#BLEAdvertisingDataParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.ble_advertising_data_parser.BLEAdvertisingDataParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the BLE advertising_data.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>advertising_data (list): BLE advertising_data.</dd>
+<dt>Returns:</dt>
+<dd><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.advertising_data.blue_st_advertising_data.BLEAdvertisingData</span></code>:
+The advertising data information sent by the device.</dd>
+<dt>Raises:</dt>
+<dd><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> if the method has not been implemented.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.advertising_data.blue_st_advertising_data">
+<span id="blue-st-sdk-advertising-data-blue-st-advertising-data-module"></span><h2>blue_st_sdk.advertising_data.blue_st_advertising_data module<a class="headerlink" href="#module-blue_st_sdk.advertising_data.blue_st_advertising_data" title="Permalink to this headline">¶</a></h2>
+<p>blue_st_advertising_data</p>
+<p>The blue_st_advertising_data module keeps the information contained within the
+advertising data coming from Bluetooth devices implementing the Blue ST protocol.</p>
+<dl class="class">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.advertising_data.blue_st_advertising_data.</code><code class="descname">BlueSTAdvertisingData</code><span class="sig-paren">(</span><em>name</em>, <em>tx_power</em>, <em>address</em>, <em>device_id</em>, <em>device_type</em>, <em>protocol_version</em>, <em>feature_mask</em>, <em>sleeping</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData" title="blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.advertising_data.ble_advertising_data.BLEAdvertisingData</span></code></a></p>
+<p>Advertising data sent by a device that follows the BlueST protocol.</p>
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>tx_power</em>, <em>address</em>, <em>device_id</em>, <em>device_type</em>, <em>protocol_version</em>, <em>feature_mask</em>, <em>sleeping</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">name (str): The device name.
+tx_power (int): The device transmission power.
+address (str): The device MAC address.
+device_id (int): The device identifier.
+device_type (<code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.NodeType</span></code>): The type of the</p>
+<blockquote>
+<div>node.</div></blockquote>
+<p>protocol_version (int): The device Protocol Version.
+feature_mask (int): The bitmask that keeps track of the available</p>
+<blockquote>
+<div>features.</div></blockquote>
+<p class="last">sleeping (bool): The device sleeping status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_address">
+<code class="descname">get_address</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device MAC address.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: The device MAC address.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_id">
+<code class="descname">get_device_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_device_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device identifier.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device identifier.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_type">
+<code class="descname">get_device_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_device_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_device_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device’s type.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The device’s type.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_feature_mask">
+<code class="descname">get_feature_mask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_feature_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_feature_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the bitmask that keeps track of the available features.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>The bitmask that keeps track of the available features.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_name">
+<code class="descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device name.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str: The device name.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_protocol_version">
+<code class="descname">get_protocol_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_protocol_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_protocol_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device protocol version.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device protocol version.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_tx_power">
+<code class="descname">get_tx_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.get_tx_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.get_tx_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the device transmission power in mdb.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: The device transmission power in mdb.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.is_sleeping">
+<code class="descname">is_sleeping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/advertising_data/blue_st_advertising_data.html#BlueSTAdvertisingData.is_sleeping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.advertising_data.blue_st_advertising_data.BlueSTAdvertisingData.is_sleeping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the device is sleeping.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>True if the device is sleeping, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="blue-st-sdk-advertising-data-blue-st-advertising-data-parser-module">
+<h2>blue_st_sdk.advertising_data.blue_st_advertising_data_parser module<a class="headerlink" href="#blue-st-sdk-advertising-data-blue-st-advertising-data-parser-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.advertising_data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.advertising_data" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">blue_st_sdk.advertising_data package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.advertising_data.ble_advertising_data">blue_st_sdk.advertising_data.ble_advertising_data module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.advertising_data.ble_advertising_data_parser">blue_st_sdk.advertising_data.ble_advertising_data_parser module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.advertising_data.blue_st_advertising_data">blue_st_sdk.advertising_data.blue_st_advertising_data module</a></li>
+<li><a class="reference internal" href="#blue-st-sdk-advertising-data-blue-st-advertising-data-parser-module">blue_st_sdk.advertising_data.blue_st_advertising_data_parser module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.advertising_data">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="blue_st_sdk.html">blue_st_sdk package</a><ul>
+      <li>Previous: <a href="blue_st_sdk.html" title="previous chapter">blue_st_sdk package</a></li>
+      <li>Next: <a href="blue_st_sdk.features.html" title="next chapter">blue_st_sdk.features package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/blue_st_sdk.advertising_data.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/blue_st_sdk.advertising_data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

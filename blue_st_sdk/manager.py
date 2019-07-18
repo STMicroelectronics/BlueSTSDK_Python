@@ -67,8 +67,8 @@ class _ScannerDelegate(DefaultDelegate):
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
-                discovering devices that do not respect the BlueSTSDK's
-                advertising data format, nothing otherwise.
+            discovering devices that do not respect the BlueSTSDK's
+            advertising data format, nothing otherwise.
         """
         DefaultDelegate.__init__(self)
 
@@ -83,19 +83,19 @@ class _ScannerDelegate(DefaultDelegate):
 
         Args:
             scan_entry (ScanEntry): BLE device. It contains device information
-                and advertising data. Refer to
-                `ScanEntry <https://ianharvey.github.io/bluepy-doc/scanentry.html>`_
-                for more information.
+            and advertising data. Refer to
+            `ScanEntry <https://ianharvey.github.io/bluepy-doc/scanentry.html>`_
+            for more information.
             is_new_device (bool): True if the device (as identified by its MAC
-                address) has not been seen before by the scanner, False
-                otherwise.
+            address) has not been seen before by the scanner, False
+            otherwise.
             is_new_data (bool): True if new or updated advertising data is
-                available.
+            available.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
-                if an advertising data has a format not recognized by the
-                BlueSTSDK.
+            if an advertising data has a format not recognized by the
+            BlueSTSDK.
         """
         # Getting a Manager's instance.
         manager = Manager.instance()
@@ -133,8 +133,8 @@ class _StoppableScanner(threading.Thread):
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
-                discovering devices not respecting the BlueSTSDK's advertising
-                data format, nothing otherwise.
+            discovering devices not respecting the BlueSTSDK's advertising
+            data format, nothing otherwise.
         """
         try:
             super(_StoppableScanner, self).__init__(*args, **kwargs)
@@ -283,13 +283,13 @@ class Manager(object):
 
         Args:
             timeout_s (int, optional): Time in seconds to wait before stopping
-                the discovery process.
+            the discovery process.
             asynchronous (bool, optional): If True the method is run in
-                asynchronous way, thus non-blocking the execution of the thread,
-                the opposite otherwise.
+            asynchronous way, thus non-blocking the execution of the thread,
+            the opposite otherwise.
             show_warnings (bool, optional): If True shows warnings, if any, when
-                discovering devices not respecting the BlueSTSDK's advertising
-                data format, nothing otherwise.
+            discovering devices not respecting the BlueSTSDK's advertising
+            data format, nothing otherwise.
 
         Returns:
             bool: True if the synchronous discovery has finished or if the
@@ -339,8 +339,8 @@ class Manager(object):
 
         Args:
             show_warnings (bool, optional): If True shows warnings, if any, when
-                discovering devices not respecting the BlueSTSDK's advertising
-                data format, nothing otherwise.
+            discovering devices not respecting the BlueSTSDK's advertising
+            data format, nothing otherwise.
 
         Returns:
             bool: True if the discovery has started, False if a discovery is
@@ -425,7 +425,7 @@ class Manager(object):
 
         Args:
             status (bool): If True the discovery starts, if False the discovery
-                stops.
+            stops.
         """
         self._is_scanning = status
         for listener in self._listeners:
@@ -534,13 +534,13 @@ class Manager(object):
         Args:
             device_id (int): Device identifier.
             mask_to_features_dic (dict): Mask-to-features dictionary to be added
-                to the features decoder dictionary referenced by the device
-                identifier. The feature masks of the dictionary must have only
-                one bit set to "1".
+            to the features decoder dictionary referenced by the device
+            identifier. The feature masks of the dictionary must have only one
+            bit set to "1".
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidFeatureBitMaskException`
-                is raised when a feature is in a non-power-of-two position.
+            is raised when a feature is in a non-power-of-two position.
         """
 
         # Example:
@@ -597,7 +597,7 @@ class Manager(object):
         
         Args:
             listener (:class:`blue_st_sdk.manager.ManagerListener`): Listener to
-                be added.
+            be added.
         """
         if listener is not None:
             with lock(self):
@@ -609,7 +609,7 @@ class Manager(object):
         
         Args:
             listener (:class:`blue_st_sdk.manager.ManagerListener`): Listener to
-                be removed.
+            be removed.
         """
         if listener is not None:
             with lock(self):
@@ -632,7 +632,7 @@ class ManagerListener(object):
 
         Args:
             manager (:class:`blue_st_sdk.manager.Manager`): Manager instance
-                that starts/stops the process.
+            that starts/stops the process.
             enabled (bool): True if a new discovery starts, False otherwise.
 
         Raises:
@@ -647,9 +647,8 @@ class ManagerListener(object):
 
         Args:
             manager (:class:`blue_st_sdk.manager.Manager`): Manager instance
-                that discovers the node.
+            that discovers the node.
             node (:class:`blue_st_sdk.node.Node`): New node discovered.
-
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.

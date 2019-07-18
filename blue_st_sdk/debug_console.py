@@ -61,13 +61,13 @@ class DebugConsole():
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node that will send the data.
             stdinout_characteristic (Characteristic): The BLE characteristic
-                used to read/write data from/to stdin/stdout. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            used to read/write data from/to stdin/stdout. Refer to 
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
             stderr_characteristic (Characteristic): The BLE characteristic used
-                to read data from stderr. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            to read data from stderr. Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
         """
 
         self._node = node
@@ -143,7 +143,7 @@ class DebugConsole():
 
         Args:
             listener (:class:`blue_st_sdk.debug.DebugListener`): Listener to
-                be added.
+            be added.
         """
         if listener is not None:
             with lock(self):
@@ -160,7 +160,7 @@ class DebugConsole():
 
         Args:
             listener (:class:`blue_st_sdk.debug.DebugListener`): Listener to
-                be removed.
+            be removed.
         """
         if listener is not None:
             with lock(self):
@@ -180,10 +180,10 @@ class DebugConsole():
 
         Args:
             characteristic (Characteristic): The BLE characteristic that has
-                been updated.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            been updated.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
             data (str): The data notified from the given characteristic.
         """
         try:
@@ -213,10 +213,10 @@ class DebugConsole():
 
         Args:
             characteristic (Characteristic): The BLE characteristic that has
-                been written.
+            been written.
             data (bytearray): Received data.
             status (bool): True if the writing operation was successfully, False
-                otherwise.
+            otherwise.
         """
         try:
             if len(self._listeners) == 0:
@@ -240,7 +240,7 @@ class DebugConsole():
 
         Returns:
             node (:class:`blue_st_sdk.node.Node`): the node that listen/write to
-                this debug console.
+            this debug console.
         """
         return self._node
 
@@ -290,7 +290,7 @@ class DebugConsoleListener(object):
             debug_console (object): Console that receives the message.
             message (str): The message sent to the stdin console.
             status (bool): True if the message is sent correctly, False
-                otherwise.
+            otherwise.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.

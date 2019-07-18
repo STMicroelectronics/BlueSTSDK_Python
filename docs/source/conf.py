@@ -26,7 +26,7 @@ author = u'Davide Aliprandi'
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
-release = u'1.0.0'
+release = u'1.4.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -44,7 +44,6 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinxcontrib.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -151,7 +150,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'bluestsdk', u'BlueSTSDK Documentation',
+    (master_doc, 'BlueSTSDK', u'BlueSTSDK Documentation',
      [author], 1)
 ]
 

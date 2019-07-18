@@ -206,8 +206,8 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
         """
         try:
             # Extracting the feature mask from the characteristic's UUID.
@@ -244,8 +244,8 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic. Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
             feature_classes (list): The list of feature-classes to instantiate.
         """
         # Build the features.
@@ -333,7 +333,7 @@ class Node(Peripheral, object):
             char_handle (int): The characteristic's handle to look for.
             data (str): The data read from the given characteristic.
             notify_update (bool, optional): If True all the registered listeners
-                are notified about the new data.
+            are notified about the new data.
 
         Returns:
             bool: True if the characteristic has some features associated to it
@@ -341,7 +341,7 @@ class Node(Peripheral, object):
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
-                if the data array has not enough data to read.
+            if the data array has not enough data to read.
         """
         # Getting the features corresponding to the given characteristic.
         features = self._get_corresponding_features(char_handle)
@@ -414,8 +414,8 @@ class Node(Peripheral, object):
 
         Args:
             debug_service (Service): The BLE service. Refer to
-                `Service <https://ianharvey.github.io/bluepy-doc/service.html>`_
-                for more information.
+            `Service <https://ianharvey.github.io/bluepy-doc/service.html>`_
+            for more information.
 
         Returns:
             :class:`blue_st_sdk.debug_console.DebugConsole`: A debug console
@@ -462,7 +462,7 @@ class Node(Peripheral, object):
 
         Args:
             user_defined_features (dict, optional): User-defined feature to be
-                added.
+            added.
 
         Returns:
             bool: True if the connection to the node has been successful, False
@@ -644,7 +644,7 @@ class Node(Peripheral, object):
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
-                if the device type is unknown.
+            if the device type is unknown.
         """
         return self._advertising_data.get_device_type()
 
@@ -672,7 +672,7 @@ class Node(Peripheral, object):
 
         Args:
             feature_class (class, optional): Type (class name) of the feature to
-                search for.
+            search for.
 
         Returns:
             list: A list of features. An empty list if no features are found.
@@ -691,7 +691,7 @@ class Node(Peripheral, object):
 
         Args:
             feature_class (class): Type (class name) of the feature to search
-                for.
+            for.
 
         Returns:
             The feature of the given type (class name) if exported by this node,
@@ -769,9 +769,9 @@ class Node(Peripheral, object):
 
         Args:
             advertising_data (list): Advertising data. Refer to 'getScanData()'
-                method of
-                `ScanEntry <https://ianharvey.github.io/bluepy-doc/scanentry.html>`_
-                class for more information.
+            method of
+            `ScanEntry <https://ianharvey.github.io/bluepy-doc/scanentry.html>`_
+            class for more information.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException`
@@ -798,9 +798,9 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic to check.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
 
         Returns:
             bool: True if the characteristic can be read, False otherwise.
@@ -818,9 +818,9 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic to check.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
 
         Returns:
             bool: True if the characteristic can be written, False otherwise.
@@ -838,9 +838,9 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic to check.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
 
         Returns:
             bool: True if the characteristic can be notified, False otherwise.
@@ -861,10 +861,10 @@ class Node(Peripheral, object):
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
-                is raised if the feature is not enabled or the operation
-                required is not supported.
+            is raised if the feature is not enabled or the operation
+            required is not supported.
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException`
-                if the data array has not enough data to read.
+            if the data array has not enough data to read.
         """
         if not feature.is_enabled():
             raise BlueSTInvalidOperationException(
@@ -900,13 +900,13 @@ class Node(Peripheral, object):
 
         Args:
             feature (:class:`blue_st_sdk.feature.Feature`): The feature to
-                write.
+            write.
             data (str): The data to be written.
 
         Raises:
             :exc:`blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException`
-                is raised if the feature is not enabled or the operation
-                required is not supported.
+            is raised if the feature is not enabled or the operation
+            required is not supported.
         """
         if not feature.is_enabled():
             raise BlueSTInvalidOperationException(
@@ -930,11 +930,11 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic to check.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
             status (bool): True if the notifications have to be turned on, False
-                otherwise.
+            otherwise.
         """
         try:
             with lock(self):
@@ -1027,9 +1027,9 @@ class Node(Peripheral, object):
 
         Args:
             characteristic (Characteristic): The BLE characteristic to check.
-                Refer to
-                `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
-                for more information.
+            Refer to
+            `Characteristic <https://ianharvey.github.io/bluepy-doc/characteristic.html>`_
+            for more information.
             feature (:class:`blue_st_sdk.feature.Feature`): The given feature.
 
         Returns:
@@ -1051,7 +1051,7 @@ class Node(Peripheral, object):
         
         Args:
             listener (:class:`blue_st_sdk.node.NodeListener`): Listener to
-                be added.
+            be added.
         """
         if listener is not None:
             with lock(self):
@@ -1063,7 +1063,7 @@ class Node(Peripheral, object):
 
         Args:
             listener (:class:`blue_st_sdk.node.NodeListener`): Listener to
-                be removed.
+            be removed.
         """
         if listener is not None:
             with lock(self):
@@ -1090,7 +1090,7 @@ class NodeDelegate(DefaultDelegate):
 
         Args:
             node (:class:`blue_st_sdk.node.Node`): The node which sends
-                notifications.
+            notifications.
         """
         DefaultDelegate.__init__(self)
 
@@ -1198,7 +1198,7 @@ class NodeListener(object):
 
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node that has changed its
-                status.
+            status.
             new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
             old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.
 
@@ -1228,9 +1228,9 @@ class NodeListener(object):
 
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node that has disconnected
-                from a host.
+            from a host.
             unexpected (bool, optional): True if the disconnection is unexpected,
-                False otherwise (called by the user).
+            False otherwise (called by the user).
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.

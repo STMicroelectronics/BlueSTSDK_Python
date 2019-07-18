@@ -79,7 +79,7 @@ class DictPutSingleElement(collections.MutableMapping):
         Args:
             key: Key.
             value: Element to be added to the list of elements associated to the
-                given key.
+            given key.
         """
         if self.__getitem__(key) is None:
             self._data[key] = [value]

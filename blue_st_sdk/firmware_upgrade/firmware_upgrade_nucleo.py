@@ -59,7 +59,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
 
         Args:
             debug_console (:class:`blue_st_sdk.firmware_upgrade.debug.Debug`): Console
-                used to send commands.
+            used to send commands.
         """
         FirmwareUpgrade.__init__(self)
 
@@ -74,7 +74,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
 
         Args:
             listener (:class:`blue_st_sdk.firmware_upgrade.debug_console.DebugConsoleListener`):
-                Listener to the debug console.
+            Listener to the debug console.
         """
         with lock(self):
             self._debug_console.remove_listener(self._debug_console_listener)
@@ -96,7 +96,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
 
         Args:
             node (:class:`blue_st_sdk.node.Node`): Node whose firmware has to be
-                updated.
+            updated.
 
         Returns:
             :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`:
@@ -121,7 +121,7 @@ class FirmwareUpgradeNucleo(FirmwareUpgrade):
 
         Args:
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
 
         Raises:
             :exc:`OSError` if the file is not found or is inaccessible.
@@ -170,7 +170,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
 
         Args:
             firmware_upgrade_console (FirmwareUpgrade): Firmware upgrade console
-                used to call user-defined listener's methods.
+            used to call user-defined listener's methods.
         """
         DebugConsoleListener.__init__(self)
 
@@ -203,7 +203,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
 
         Args:
             error (:class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError`):
-                Error code.
+            Error code.
         """
         for listener in self._firmware_upgrade_console._listeners:
             listener.on_upgrade_firmware_error(self,
@@ -284,7 +284,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
 
         Args:
             firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):
-                Firmware file.
+            Firmware file.
 
         Raises:
             :exc:`OSError` if the file is not found or is inaccessible.
@@ -383,7 +383,7 @@ class FirmwareUpgradeDebugConsoleListener(DebugConsoleListener):
             debug_console (object): Console that receives the message.
             message (str): The message sent to the stdin console.
             status (bool): True if the message is sent correctly, False
-                otherwise.
+            otherwise.
 
         Raises:
             :exc:`NotImplementedError` if the method has not been implemented.
