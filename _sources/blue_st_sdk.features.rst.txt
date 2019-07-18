@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    blue_st_sdk.features.audio
     blue_st_sdk.features.standard_characteristics
 
 Submodules

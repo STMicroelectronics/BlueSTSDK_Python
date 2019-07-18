@@ -1,0 +1,454 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.features.audio.adpcm package &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="blue_st_sdk.features.standard_characteristics package" href="blue_st_sdk.features.standard_characteristics.html" />
+    <link rel="prev" title="blue_st_sdk.features.audio package" href="blue_st_sdk.features.audio.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="blue-st-sdk-features-audio-adpcm-package">
+<h1>blue_st_sdk.features.audio.adpcm package<a class="headerlink" href="#blue-st-sdk-features-audio-adpcm-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager">
+<span id="blue-st-sdk-features-audio-adpcm-bv-audio-sync-manager-module"></span><h2>blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager module<a class="headerlink" href="#module-blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.</code><code class="descname">BVAudioSyncManager</code><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The feature contains all mandatory ADPCM synchronization parameters
+extracted from an AudioSync received packet.</p>
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.get_index_in">
+<em class="property">classmethod </em><code class="descname">get_index_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager.get_index_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.get_index_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the adpcm_index_in parameter value.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>int: Current adpcm index.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.get_pred_sample_in">
+<em class="property">classmethod </em><code class="descname">get_pred_sample_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager.get_pred_sample_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.get_pred_sample_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns The adpcm_predsample_in parameter value.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>short: The adpcm predsample actual value.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.initialize_reset_flag">
+<em class="property">classmethod </em><code class="descname">initialize_reset_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager.initialize_reset_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.initialize_reset_flag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize reset flag.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.is_intra">
+<em class="property">classmethod </em><code class="descname">is_intra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager.is_intra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.is_intra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the intra_flag parameter state.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>boolean: True if is activated, False elsewhere.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.set_synchronization_parameters">
+<em class="property">classmethod </em><code class="descname">set_synchronization_parameters</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/bv_audio_sync_manager.html#BVAudioSyncManager.set_synchronization_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager.BVAudioSyncManager.set_synchronization_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Populate all mandatory adpcm synchronization parameters from an input</dt>
+<dd>FeatureAudioADPCMSync Sample.</dd>
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>sample (Sample): A Sample exctracted from a received</dt>
+<dd>FeatureAudioADPCMSync synchronization packet (6 bytes).</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm">
+<span id="blue-st-sdk-features-audio-adpcm-feature-audio-adpcm-module"></span><h2>blue_st_sdk.features.audio.adpcm.feature_audio_adpcm module<a class="headerlink" href="#module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.</code><code class="descname">ADPCMEngine</code><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#ADPCMEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DPCM Engine class.
+It contains all the operations and parameters necessary to decompress the
+received audio.</p>
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#ADPCMEngine.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>code</em>, <em>sync_manager</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#ADPCMEngine.decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.ADPCMEngine.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>ADPCM_Decode.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>code (byte): It contains a 4-bit ADPCM sample.</dd>
+<dt>Returns:</dt>
+<dd>int: A 16-bit ADPCM sample.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.</code><code class="descname">FeatureAudioADPCM</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#FeatureAudioADPCM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the compressed audio data acquired from a microphone.</p>
+<p>Data is a twenty bytes array.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.AUDIO_PACKAGE_SIZE">
+<code class="descname">AUDIO_PACKAGE_SIZE</code><em class="property"> = 40</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.AUDIO_PACKAGE_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 20</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = 256</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = 'Audio'</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_FIELDS">
+<code class="descname">FEATURE_FIELDS</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_FIELDS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'ADPCM Audio'</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#FeatureAudioADPCM.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>node (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>): Node that will send data to</dt>
+<dd>this feature.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.bv_sync_manager">
+<code class="descname">bv_sync_manager</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.bv_sync_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.engine_adpcm">
+<code class="descname">engine_adpcm</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.engine_adpcm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#FeatureAudioADPCM.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the data from the feature’s raw data.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (bytearray): The data read from the feature (a 20 bytes array).
+offset (int): Offset where to start reading data (0 by default).</dd>
+<dt>Returns:</dt>
+<dd><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a>: Container of the number
+of bytes read (20)  and the extracted data (audio info, the 40
+shorts array).</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException" title="blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException</span></code></a></dt>
+<dd>if the data array has not enough data to read.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.get_audio">
+<em class="property">classmethod </em><code class="descname">get_audio</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#FeatureAudioADPCM.get_audio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.get_audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the audio data from a sample.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data.</dd>
+<dt>Returns:</dt>
+<dd>short[]: audio values if the data array is valid, None[]
+otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.set_audio_sync_parameters">
+<code class="descname">set_audio_sync_parameters</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm.html#FeatureAudioADPCM.set_audio_sync_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm.FeatureAudioADPCM.set_audio_sync_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set the object synchronization parameters necessary to the</dt>
+<dd>decompression process.</dd>
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>sample (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Extracted sample which</dt>
+<dd>contains the synchronization parameters.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync">
+<span id="blue-st-sdk-features-audio-adpcm-feature-audio-adpcm-sync-module"></span><h2>blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync module<a class="headerlink" href="#module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync">
+<em class="property">class </em><code class="descclassname">blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.</code><code class="descname">FeatureAudioADPCMSync</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm_sync.html#FeatureAudioADPCMSync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Feature" title="blue_st_sdk.feature.Feature"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Feature</span></code></a></p>
+<p>The feature handles the audio synchronization parameters mandatory to the
+ADPCM audio decompression.</p>
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.ADPCM_INDEX_INDEX">
+<code class="descname">ADPCM_INDEX_INDEX</code><em class="property"> = 0</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.ADPCM_INDEX_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.ADPCM_PREDSAMPLE_INDEX">
+<code class="descname">ADPCM_PREDSAMPLE_INDEX</code><em class="property"> = 1</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.ADPCM_PREDSAMPLE_INDEX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_LENGTH_BYTES">
+<code class="descname">DATA_LENGTH_BYTES</code><em class="property"> = 6</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_LENGTH_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_MAX">
+<code class="descname">DATA_MAX</code><em class="property"> = 32767</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_MIN">
+<code class="descname">DATA_MIN</code><em class="property"> = -32768</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.DATA_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_DATA_NAME">
+<code class="descname">FEATURE_DATA_NAME</code><em class="property"> = ['ADPCM_index', 'ADPCM_predsample']</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_DATA_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_INDEX_FIELD">
+<code class="descname">FEATURE_INDEX_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_INDEX_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_NAME">
+<code class="descname">FEATURE_NAME</code><em class="property"> = 'ADPCM Sync'</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_PREDSAMPLE_FIELD">
+<code class="descname">FEATURE_PREDSAMPLE_FIELD</code><em class="property"> = &lt;blue_st_sdk.features.field.Field object&gt;</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_PREDSAMPLE_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_UNIT">
+<code class="descname">FEATURE_UNIT</code><em class="property"> = None</em><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.FEATURE_UNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm_sync.html#FeatureAudioADPCMSync.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>node (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.node.Node" title="blue_st_sdk.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.node.Node</span></code></a>): Node that will send data to</dt>
+<dd>this feature.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.extract_data">
+<code class="descname">extract_data</code><span class="sig-paren">(</span><em>timestamp</em>, <em>data</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm_sync.html#FeatureAudioADPCMSync.extract_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.extract_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Extract the audio sync data from the feature’s raw data.</dt>
+<dd>In this case it reads a short integer (adpcm_index) and an integer
+(adpcm_predsample).</dd>
+<dt>Args:</dt>
+<dd>data (bytearray): The data read from the feature (a 6 bytes array).
+offset (int): Offset where to start reading data (0 by default).</dd>
+<dt>Returns:</dt>
+<dd><a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.ExtractedData" title="blue_st_sdk.feature.ExtractedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.ExtractedData</span></code></a>: Container of the number
+of bytes read (6)  and the extracted data (audio sync info, a short
+and an int).</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt><a class="reference internal" href="blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException" title="blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException</span></code></a></dt>
+<dd>if the data array has not enough data to read.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.get_index">
+<em class="property">static </em><code class="descname">get_index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm_sync.html#FeatureAudioADPCMSync.get_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.get_index" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method which extract the index synchronization parameter from a buffer</dt>
+<dd>passed as parameter</dd>
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data (6 bytes).</dd>
+<dt>Returns:</dt>
+<dd>short: The ADPCM index synch parameter if the data array is
+valid, “None” otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.get_predicted_sample">
+<em class="property">static </em><code class="descname">get_predicted_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/blue_st_sdk/features/audio/adpcm/feature_audio_adpcm_sync.html#FeatureAudioADPCMSync.get_predicted_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync.FeatureAudioADPCMSync.get_predicted_sample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method which extract the predsample synchronization parameter from a</dt>
+<dd>buffer passed as parameter</dd>
+<dt>Args:</dt>
+<dd>sample (<a class="reference internal" href="blue_st_sdk.html#blue_st_sdk.feature.Sample" title="blue_st_sdk.feature.Sample"><code class="xref py py-class docutils literal notranslate"><span class="pre">blue_st_sdk.feature.Sample</span></code></a>): Sample data (6 bytes).</dd>
+<dt>Returns:</dt>
+<dd>short: The ADPCM predsample synch parameter if the data array is
+valid, “None” otherwise.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-blue_st_sdk.features.audio.adpcm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-blue_st_sdk.features.audio.adpcm" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">blue_st_sdk.features.audio.adpcm package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager">blue_st_sdk.features.audio.adpcm.bv_audio_sync_manager module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm">blue_st_sdk.features.audio.adpcm.feature_audio_adpcm module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync">blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync module</a></li>
+<li><a class="reference internal" href="#module-blue_st_sdk.features.audio.adpcm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="blue_st_sdk.html">blue_st_sdk package</a><ul>
+  <li><a href="blue_st_sdk.features.html">blue_st_sdk.features package</a><ul>
+  <li><a href="blue_st_sdk.features.audio.html">blue_st_sdk.features.audio package</a><ul>
+      <li>Previous: <a href="blue_st_sdk.features.audio.html" title="previous chapter">blue_st_sdk.features.audio package</a></li>
+      <li>Next: <a href="blue_st_sdk.features.standard_characteristics.html" title="next chapter">blue_st_sdk.features.standard_characteristics package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/blue_st_sdk.features.audio.adpcm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/blue_st_sdk.features.audio.adpcm.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
