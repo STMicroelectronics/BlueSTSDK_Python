@@ -1,0 +1,480 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;firmware_upgrade</span>
+
+<span class="sd">The firmware_upgrade_nucleo module is responsible for managing the upgrading</span>
+<span class="sd">process of devices&#39;firmware via Bluetooth Low Energy (BLE).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># IMPORT</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">blue_st_sdk.node</span> <span class="k">import</span> <span class="n">NodeType</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.debug_console</span> <span class="k">import</span> <span class="n">DebugConsoleListener</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.firmware_upgrade.firmware_upgrade</span> <span class="k">import</span> <span class="n">FirmwareUpgrade</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.firmware_upgrade.firmware_upgrade</span> <span class="k">import</span> <span class="n">FirmwareUpgradeError</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.number_conversion</span> <span class="k">import</span> <span class="n">LittleEndian</span>
+<span class="kn">from</span> <span class="nn">blue_st_sdk.utils.python_utils</span> <span class="k">import</span> <span class="n">lock</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeNucleo"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo">[docs]</a><span class="k">class</span> <span class="nc">FirmwareUpgradeNucleo</span><span class="p">(</span><span class="n">FirmwareUpgrade</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that implements the firmware upgrade capability for a Nucleo device.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeNucleo.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug_console</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            debug_console (:class:`blue_st_sdk.firmware_upgrade.debug.Debug`): Console</span>
+<span class="sd">            used to send commands.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">FirmwareUpgrade</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console</span> <span class="o">=</span> <span class="n">debug_console</span>
+        <span class="sd">&quot;&quot;&quot;Debug console where to send commands.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console_listener</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="sd">&quot;&quot;&quot;Listener to nucleo debug console events.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_set_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the listener to the debug console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            listener (:class:`blue_st_sdk.firmware_upgrade.debug_console.DebugConsoleListener`):</span>
+<span class="sd">            Listener to the debug console.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console</span><span class="o">.</span><span class="n">remove_listener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_debug_console_listener</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console_listener</span> <span class="o">=</span> <span class="n">listener</span>
+
+    <span class="k">def</span> <span class="nf">_firmware_is_upgrading</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check whether a firmware upgrade process is already in place.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if a firmware upgrade process is already in place, False</span>
+<span class="sd">            otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console_listener</span> <span class="o">!=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeNucleo.get_console"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.get_console">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get an instance of this class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (:class:`blue_st_sdk.node.Node`): Node whose firmware has to be</span>
+<span class="sd">            updated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`:</span>
+<span class="sd">            An instance of this class if the given node implements the BlueST</span>
+<span class="sd">            protocol, &quot;None&quot; otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">debug</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_debug</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">debug</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_type</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_type</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">_type</span> <span class="o">==</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">NUCLEO</span> <span class="ow">or</span> \
+                <span class="n">_type</span> <span class="o">==</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">SENSOR_TILE</span> <span class="ow">or</span> \
+                <span class="n">_type</span> <span class="o">==</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">BLUE_COIN</span> <span class="ow">or</span> \
+                <span class="n">_type</span> <span class="o">==</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">STEVAL_BCN002V1</span> <span class="ow">or</span> \
+                <span class="n">_type</span> <span class="o">==</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">SENSOR_TILE_BOX</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">FirmwareUpgradeNucleo</span><span class="p">(</span><span class="n">debug</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeNucleo.upgrade_firmware"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeNucleo.upgrade_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">upgrade_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Upgrade the firmware onto the device assiciated to the debug console.</span>
+<span class="sd">        The firmware is loaded starting from the address &quot;0x0804000&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):</span>
+<span class="sd">            Firmware file.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`OSError` if the file is not found or is inaccessible.</span>
+<span class="sd">            :exc:`ValueError` if the firmware file can not be read properly.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the upload starts correctly, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_is_upgrading</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_listener</span><span class="p">(</span><span class="n">FirmwareUpgradeDebugConsoleListener</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_debug_console_listener</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">firmware_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+</div></div>
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener">[docs]</a><span class="k">class</span> <span class="nc">FirmwareUpgradeDebugConsoleListener</span><span class="p">(</span><span class="n">DebugConsoleListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that handles the upgrade of the firmware file to a device via</span>
+<span class="sd">    Bluetooth.&quot;&quot;&quot;</span>
+
+    <span class="n">FIRMWARE_UPGRADE_COMMAND</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;upgradeFw&#39;</span>
+    <span class="sd">&quot;&quot;&quot;Firmware upgrade command.&quot;&quot;&quot;</span>
+
+    <span class="n">ACK_MSG</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u0001</span><span class="s1">&#39;</span>  <span class="c1"># Unicode character</span>
+    <span class="sd">&quot;&quot;&quot;Acknowledgement message.&quot;&quot;&quot;</span>
+
+    <span class="n">MAX_MSG_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="sd">&quot;&quot;&quot;The STM32L4 Family can write only 8 bytes at a time, thus sending a</span>
+<span class="sd">    multiple of 8 bytes simplifies the code.&quot;&quot;&quot;</span>
+
+    <span class="n">LOST_MSG_TIMEOUT_ms</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="sd">&quot;&quot;&quot;Timeout for sending a message.&quot;&quot;&quot;</span>
+
+    <span class="n">FIRMWARE_UPGRADE_TIMEOUT_ms</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">LOST_MSG_TIMEOUT_ms</span>
+    <span class="sd">&quot;&quot;&quot;Increased timeout for sending a message&quot;&quot;&quot;</span>
+
+    <span class="n">BLOCK_OF_PACKETS_SIZE</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="sd">&quot;&quot;&quot;Sending a block of packets at a time, in order to not to stress the</span>
+<span class="sd">    Bluetooth too much.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_upgrade_console</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Costructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            firmware_upgrade_console (FirmwareUpgrade): Firmware upgrade console</span>
+<span class="sd">            used to call user-defined listener&#39;s methods.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">DebugConsoleListener</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;Firmware file.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_fd</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;Firmware file descriptor.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="sd">&quot;&quot;&quot;CRC code of the firmware file.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span> <span class="o">=</span> <span class="n">firmware_upgrade_console</span>
+        <span class="sd">&quot;&quot;&quot;Firmware upgrade console.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="sd">&quot;&quot;&quot;Number of bytes sent.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_shift</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="sd">&quot;&quot;&quot;Whenever there is a transmission error, the number of packets to send</span>
+<span class="sd">        in a block is halved.&quot;&quot;&quot;</span>
+
+        <span class="c1">#self._timeout = threading.Timer(</span>
+        <span class="c1">#    self.FIRMWARE_UPGRADE_TIMEOUT_ms * 1000,</span>
+        <span class="c1">#    self._on_timeout)</span></div>
+        <span class="sd">&quot;&quot;&quot;Timeout for sending a single packet of data.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_on_load_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Notifies to the user that the upload on the file raised an error.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            error (:class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgradeError`):</span>
+<span class="sd">            Error code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="n">listener</span><span class="o">.</span><span class="n">on_upgrade_firmware_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="p">,</span>
+                <span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_set_listener</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_load_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Notifies to the user that a block of data has been correctly sent and</span>
+<span class="sd">        that it is possible to send a new one.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_packets_received</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_packets_received</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_block_size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+                <span class="n">listener</span><span class="o">.</span><span class="n">on_upgrade_firmware_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span>
+            <span class="c1">#self._send_block()</span>
+    
+    <span class="k">def</span> <span class="nf">_on_load_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Notifies to the user that the upload on the file has completed.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_listeners</span><span class="p">:</span>
+            <span class="n">listener</span><span class="o">.</span><span class="n">on_upgrade_firmware_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_set_listener</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1">#def _on_timeout(self):</span>
+    <span class="c1">#    &quot;&quot;&quot;Timeout callback.&quot;&quot;&quot;</span>
+    <span class="c1">#    self._on_load_error(FirmwareUpgradeError.TRANSMISSION_ERROR)</span>
+    <span class="c1">#    self._block_shift += 1</span>
+
+    <span class="k">def</span> <span class="nf">_get_block_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Getting block size.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The block size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#return int(max(1,</span>
+        <span class="c1">#    self.BLOCK_OF_PACKETS_SIZE / ( 1 &lt;&lt; (self._block_shift))))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLOCK_OF_PACKETS_SIZE</span>
+
+    <span class="k">def</span> <span class="nf">_send_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sending a block of packets through the debug console.</span>
+<span class="sd">        It stops at the first error.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if all the packets are sent correctly, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sending a packet at a time.</span>
+        <span class="k">for</span> <span class="n">packet</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_block_size</span><span class="p">()):</span>
+            <span class="c1"># Computing the number of bytes to read from the file and to send</span>
+            <span class="c1"># through the debug console.</span>
+            <span class="n">size_to_read</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MAX_MSG_SIZE</span><span class="p">)</span>
+
+            <span class="c1"># Reading data from the file.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_fd</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size_to_read</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># Chek size of data.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="n">size_to_read</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            
+            <span class="c1"># Sending data throught the debug console.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span> <span class="o">+=</span> <span class="n">size_to_read</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_debug_console</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> \
+                <span class="o">!=</span> <span class="n">size_to_read</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener.load_file"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.load_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts to upload the firmware.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            firmware_file (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_file.FirmwareFile`):</span>
+<span class="sd">            Firmware file.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`OSError` if the file is not found or is inaccessible.</span>
+<span class="sd">            :exc:`ValueError` if the firmware file can not be read properly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Setting the firmware file.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span> <span class="o">=</span> <span class="n">firmware_file</span>
+
+            <span class="c1"># Computing the CRC of the firmware file content.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_crc_32</span><span class="p">()</span>
+
+            <span class="c1"># Creating the command to start the firmware upgrade.</span>
+            <span class="c1"># Python 2.</span>
+            <span class="c1">#command = bytearray(self.FIRMWARE_UPGRADE_COMMAND, encoding=&#39;utf8&#39;) \</span>
+            <span class="c1">#    + bytearray(LittleEndian.uint32_to_bytes(</span>
+            <span class="c1">#        self._firmware_file.get_size()), encoding=&#39;utf8&#39;) \</span>
+            <span class="c1">#    + bytearray(LittleEndian.uint32_to_bytes(</span>
+            <span class="c1">#        self._firmware_crc), encoding=&#39;utf8&#39;)</span>
+            <span class="c1"># Python 3.</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_UPGRADE_COMMAND</span> \
+                <span class="o">+</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_size</span><span class="p">())</span> \
+                <span class="o">+</span> <span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="c1"># Opening the firmware file to send data packets.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+        <span class="c1"># Starting the firmware upgrade.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loading_file_status</span> <span class="o">=</span> <span class="n">LoadingFileStatus</span><span class="o">.</span><span class="n">CRC_CHECK</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_upgrade_console</span><span class="o">.</span><span class="n">_debug_console</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener.on_stdout_receive"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdout_receive">[docs]</a>    <span class="k">def</span> <span class="nf">on_stdout_receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug_console</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called whenever a message is received on the standard output.</span>
+
+<span class="sd">        A message is received on the standard output in two cases:</span>
+<span class="sd">          + When the device sends back the CRC received from the gateway.</span>
+<span class="sd">          + When the device sends an ACK or a NACK message after receiving the</span>
+<span class="sd">            firmware file and comparing the CRC computed on it with the CRC</span>
+<span class="sd">            previously received from the gateway.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            debug_console (object): Console that sends the message.</span>
+<span class="sd">            message (str): The message received on the stdout console.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`NotImplementedError` if the method has not been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_file_status</span> <span class="o">==</span> <span class="n">LoadingFileStatus</span><span class="o">.</span><span class="n">CRC_CHECK</span><span class="p">:</span>
+            <span class="c1"># Check whether the message received from the node contains the same</span>
+            <span class="c1"># CRC code that we have sent.</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ISO-8859-1&#39;</span><span class="p">)</span> <span class="o">!=</span> \
+                <span class="n">LittleEndian</span><span class="o">.</span><span class="n">uint32_to_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_firmware_crc</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_error</span><span class="p">(</span><span class="n">FirmwareUpgradeError</span><span class="o">.</span><span class="n">TRANSMISSION_ERROR</span><span class="p">)</span>
+
+            <span class="c1"># Sending firmware in blocks of packets.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loading_file_status</span> <span class="o">=</span> <span class="n">LoadingFileStatus</span><span class="o">.</span><span class="n">ACK_CHECK</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_packets_received</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_firmware_file</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bytes_sent</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_block</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_error</span><span class="p">(</span>
+                        <span class="n">FirmwareUpgradeError</span><span class="o">.</span><span class="n">CORRUPTED_FILE_ERROR</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_file_status</span> <span class="o">==</span> <span class="n">LoadingFileStatus</span><span class="o">.</span><span class="n">ACK_CHECK</span><span class="p">:</span>
+            <span class="c1"># Transfer completed.</span>
+            <span class="c1">#self._timeout.cancel()</span>
+            <span class="c1"># Python 2.</span>
+            <span class="c1">#if message.encode(&#39;ISO-8859-1&#39;).lower() == self.ACK_MSG.lower():</span>
+            <span class="c1"># Python 3.</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ACK_MSG</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_complete</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_error</span><span class="p">(</span><span class="n">FirmwareUpgradeError</span><span class="o">.</span><span class="n">CORRUPTED_FILE_ERROR</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener.on_stderr_receive"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stderr_receive">[docs]</a>    <span class="k">def</span> <span class="nf">on_stderr_receive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called whenever a message is received on the standard error.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            debug_console (object): Console that sends the message.</span>
+<span class="sd">            message (str): The message received on the stderr console.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`NotImplementedError` if the method has not been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="FirmwareUpgradeDebugConsoleListener.on_stdin_send"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.FirmwareUpgradeDebugConsoleListener.on_stdin_send">[docs]</a>    <span class="k">def</span> <span class="nf">on_stdin_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug_console</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called whenever a message is sent to the standard input.</span>
+
+<span class="sd">        A message is sent to the standard input whenever some data are written</span>
+<span class="sd">        to the debug console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            debug_console (object): Console that receives the message.</span>
+<span class="sd">            message (str): The message sent to the stdin console.</span>
+<span class="sd">            status (bool): True if the message is sent correctly, False</span>
+<span class="sd">            otherwise.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            :exc:`NotImplementedError` if the method has not been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_file_status</span> <span class="o">==</span> <span class="n">LoadingFileStatus</span><span class="o">.</span><span class="n">ACK_CHECK</span><span class="p">:</span>
+                <span class="c1">#self._timeout.cancel()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_progress</span><span class="p">()</span>
+                <span class="c1">#self._timeout.start()</span>
+        <span class="k">else</span><span class="p">:</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_load_error</span><span class="p">(</span><span class="n">FirmwareUpgradeError</span><span class="o">.</span><span class="n">TRANSMISSION_ERROR</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="LoadingFileStatus"><a class="viewcode-back" href="../../../blue_st_sdk.firmware_upgrade.html#blue_st_sdk.firmware_upgrade.firmware_upgrade_nucleo.LoadingFileStatus">[docs]</a><span class="k">class</span> <span class="nc">LoadingFileStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Status of loading file process.&quot;&quot;&quot;</span>
+    <span class="n">CRC_CHECK</span> <span class="o">=</span> <span class="mi">0</span></div>
+    <span class="n">ACK_CHECK</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

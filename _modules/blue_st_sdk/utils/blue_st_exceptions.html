@@ -1,0 +1,160 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>blue_st_sdk.utils.blue_st_exceptions &#8212; BlueSTSDK 1.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for blue_st_sdk.utils.blue_st_exceptions</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># COPYRIGHT(c) 2018 STMicroelectronics                                         #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Redistribution and use in source and binary forms, with or without           #</span>
+<span class="c1"># modification, are permitted provided that the following conditions are met:  #</span>
+<span class="c1">#   1. Redistributions of source code must retain the above copyright notice,  #</span>
+<span class="c1">#      this list of conditions and the following disclaimer.                   #</span>
+<span class="c1">#   2. Redistributions in binary form must reproduce the above copyright       #</span>
+<span class="c1">#      notice, this list of conditions and the following disclaimer in the     #</span>
+<span class="c1">#      documentation and/or other materials provided with the distribution.    #</span>
+<span class="c1">#   3. Neither the name of STMicroelectronics nor the names of its             #</span>
+<span class="c1">#      contributors may be used to endorse or promote products derived from    #</span>
+<span class="c1">#      this software without specific prior written permission.                #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  #</span>
+<span class="c1"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    #</span>
+<span class="c1"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   #</span>
+<span class="c1"># ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    #</span>
+<span class="c1"># LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          #</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         #</span>
+<span class="c1"># SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     #</span>
+<span class="c1"># INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      #</span>
+<span class="c1"># CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      #</span>
+<span class="c1"># ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   #</span>
+<span class="c1"># POSSIBILITY OF SUCH DAMAGE.                                                  #</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;blue_st_exceptions</span>
+
+<span class="sd">The blue_st_exceptions module defines exceptions raised by the BlueSTSDK.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># CLASSES</span>
+
+<div class="viewcode-block" id="BlueSTInvalidAdvertisingDataException"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException">[docs]</a><span class="k">class</span> <span class="nc">BlueSTInvalidAdvertisingDataException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised whenever an advertising data has a format not recognized</span>
+<span class="sd">    by the BlueSTSDK.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueSTInvalidAdvertisingDataException.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidAdvertisingDataException.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): The message to raise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BlueSTInvalidAdvertisingDataException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BlueSTInvalidFeatureBitMaskException"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidFeatureBitMaskException">[docs]</a><span class="k">class</span> <span class="nc">BlueSTInvalidFeatureBitMaskException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised whenever a bitmask has more than 1 bit set to &quot;1&quot;.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueSTInvalidFeatureBitMaskException.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidFeatureBitMaskException.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): The message to raise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BlueSTInvalidFeatureBitMaskException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BlueSTInvalidOperationException"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException">[docs]</a><span class="k">class</span> <span class="nc">BlueSTInvalidOperationException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised whenever the operation requested is not supported.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueSTInvalidOperationException.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidOperationException.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): The message to raise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BlueSTInvalidOperationException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BlueSTInvalidDataException"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException">[docs]</a><span class="k">class</span> <span class="nc">BlueSTInvalidDataException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Exception raised whenever a feature&#39;s data are not complete.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlueSTInvalidDataException.__init__"><a class="viewcode-back" href="../../../blue_st_sdk.utils.html#blue_st_sdk.utils.blue_st_exceptions.BlueSTInvalidDataException.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): The message to raise.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BlueSTInvalidDataException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Davide Aliprandi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
