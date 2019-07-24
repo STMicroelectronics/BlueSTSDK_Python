@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = BlueSTSDK
 SOURCEDIR     = source
-BUILDDIR      = ../../BlueSTSDK_Python-docs2
+BUILDDIR      = ../../BlueSTSDK_Python-docs/
 
 # Put it first so that "make" without argument is like "make help".
 help:

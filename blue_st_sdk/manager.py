@@ -194,8 +194,8 @@ class _StoppableScanner(threading.Thread):
         """
         super(_StoppableScanner, self).join()
         if self._exc:
-            msg = '\nBluetooth scanning requires root privilege, ' \
-                  'so please run the script with \"sudo\".'
+            msg = '\nBluetooth scanning requires root privileges, ' \
+                  'so please run the application with \"sudo\".'
             raise BlueSTInvalidOperationException(msg)
 
 
@@ -320,8 +320,8 @@ class Manager(object):
                 threading.Timer(timeout_s, self.stop_discovery).start()
                 return True
         except BTLEException as e:
-            msg = '\nBluetooth scanning requires root privilege, ' \
-                  'so please run the script with \"sudo\".'
+            msg = '\nBluetooth scanning requires root privileges, ' \
+                  'so please run the application with \"sudo\".'
             raise BlueSTInvalidOperationException(msg)
 
     def start_discovery(self, show_warnings=False):
@@ -360,8 +360,8 @@ class Manager(object):
             self._scanner_thread.start()
             return True
         except BTLEException as e:
-            msg = '\nBluetooth scanning requires root privilege, ' \
-                  'so please run the script with \"sudo\".'
+            msg = '\nBluetooth scanning requires root privileges, ' \
+                  'so please run the application with \"sudo\".'
             raise BlueSTInvalidOperationException(msg)
 
     def stop_discovery(self):
@@ -388,8 +388,8 @@ class Manager(object):
                 return True
             return False
         except BTLEException as e:
-            msg = '\nBluetooth scanning requires root privilege, ' \
-                  'so please run the script with \"sudo\".'
+            msg = '\nBluetooth scanning requires root privileges, ' \
+                  'so please run the application with \"sudo\".'
             raise BlueSTInvalidOperationException(msg)
 
     def is_discovering(self):
@@ -415,8 +415,8 @@ class Manager(object):
                 self.stop_discovery()
             self.remove_nodes()
         except BTLEException as e:
-            msg = '\nBluetooth scanning requires root privilege, ' \
-                  'so please run the script with \"sudo\".'
+            msg = '\nBluetooth scanning requires root privileges, ' \
+                  'so please run the application with \"sudo\".'
             raise BlueSTInvalidOperationException(msg)
 
     def _notify_discovery_change(self, status):

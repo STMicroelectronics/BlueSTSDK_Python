@@ -1192,21 +1192,21 @@ class NodeListener(object):
     """
     __metaclass__ = ABCMeta
 
-    @abstractmethod
-    def on_status_change(self, node, new_status, old_status):
-        """To be called whenever a node changes its status.
+    # @abstractmethod
+    # def on_status_change(self, node, new_status, old_status):
+    #     """To be called whenever a node changes its status.
 
-        Args:
-            node (:class:`blue_st_sdk.node.Node`): Node that has changed its
-            status.
-            new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
-            old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.
+    #     Args:
+    #         node (:class:`blue_st_sdk.node.Node`): Node that has changed its
+    #         status.
+    #         new_status (:class:`blue_st_sdk.node.NodeStatus`): New status.
+    #         old_status (:class:`blue_st_sdk.node.NodeStatus`): Old status.
 
-        Raises:
-            :exc:`NotImplementedError` if the method has not been implemented.
-        """
-        raise NotImplementedError('You must implement "on_status_change()" to '
-                                  'use the "NodeListener" class.')
+    #     Raises:
+    #         :exc:`NotImplementedError` if the method has not been implemented.
+    #     """
+    #     raise NotImplementedError('You must implement "on_status_change()" to '
+    #                               'use the "NodeListener" class.')
 
     @abstractmethod
     def on_connect(self, node):
