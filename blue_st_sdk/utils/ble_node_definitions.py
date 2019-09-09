@@ -177,6 +177,13 @@ class Config(object):
         + BLENodeDefinitions.BLUESTSDK_SERVICE_UUID)
     """Control characteristic UUID through which you can send commands to a
     feature."""
+    
+    CONFIG_COMMAND_BLUESTSDK_FEATURE_UUID = \
+        uuid.UUID('00000002' \
+        + BLENodeDefinitions.CONFIG_UUID \
+        + BLENodeDefinitions.BLUESTSDK_CHARACTERISTIC_UUID)
+    """Control characteristic UUID through which you can send commands to a
+    feature."""
 
     @classmethod
     def is_config_service(self, uuid):
@@ -239,7 +246,7 @@ class FeatureCharacteristic(object):
         0x00002000: feature_stepper_motor.FeatureStepperMotor,
         #0x00001000: feature_sd_logging.FeatureSDLogging,
 
-        #0x00000800: feature_beamforming.FeatureBeamforming,
+        0x00000800: feature_beamforming.FeatureBeamforming,
         #0x00000400: feature_acceleration_event.FeatureAccelerometerEvent,
         #0x00000200: feature_free_fall.FeatureFreeFall,
         #0x00000100: feature_mems_sensor_fusion_compact.FeatureMemsSensorFusionCompact,

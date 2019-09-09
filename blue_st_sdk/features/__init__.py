@@ -6,7 +6,7 @@ __all__ = [
     #'feature_analog', \
     'feature_audio_scene_classification', \
     #'feature_battery', \
-    #'feature_beamforming', \
+    'feature_beamforming', \
     #'feature_carry_position', \
     #'feature_compass', \
     #'feature_co_sensor', \
