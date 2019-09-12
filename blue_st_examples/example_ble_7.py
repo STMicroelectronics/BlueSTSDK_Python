@@ -303,7 +303,11 @@ def main(argv):
                             if device.wait_for_notifications(0.05):
                                 continue
                             elif AIAlgo_msg_completed:
-                                print("Algos received:" + AI_msg)
+                                if choice == 1:
+                                    print("Algos received:" + AI_msg)
+                                elif choice == 2:
+                                    print("SetAlgo: "+ str(_algo) + " command sent")
+                                    time.sleep(2)
                                 break
                         
                         print("Finished example")
