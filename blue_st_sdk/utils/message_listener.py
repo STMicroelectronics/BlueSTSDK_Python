@@ -37,8 +37,8 @@ from abc import abstractmethod
 # INTERFACES
 
 class MessageListener(object):
-    """Interface used by the :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`
-    class to notify changes of the firmware uprgade process.
+    """Interface used by the :class:`blue_st_sdk.ai_algos.ai_algos.AIAlgos`
+    class to notify message reception/send completion.
     """
     __metaclass__ = ABCMeta
 

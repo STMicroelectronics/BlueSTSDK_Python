@@ -69,7 +69,7 @@ class AIAlgos(object):
         """Add a listener.
         
         Args:
-            listener (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener`):
+            listener (:class:`blue_st_sdk.utils.message_listener.MessageListener`):
             Listener to be added.
         """
         if listener is not None:
@@ -81,7 +81,7 @@ class AIAlgos(object):
         """Remove a listener.
 
         Args:
-            listener (:class:`blue_st_sdk.firmware_upgrade.utils.firmware_upgrade.FirmwareUpgradeListener`):
+            listener (:class:`blue_st_sdk.utils.message_listener.MessageListener`):
             Listener to be removed.
         """
         if listener is not None:
@@ -106,16 +106,14 @@ class AIAlgos(object):
         """Get an instance of this class.
 
         Args:
-            node (:class:`blue_st_sdk.node.Node`): Node whose firmware has to be
-            updated.
+            node (:class:`blue_st_sdk.node.Node`): Node with which msg has to be sent/received
 
         Returns:
-            :class:`blue_st_sdk.firmware_upgrade.firmware_upgrade.FirmwareUpgrade`:
+            :class:`blue_st_sdk.ai_algos.ai_algos.AIAlgos`:
             An instance of this class if the given node implements the BlueST
             protocol, "None" otherwise.
         """
         debug = node.get_debug()
-        print("AI Algos get console")
         if debug is not None:
             _type = node.get_type()
             if _type == NodeType.NUCLEO or \
@@ -126,28 +124,41 @@ class AIAlgos(object):
                 return AIAlgos(debug)
         return None
 
-    def getAIAlgos(self):
-        print("getAIAlgos")
+    def getAvailableCmds(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("SetAlgo", 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("help", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
         return True
 
-    def setAIAlgos(self):
-        print("setAIAlgos")
+    def getAIAlgos(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("GetAlgo",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("getAllAIAlgo", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
+        return True
 
+    def setAIAlgo(self, algo_no):
+        self._set_listener(AIAlgosDebugConsoleListener(self))
+        try:
+            self._debug_console_listener.send_message(bytearray("setAIAlgo "+str(algo_no),  'utf-8'))
+        except (OSError, ValueError) as e:
+            raise e
+        return True
+
+    def startAlgo(self):
+        self._set_listener(AIAlgosDebugConsoleListener(self))
+        try:
+            self._debug_console_listener.send_message(bytearray("har start ign_wsdm",  'utf-8'))
+        except (OSError, ValueError) as e:
+            raise e
         return True
 
 
 class AIAlgosDebugConsoleListener(DebugConsoleListener):
-    """Class that handles the upgrade of the firmware file to a device via
+    """Class that handles the send/receive of messages to a device via
     Bluetooth."""
 
     MSG_SEND_COMMAND = b'sendMsg'
@@ -165,7 +176,8 @@ class AIAlgosDebugConsoleListener(DebugConsoleListener):
 
     def __init__(self, aialgo_console):
         DebugConsoleListener.__init__(self)
-        self._message = None
+        self._message = ""
+        self._rcv_message = ""
         self._aialgo_console = aialgo_console
         self._bytes_sent = 0
 
@@ -176,16 +188,15 @@ class AIAlgosDebugConsoleListener(DebugConsoleListener):
         self._aialgo_console._debug_console.write(message)
 
     def on_stdout_receive(self, debug_console, message):
-        if message.lower() == self.ACK_MSG.lower():
+        self._rcv_message = self._rcv_message + message
+        # if message.lower() == self.ACK_MSG.lower():
+        if message.endswith('\n'):
             for listener in self._aialgo_console._listeners:
-                listener.on_message_send_complete(self, self._message, self._bytes_sent)
-        else:
-            print("Error received on_stdout debug console listener")
-        pass        
+                listener.on_message_send_complete(self._aialgo_console, self._rcv_message, self._bytes_sent)
 
-    def on_stderr_receive(self, debug, message):
-        pass
+    def on_stderr_receive(self, debug_console, message):
+        print('on_stderr_receive: ' + message)
 
     def on_stdin_send(self, debug_console, message, status):
-        pass
+        print('on_stdin_send: '+ message)
 

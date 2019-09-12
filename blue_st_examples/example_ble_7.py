@@ -27,19 +27,14 @@
 # POSSIBILITY OF SUCH DAMAGE.                                                  #
 ################################################################################
 
-################################################################################
-# Author:  Davide Aliprandi, STMicroelectronics                                #
-################################################################################
-
 
 # DESCRIPTION
 #
 # This application example shows how to connect to a Bluetooth Low Energy (BLE)
-# device that exports "Debug" service and features, and supports the "Firmware
-# Update" capability, and how to upgrade the device's firmware.
+# device that exports "Debug" service and features, and supports the "GetAIAlgos"
+# and "SetAIAlgo" BLE commands capability.
 #
-# Please set the "IOT_DEVICE_NAME" variable and the "Firmware file paths"
-# section properly to fit your setup.
+# Please set the "IOT_DEVICE_NAME" variable section properly to fit your setup.
 
 
 # IMPORT
@@ -85,15 +80,7 @@ SCANNING_TIME_s = 5
 NOTIFICATIONS = 10
 
 # Bluetooth Low Energy devices' name.
-IOT_DEVICE_NAME = 'TAI_110'
-
-# Firmware file paths.
-FIRMWARE_FOLDER = '/home/_user_/LinuxGW/SensorTile_Binaries/AI/'
-FIRMWARE_EXTENSION = '.bin'
-FIRMWARE_FILENAMES = [
-    'SENSING1_ASC', \
-    'SENSING1_HAR_GMP'
-]
+IOT_DEVICE_NAME = 'NAI_300' #BLE Nucleo Stack FP-Sensing withh AIAlgo
 
 
 # FUNCTIONS
@@ -181,8 +168,11 @@ class MyFeatureListener(FeatureListener):
 # message rcv and send completion.
 #
 class MyMessageListener(MessageListener):
+    
     def on_message_send_complete(self, debug_console, msg, bytes_sent):
-        print("msg send complete for msg: " + msg)
+        global AIAlgo_msg_completed, AI_msg        
+        AI_msg = msg
+        AIAlgo_msg_completed = True
     
     def on_message_send_error(self, debug_console, msg, error):
         print("msg send error!")
@@ -201,7 +191,7 @@ class MyMessageListener(MessageListener):
 # Main application.
 #
 def main(argv):
-    global firmware_upgrade_completed
+    global AIAlgo_msg_completed, AI_msg
 
     # Printing intro.
     print_intro()
@@ -257,7 +247,7 @@ def main(argv):
                     i += 1
             if not features:
                 print('No features found.')
-            print('%d) Firmware upgrade' % (i))
+            print('%d) Get/Set Algos' % (i))
 
             # Selecting an action.
             while True:
@@ -279,29 +269,46 @@ def main(argv):
 
             elif choice == i:
                 try:
-                    # Selecting firmware.
-                    i = 1
-                    for filename in FIRMWARE_FILENAMES:
-                        print('%d) %s' % (i, filename))
-                        i += 1
-                    while True:
-                        choice = int(input("\nSelect a firmware (\'0\' to cancel): "))
-                        if choice >= 0 and choice <= len(FIRMWARE_FILENAMES):
-                            break
-
-                    # Upgrading firmware.
                     if choice != 0:
-                        print('\nGet/Set Algos...')
+                        # Sending messages through debug console
                         AI_console = AIAlgos.get_console(device)
                         AI_msg_listener = MyMessageListener()
                         AI_console.add_listener(AI_msg_listener)
-                        AI_console.getAIAlgos()
+                    
+                        i = 1
+                        actions = ["Get Algo", "Set Algo"]
+                        for action in actions:
+                            print('%d) %s' % (i, action))
+                            i += 1
+                        while True:
+                            choice = int(input("\nSelect an action (\'0\' to cancel): "))
+                            if choice >= 0 and choice <= len(actions):
+                                break
+
+                        if choice == 1:
+                            # AI_console.getAvailableCmds()
+                            AI_console.getAIAlgos()
+                        elif choice == 2:
+                            while True:
+                                _algo = int(input("\nSelect an algo (\'0\' to cancel): "))
+                                if choice >= 0 and choice <= 3:
+                                    break
+                            AI_console.setAIAlgo(_algo)
+                            # AI_console.startAlgo()
+                        elif choice == 0:
+                            break
 
                         # Getting notifications about firmware upgrade process.
-                        while not firmware_upgrade_completed:
+                        while True:
                             if device.wait_for_notifications(0.05):
                                 continue
-
+                            elif AIAlgo_msg_completed:
+                                print("Algos received:" + AI_msg)
+                                break
+                        
+                        print("Finished example")
+                        print('Exiting...')
+                        sys.exit(0)
                 except (OSError, ValueError) as e:
                     print(e)
 
@@ -317,6 +324,7 @@ def main(argv):
                     time.sleep(1)
 
             else:
+                print("Testing Features")
                 # Testing features.
                 feature = features[choice - 1]
 
@@ -352,5 +360,5 @@ def main(argv):
 
 if __name__ == "__main__":
 
-    firmware_upgrade_completed = False
+    AIAlgo_msg_completed = False
     main(sys.argv[1:])
