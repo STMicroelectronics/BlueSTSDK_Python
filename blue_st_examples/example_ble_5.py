@@ -51,6 +51,7 @@ from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
 from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm import FeatureAudioADPCM
 from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync import FeatureAudioADPCMSync
+from blue_st_sdk.features.feature_beamforming import FeatureBeamforming
 from blue_st_sdk.utils.number_conversion import LittleEndian
 
 ###Audio Stream#########################################################
@@ -109,7 +110,11 @@ n_idx = 0
 
 # Global audio features.
 audio_feature = None
-audio_sync_feature = None
+audio_sync_feature = None 
+beamforming_feature = None
+
+# Global Beamforming control.
+beamforming_flag = 0;
 
 
 # FUNCTIONS
@@ -225,7 +230,19 @@ class MyFeatureListenerSync(FeatureListener):
         if audio_feature is not None:
             audio_feature.set_audio_sync_parameters(sample)
                 
+class MyFeatureListenerBeam(FeatureListener):
 
+    #
+    # To be called whenever the feature updates its data.
+    #
+    # @param feature Feature that has updated.
+    # @param sample  Data extracted from the feature.
+    #
+    def on_update(self, feature, sample):
+        global beamforming_feature
+        if beamforming_feature is not None:
+            print(beamforming_feature)
+                
 # MAIN APPLICATION
 
 # This application example connects to a Bluetooth Low Energy device, retrieves
@@ -241,10 +258,12 @@ def main(argv):
     ###Save Audio File##################################################
     global audioFile
     global save_audio_flag
+    global beamforming_flag
     ###Save Audio File##################################################
     
     global audio_feature
     global audio_sync_feature
+    global beamforming_feature
     
     # Printing intro.
     print_intro()
@@ -287,6 +306,7 @@ def main(argv):
             device = devices[choice - 1]
 
             has_audio_features = [False,False]
+            has_beamforming_feature = False
 
             i = 1
             features = device.get_features()
@@ -297,6 +317,9 @@ def main(argv):
                 elif isinstance(feature, FeatureAudioADPCMSync):
                     audio_sync_feature = feature
                     has_audio_features[1] = True
+                elif isinstance(feature,FeatureBeamforming):
+                    beamforming_feature = feature
+                    has_beamforming_feature = True
                 i += 1
 
             if all(has_audio_features):
@@ -307,7 +330,7 @@ def main(argv):
                 if not device.connect():
                     print('Connection failed.\n')
                     continue
-                print('Connection done.')
+                print('Connection done.')    
 
                 while True:
                     save_audio_flag = input('\nDo you want to save the audio stream?'
@@ -322,6 +345,10 @@ def main(argv):
                                 os.makedirs(AUDIO_DUMPS_PATH)
                             fileName = AUDIO_DUMPS_PATH + st + AUDIO_DUMP_SUFFIX
                             audioFile = open(fileName,"w+")
+                        
+                        if(has_beamforming_feature):
+                            beamforming_flag = input('\nDo you want to enable beamforming?'
+                                             '\'y\' - Yes, \'n\' - No (\'0\' to quit): ')
                         
                         number_of_seconds = int(input('\nHow many seconds do you want to stream?'
                                                       ' Value must be > 0 (\'0\' to quit): '))
@@ -345,6 +372,14 @@ def main(argv):
                             audio_sync_feature_listener = MyFeatureListenerSync()
                             audio_sync_feature.add_listener(audio_sync_feature_listener)
                             device.enable_notifications(audio_sync_feature)
+                            if beamforming_flag == 'y' or beamforming_flag == 'Y' or \
+                                beamforming_flag == 'n' or beamforming_flag == 'N':
+                                if beamforming_flag == 'y' or beamforming_flag == 'Y':
+                                    beamforming_feature_listener = MyFeatureListenerBeam()
+                                    beamforming_feature.add_listener(beamforming_feature_listener)
+                                    device.enable_notifications(beamforming_feature)
+                                    device.send_command(b"\x00\x00\x08\x00\xAA\x01")
+                                    print("Beamforming Enabled")
                             
                             n_idx = 0
                             while n_idx < number_of_notifications:
@@ -356,6 +391,9 @@ def main(argv):
                             audio_feature.remove_listener(audio_feature_listener)
                             device.disable_notifications(audio_sync_feature)
                             audio_sync_feature.remove_listener(audio_sync_feature_listener)
+                            if beamforming_flag == 'y' or beamforming_flag == 'Y':
+                                device.disable_notifications(beamforming_feature)
+                                beamforming_feature.remove_listener(beamforming_feature_listener)
                             ###Save Audio File##################################
                             if save_audio_flag == 'y' or save_audio_flag == 'Y':
                                 audioFile.close()
@@ -371,6 +409,10 @@ def main(argv):
                             if audio_sync_feature.is_notifying():
                                 device.disable_notifications(audio_sync_feature)
                                 audio_sync_feature.remove_listener(audio_sync_feature_listener)
+                            if beamforming_flag == 'y' or beamforming_flag == 'Y':
+                                if beamforming_feature.is_notifying():
+                                    device.disable_notifications(beamforming_feature)
+                                    beamforming_feature.remove_listener(beamforming_feature_listener)
                             ###Save Audio File##################################
                             if save_audio_flag == 'y' or save_audio_flag == 'Y':
                                 audioFile.close()

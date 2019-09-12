@@ -52,6 +52,7 @@ import time
 import blue_st_sdk.manager
 from blue_st_sdk.advertising_data.blue_st_advertising_data_parser import BlueSTAdvertisingDataParser
 from blue_st_sdk.utils.ble_node_definitions import Debug
+from blue_st_sdk.utils.ble_node_definitions import Config
 from blue_st_sdk.utils.ble_node_definitions import FeatureCharacteristic
 from blue_st_sdk.utils.ble_node_definitions import TIMESTAMP_OFFSET_BYTES
 from blue_st_sdk.utils.blue_st_exceptions import BlueSTInvalidAdvertisingDataException
@@ -185,6 +186,9 @@ class Node(Peripheral, object):
 
         # Building available features.
         self._build_available_features()
+        
+        # Command Caracteristic.
+        self._command_characteristic = None
 
     def _build_feature_from_class(self, feature_class):
         """Get a feature object from the given class.
@@ -507,6 +511,8 @@ class Node(Peripheral, object):
                     with lock(self):
                         self._char_handle_to_characteristic_dict[
                             characteristic.getHandle()] = characteristic
+                        if characteristic.uuid == Config.CONFIG_COMMAND_BLUESTSDK_FEATURE_UUID:
+                            self._command_characteristic = characteristic
 
                     # Building characteristics' features.
                     if FeatureCharacteristic.is_base_feature_characteristic(
@@ -923,6 +929,15 @@ class Node(Peripheral, object):
                 self.writeCharacteristic(char_handle, data, True)
         except BTLEException as e:
             self._unexpected_disconnect()
+    
+    def send_command(self,data):
+        
+        if not self.characteristic_can_be_written(self._command_characteristic):
+            raise InvalidOperationException(
+                ' The "' + feature.get_name() + '" cannot be written.')
+        
+        char_handle = self._command_characteristic.getHandle()
+        self.writeCharacteristic(char_handle, data, False)
 
     def set_notification_status(self, characteristic, status):
         """Ask the node to set the notification status of the given
