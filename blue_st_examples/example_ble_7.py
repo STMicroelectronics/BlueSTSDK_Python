@@ -160,6 +160,7 @@ class MyFeatureListener(FeatureListener):
     # @param sample  Data extracted from the feature.
     #
     def on_update(self, feature, sample):
+        print("on_update::")
         print(feature)
 
 
@@ -173,6 +174,7 @@ class MyMessageListener(MessageListener):
         global AIAlgo_msg_completed, AI_msg        
         AI_msg = msg
         AIAlgo_msg_completed = True
+        print(msg)
     
     def on_message_send_error(self, debug_console, msg, error):
         print("msg send error!")
@@ -183,9 +185,6 @@ class MyMessageListener(MessageListener):
     def on_message_rcv_error(self, debug_console, msg, error):
         print("msg rcv error!")
 
-
-
-# MAIN APPLICATION
 
 #
 # Main application.
@@ -276,7 +275,7 @@ def main(argv):
                         AI_console.add_listener(AI_msg_listener)
                     
                         i = 1
-                        actions = ["Get Algo", "Set Algo"]
+                        actions = ["Get Algo", "Set Algo", "Start HAR Algo", "Start ASC Algo"]
                         for action in actions:
                             print('%d) %s' % (i, action))
                             i += 1
@@ -286,18 +285,57 @@ def main(argv):
                                 break
 
                         if choice == 1:
-                            # AI_console.getAvailableCmds()
                             AI_console.getAIAlgos()
                         elif choice == 2:
-                            while True:
-                                _algo = int(input("\nSelect an algo (\'0\' to cancel): "))
-                                if choice >= 0 and choice <= 3:
+                            _har = None
+                            __algo =int(input("\nSelect algo to run(\'1:asc\', \'2\':har: "))                            
+                            if __algo == 2:
+                                while True:
+                                    _algo = int(input("\nSelect HAR algo (\'1:GMP\', \'2\':IGN, \'3\':IGN_WSDM): "))
+                                    if _algo <= 0 and _algo > 3:
+                                        continue
+                                    elif _algo == 1:
+                                        _har = "gmp"
+                                    elif _algo == 2:
+                                        _har = "ign"
+                                    elif _algo == 3:
+                                        _har = "ign_wsdm"        
                                     break
-                            AI_console.setAIAlgo(_algo)
-                            # AI_console.startAlgo()
+                            if __algo == 1:
+                                _algo = 1
+                                AI_console.setAIAlgo(_algo, _har, 'asc')
+                            elif __algo ==2:
+                                AI_console.setAIAlgo(_algo, _har, 'har')
+                        elif choice==3:
+                            while True:
+                                _algo = int(input("\nSelect HAR algo (\'1:GMP\', \'2\':IGN, \'3\':IGN_WSDM): "))
+                                if _algo <= 0 and _algo > 3:
+                                    continue
+                                elif _algo == 1:
+                                    _har = "gmp"
+                                elif _algo == 2:
+                                    _har = "ign"
+                                elif _algo == 3:
+                                    _har = "ign_wsdm"        
+                                break
+                            feature = features[1]
+
+                            # Enabling notifications.
+                            feature_listener = MyFeatureListener()
+                            feature.add_listener(feature_listener)
+                            device.enable_notifications(feature)
+                            AI_console.startHARAlgo(_har)
+                        elif choice==4:
+                            feature = features[0]
+
+                            # Enabling notifications.
+                            feature_listener = MyFeatureListener()
+                            feature.add_listener(feature_listener)
+                            device.enable_notifications(feature)
+                            AI_console.startASCAlgo()
                         elif choice == 0:
                             break
-
+                    
                         # Getting notifications about firmware upgrade process.
                         while True:
                             if device.wait_for_notifications(0.05):
@@ -305,10 +343,9 @@ def main(argv):
                             elif AIAlgo_msg_completed:
                                 if choice == 1:
                                     print("Algos received:" + AI_msg)
+                                    break
                                 elif choice == 2:
-                                    print("SetAlgo: "+ str(_algo) + " command sent")
-                                    time.sleep(2)
-                                break
+                                    continue
                         
                         print("Finished example")
                         print('Exiting...')
