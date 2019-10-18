@@ -121,7 +121,8 @@ class FeatureAudioSceneClassification(Feature):
         if sample is not None:
             if sample._data:
                 if sample._data[0] is not None:
-                    return SceneType(sample._data[0])
+                    if sample._data[0] in [0,1,2]:
+                        return SceneType(sample._data[0])
         return SceneType.ERROR
 
     def __str__(self):
