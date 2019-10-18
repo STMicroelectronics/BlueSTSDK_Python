@@ -171,6 +171,16 @@ class AIAlgos(object):
             raise e
         return True
 
+    def stopAlgos(self):
+        self._set_listener(AIAlgosDebugConsoleListener(self))
+        try:
+            self._debug_console_listener.send_message(bytearray("asc stop",  'utf-8'))
+            time.sleep(1)
+            self._debug_console_listener.send_message(bytearray("har stop gmp",  'utf-8'))
+        except (OSError, ValueError) as e:
+            raise e
+        return True
+
     def startHARAlgo(self, har_algo='gmp'):        
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
