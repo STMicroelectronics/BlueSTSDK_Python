@@ -392,6 +392,8 @@ def main(argv):
                             device.disable_notifications(audio_sync_feature)
                             audio_sync_feature.remove_listener(audio_sync_feature_listener)
                             if beamforming_flag == 'y' or beamforming_flag == 'Y':
+                                device.send_command(b"\x00\x00\x08\x00\xAA\x00")
+                                print("Beamforming Disabled")
                                 device.disable_notifications(beamforming_feature)
                                 beamforming_feature.remove_listener(beamforming_feature_listener)
                             ###Save Audio File##################################
