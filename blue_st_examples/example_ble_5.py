@@ -51,6 +51,8 @@ from blue_st_sdk.node import NodeListener
 from blue_st_sdk.feature import FeatureListener
 from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm import FeatureAudioADPCM
 from blue_st_sdk.features.audio.adpcm.feature_audio_adpcm_sync import FeatureAudioADPCMSync
+from blue_st_sdk.features.audio.opus.feature_audio_opus import FeatureAudioOpus
+from blue_st_sdk.features.audio.opus.feature_audio_opus_conf import FeatureAudioOpusConf
 from blue_st_sdk.features.feature_beamforming import FeatureBeamforming
 from blue_st_sdk.utils.number_conversion import LittleEndian
 
@@ -72,7 +74,16 @@ import alsaaudio
 #     sudo apt-get install libasound2-dev
 #   pyalsaaudio:  
 #     sudo pip3 install pyalsaaudio
-# 
+#
+# If you are using the Opus codec
+#   libopus:
+#     sudo apt-get install libopus0
+#   opuslib (wrapper from github):
+#     git clone https://github.com/OnBeep/opuslib.git
+#     cd opuslib
+#     sudo su
+#     python3 setup.py install
+#
 # Troubleshooting:
 #   Prevent audio out garbling caused by the audio output peripheral:
 #      sudo bash -c "echo disable_audio_dither=1 >> /boot/config.txt"
@@ -88,15 +99,19 @@ INTRO = """##################
 # Paths and File names
 AUDIO_DUMPS_PATH = "/home/_user_/audioDumps/"
 AUDIO_DUMP_SUFFIX = "_audioDump.raw"
+ADPCM_TAG = "_ADPCM"
+OPUS_TAG = "_Opus"
 
-# Notifications per second.
-NPS = 200
+# Notifications per second
+NPS_ADPCM = 200
+NPS_OPUS = 50
 
 # Number of channels.
 CHANNELS = 1
 
 # Sampling frequency.
-SAMPLING_FREQ = 8000
+SAMPLING_FREQ_ADPCM = 8000
+SAMPLING_FREQ_OPUS = 16000
 
 # Global Audio Raw file.
 audioFile=None
@@ -115,7 +130,6 @@ beamforming_feature = None
 
 # Global Beamforming control.
 beamforming_flag = 0;
-
 
 # FUNCTIONS
 
@@ -199,19 +213,31 @@ class MyFeatureListener(FeatureListener):
         global audioFile
         global save_audio_flag
         ###Save Audio File##############################################
-        shortData = sample._data
-        if len(shortData) != 0:
-            for d in shortData:
-                byteData = LittleEndian.int16_to_bytes(d)
-                ###Save Audio File######################################
-                if save_audio_flag == 'y' or save_audio_flag == 'Y':
-                    audioFile.write(str(byteData))
-                ###Save Audio File######################################
-                ###Audio Stream#########################################
-                stream.write(byteData)
-                ###Audio Stream#########################################
-            n_idx += 1
-
+        if isinstance(feature,FeatureAudioADPCM):
+            shortData = sample._data
+            if len(shortData) != 0:
+                for d in shortData:
+                    byteData = LittleEndian.int16_to_bytes(d)
+                    ###Save Audio File######################################
+                    if save_audio_flag == 'y' or save_audio_flag == 'Y':
+                        audioFile.write(byteData)
+                    ###Save Audio File######################################
+                    ###Audio Stream#########################################
+                    stream.write(byteData)
+                    ###Audio Stream#########################################
+                n_idx += 1
+        elif isinstance(feature,FeatureAudioOpus):
+            if sample is not None:
+                byteData = sample._data
+                if byteData is not None and len(byteData) != 0:
+                    ###Save Audio File######################################
+                    if save_audio_flag == 'y' or save_audio_flag == 'Y':
+                        audioFile.write(byteData)
+                    ###Save Audio File######################################
+                    ###Audio Stream#########################################
+                    stream.write(byteData)
+                    ###Audio Stream#########################################
+                    n_idx += 1
 
 #
 # Implementation of the interface used by the Feature class to notify that a
@@ -228,7 +254,10 @@ class MyFeatureListenerSync(FeatureListener):
     def on_update(self, feature, sample):
         global audio_feature
         if audio_feature is not None:
-            audio_feature.set_audio_sync_parameters(sample)
+            if isinstance(feature, FeatureAudioADPCMSync):
+                audio_feature.set_audio_sync_parameters(sample)
+            elif isinstance(feature, FeatureAudioOpusConf):
+                print("command message received: " + str(sample))  
                 
 class MyFeatureListenerBeam(FeatureListener):
 
@@ -251,7 +280,6 @@ class MyFeatureListenerBeam(FeatureListener):
 def main(argv):
     
     global n_idx
- 
     ###Audio Stream#####################################################
     global stream
     ###Audio Stream#####################################################
@@ -304,8 +332,18 @@ def main(argv):
                 print()
                 sys.exit(0)
             device = devices[choice - 1]
+            
+            # Connecting to the device.
+            node_listener = MyNodeListener()
+            device.add_listener(node_listener)
+            print('Connecting to %s...' % (device.get_name()))
+            if not device.connect():
+                print('Connection failed.\n')
+                continue
+            print('Connection done.') 
 
-            has_audio_features = [False,False]
+            has_audio_adpcm_features = [False,False]
+            has_audio_opus_features = [False,False]
             has_beamforming_feature = False
 
             i = 1
@@ -313,25 +351,22 @@ def main(argv):
             for feature in features:
                 if isinstance(feature, FeatureAudioADPCM):
                     audio_feature = feature
-                    has_audio_features[0] = True
+                    has_audio_adpcm_features[0] = True
                 elif isinstance(feature, FeatureAudioADPCMSync):
                     audio_sync_feature = feature
-                    has_audio_features[1] = True
+                    has_audio_adpcm_features[1] = True
+                elif isinstance(feature, FeatureAudioOpus):
+                    audio_feature = feature
+                    has_audio_opus_features[0] = True
+                elif isinstance(feature, FeatureAudioOpusConf):
+                    audio_sync_feature = feature
+                    has_audio_opus_features[1] = True
                 elif isinstance(feature,FeatureBeamforming):
                     beamforming_feature = feature
                     has_beamforming_feature = True
                 i += 1
-
-            if all(has_audio_features):
-                # Connecting to the device.
-                node_listener = MyNodeListener()
-                device.add_listener(node_listener)
-                print('Connecting to %s...' % (device.get_name()))
-                if not device.connect():
-                    print('Connection failed.\n')
-                    continue
-                print('Connection done.')    
-
+            
+            if all(has_audio_adpcm_features) or all(has_audio_opus_features):
                 while True:
                     save_audio_flag = input('\nDo you want to save the audio stream?'
                                             '\'y\' - Yes, \'n\' - No (\'0\' to quit): ')
@@ -343,8 +378,11 @@ def main(argv):
                             st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S')
                             if not os.path.exists(AUDIO_DUMPS_PATH):
                                 os.makedirs(AUDIO_DUMPS_PATH)
-                            fileName = AUDIO_DUMPS_PATH + st + AUDIO_DUMP_SUFFIX
-                            audioFile = open(fileName,"w+")
+                            if all(has_audio_adpcm_features):
+                                fileName = AUDIO_DUMPS_PATH + st + ADPCM_TAG + AUDIO_DUMP_SUFFIX
+                            elif all(has_audio_opus_features):
+                                fileName = AUDIO_DUMPS_PATH + st + OPUS_TAG + AUDIO_DUMP_SUFFIX
+                            audioFile = open(fileName,"wb+")
                         
                         if(has_beamforming_feature):
                             beamforming_flag = input('\nDo you want to enable beamforming?'
@@ -353,25 +391,46 @@ def main(argv):
                         number_of_seconds = int(input('\nHow many seconds do you want to stream?'
                                                       ' Value must be > 0 (\'0\' to quit): '))
                         
-                        number_of_notifications = number_of_seconds * NPS             
+                        if all(has_audio_adpcm_features):
+                            number_of_notifications = number_of_seconds * NPS_ADPCM
+                        elif all(has_audio_opus_features):
+                            number_of_notifications = number_of_seconds * NPS_OPUS
 
                         if number_of_seconds > 0:
                             print("Streaming Started")
                             
-                            ###Audio Stream#####################################
-                            stream = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK,'default')
-                            stream.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-                            stream.setchannels(CHANNELS)
-                            stream.setrate(SAMPLING_FREQ)
-                            ###Audio Stream#####################################
+                            if all(has_audio_adpcm_features):
+                                ###Audio Stream#####################################
+                                stream = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK,'default')
+                                stream.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+                                stream.setchannels(CHANNELS)
+                                stream.setrate(SAMPLING_FREQ_ADPCM)
+                                ###Audio Stream#####################################
+                                
+                                #Enabling Notifications
+                                audio_feature_listener = MyFeatureListener()
+                                audio_feature.add_listener(audio_feature_listener)
+                                device.enable_notifications(audio_feature)
+                                audio_sync_feature_listener = MyFeatureListenerSync()
+                                audio_sync_feature.add_listener(audio_sync_feature_listener)
+                                device.enable_notifications(audio_sync_feature)
+                            elif all(has_audio_opus_features):
+                                ###Audio Stream#########################################
+                                stream = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NORMAL,'default')
+                                stream.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+                                stream.setchannels(CHANNELS)
+                                stream.setrate(SAMPLING_FREQ_OPUS)
+                                stream.setperiodsize(160)
+                                ###Audio Stream#########################################
+                                            
+                                #Enabling Notifications
+                                audio_sync_feature_listener = MyFeatureListenerSync()
+                                audio_sync_feature.add_listener(audio_sync_feature_listener)
+                                device.enable_notifications(audio_sync_feature)
+                                audio_feature_listener = MyFeatureListener()
+                                audio_feature.add_listener(audio_feature_listener)
+                                device.enable_notifications(audio_feature)
                             
-                            #Enabling Notifications
-                            audio_feature_listener = MyFeatureListener()
-                            audio_feature.add_listener(audio_feature_listener)
-                            device.enable_notifications(audio_feature)
-                            audio_sync_feature_listener = MyFeatureListenerSync()
-                            audio_sync_feature.add_listener(audio_sync_feature_listener)
-                            device.enable_notifications(audio_sync_feature)
                             if beamforming_flag == 'y' or beamforming_flag == 'Y' or \
                                 beamforming_flag == 'n' or beamforming_flag == 'N':
                                 if beamforming_flag == 'y' or beamforming_flag == 'Y':

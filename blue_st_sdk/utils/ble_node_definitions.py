@@ -40,6 +40,7 @@ import re
 
 from blue_st_sdk.features import *
 from blue_st_sdk.features.audio.adpcm import *
+from blue_st_sdk.features.audio.opus import *
 
 
 # DEFINITIONS
@@ -307,8 +308,8 @@ class FeatureCharacteristic(object):
     """Map from SensorTile.box feature's masks to feature's classes."""
 
     EXTENDED_MASK_TO_FEATURE_DIC = {
-        #0x00000001: feature_audio_opus.FeatureAudioOpus,
-        #0x00000002: feature_audio_opus_configuration.FeatureAudioOpusConfiguration,
+        0x00000001: feature_audio_opus.FeatureAudioOpus,
+        0x00000002: feature_audio_opus_conf.FeatureAudioOpusConf,
         0x00000003: feature_audio_scene_classification.FeatureAudioSceneClassification
         #0x00000004: feature_ai_logging.FeatureAILogging,
         #0x00000005: feature_fft_amplitude.FeatureFFTAmplitude,
