@@ -80,7 +80,7 @@ SCANNING_TIME_s = 5
 NOTIFICATIONS = 10
 
 # Bluetooth Low Energy devices' name.
-IOT_DEVICE_NAME = 'NAI_300' #BLE Nucleo Stack FP-Sensing withh AIAlgo
+IOT_DEVICE_NAME = 'NAI_400' #BLE Nucleo Stack FP-Sensing withh AIAlgo
 
 
 # FUNCTIONS
@@ -171,10 +171,36 @@ class MyFeatureListener(FeatureListener):
 class MyMessageListener(MessageListener):
     
     def on_message_send_complete(self, debug_console, msg, bytes_sent):
-        global AIAlgo_msg_completed, AI_msg        
-        AI_msg = msg
-        AIAlgo_msg_completed = True
-        print(msg)
+        global AIAlgo_msg_completed, AI_msg, algos_supported 
+        if msg == "\r\n" or msg == '\n': # ignore New Line reply
+            #AIAlgo_msg_completed = True
+            print("got new line '\\n'")
+            return
+        elif "NNconfidence" in msg: # ignore "NNconfidence = xx%" messages from the node
+            #AIAlgo_msg_completed = True
+            print("got NNconfidence")
+            print(msg)
+            return
+        else:
+            #if AIAlgo_msg_process is True:
+            #AIAlgo_msg_process = False
+            AI_msg = msg
+            AI_AlgoNames = {} 
+            # Find algos and activation sizes
+            algos_supported = ''
+            res = AI_msg.split('\n')
+            for t in range(len(res)):
+                if res[t].strip() == '':
+                    continue
+                algos_supported += res[t].strip()
+                algos_supported += ';'
+                __har = res[t].split('-')
+                if len(__har) > 1:
+                    _algo = __har[0].strip()
+                    AI_AlgoNames[_algo] = t+1
+            AIAlgo_msg_completed = True
+            #time.sleep(1)
+        return
     
     def on_message_send_error(self, debug_console, msg, error):
         print("msg send error!")
@@ -190,7 +216,7 @@ class MyMessageListener(MessageListener):
 # Main application.
 #
 def main(argv):
-    global AIAlgo_msg_completed, AI_msg
+    global AIAlgo_msg_completed, AI_msg, algos_supported
 
     # Printing intro.
     print_intro()
@@ -275,7 +301,7 @@ def main(argv):
                         AI_console.add_listener(AI_msg_listener)
                     
                         i = 1
-                        actions = ["Get Algo", "Set Algo", "Start HAR Algo", "Start ASC Algo"]
+                        actions = ["Get Algo Details", "Set Algo", "Start HAR Algo", "Start ASC Algo"]
                         for action in actions:
                             print('%d) %s' % (i, action))
                             i += 1
@@ -285,7 +311,8 @@ def main(argv):
                                 break
 
                         if choice == 1:
-                            AI_console.getAIAlgos()
+                            #AI_console.getAIAlgos()
+                            AI_console.getAIAllAlgoDetails()
                         elif choice == 2:
                             _har = None
                             __algo =int(input("\nSelect algo to run(\'1:asc\', \'2\':har: "))                            
@@ -342,7 +369,8 @@ def main(argv):
                                 continue
                             elif AIAlgo_msg_completed:
                                 if choice == 1:
-                                    print("Algos received:" + AI_msg)
+                                    print(algos_supported)
+                                    print("Algos received complete")
                                     break
                                 elif choice == 2:
                                     continue

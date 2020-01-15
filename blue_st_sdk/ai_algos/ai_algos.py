@@ -139,7 +139,7 @@ class AIAlgos(object):
     def getAIAlgo(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("getAIAlgo        ", 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("getAIAlgo", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
         return True
@@ -147,26 +147,29 @@ class AIAlgos(object):
     def getAIAlgos(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("getAllAIAlgo     ", 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("getAllAIAlgo", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
         return True
-    
+   
+    def getAIAllAlgoDetails(self):
+        self._set_listener(AIAlgosDebugConsoleListener(self))
+        try:
+            self._debug_console_listener.send_message(bytearray("getAllAIAlgoDetails", 'utf-8'))
+        except (OSError, ValueError) as e:
+            raise e
+        return True
+
     def setAIAlgo(self, algo_no=1, _har_algo='gmp', start_algo='asc'):
         self._set_listener(AIAlgosDebugConsoleListener(self))        
         try:
             self._debug_console_listener.send_message(bytearray("har stop ign_wsdm",  'utf-8'))
-            # time.sleep(1)            
             self._debug_console_listener.send_message(bytearray("asc stop         ",  'utf-8'))
-            # time.sleep(1)            
             self._algo = algo_no
             self._har_algo = _har_algo
             self._debug_console_listener.send_message(bytearray("setAIAlgo "+str(algo_no)+"     ",  'utf-8'))
-            # time.sleep(1)
             self._debug_console_listener.send_message(bytearray("asc start        ",  'utf-8'))
-            # time.sleep(1)
             self._debug_console_listener.send_message(bytearray("har start "+str(_har_algo)+"     ",  'utf-8'))
-            # time.sleep(1)
         except (OSError, ValueError) as e:
             raise e
         return True
