@@ -178,8 +178,8 @@ class MyMessageListener(MessageListener):
             return
         elif "NNconfidence" in msg: # ignore "NNconfidence = xx%" messages from the node
             #AIAlgo_msg_completed = True
-            print("got NNconfidence")
-            print(msg)
+            #print("got NNconfidence")
+            #print(msg)
             return
         else:
             #if AIAlgo_msg_process is True:
@@ -262,6 +262,8 @@ def main(argv):
             print('\nFeatures:')
             i = 1
             features = []
+            feature_listeners = []
+
             for desired_feature in [
                 feature_audio_scene_classification.FeatureAudioSceneClassification,
                 feature_activity_recognition.FeatureActivityRecognition]:
@@ -300,6 +302,12 @@ def main(argv):
                         AI_msg_listener = MyMessageListener()
                         AI_console.add_listener(AI_msg_listener)
                     
+                        for feature in features:
+                            feature_listener = MyFeatureListener()
+                            feature_listeners.append(feature_listener)
+                            feature.add_listener(feature_listener)
+                            device.enable_notifications(feature)
+
                         i = 1
                         actions = ["Get Algo Details", "Set Algo", "Start HAR Algo", "Start ASC Algo"]
                         for action in actions:
@@ -328,6 +336,13 @@ def main(argv):
                                     elif _algo == 3:
                                         _har = "ign_wsdm"        
                                     break
+                            
+                            # Enabling notifications.
+                            #for feature in features:
+                            #    feature_listener = MyFeatureListener()
+                            #    feature.add_listener(feature_listener)
+                            #    device.enable_notifications(feature)
+
                             if __algo == 1:
                                 _algo = 1
                                 AI_console.setAIAlgo(_algo, _har, 'asc')
@@ -348,17 +363,19 @@ def main(argv):
                             feature = features[1]
 
                             # Enabling notifications.
-                            feature_listener = MyFeatureListener()
-                            feature.add_listener(feature_listener)
-                            device.enable_notifications(feature)
+                            #for feature in features:
+                            #    feature_listener = MyFeatureListener()
+                            #    feature.add_listener(feature_listener)
+                            #    device.enable_notifications(feature)
                             AI_console.startHARAlgo(_har)
                         elif choice==4:
                             feature = features[0]
 
                             # Enabling notifications.
-                            feature_listener = MyFeatureListener()
-                            feature.add_listener(feature_listener)
-                            device.enable_notifications(feature)
+                            #for feature in features:
+                            #    feature_listener = MyFeatureListener()
+                            #    feature.add_listener(feature_listener)
+                            #    device.enable_notifications(feature)
                             AI_console.startASCAlgo()
                         elif choice == 0:
                             break
@@ -382,13 +399,21 @@ def main(argv):
                     print(e)
 
                 finally:
+                    for i, feature in enumerate(features):
+                        device.disable_notifications(feature)
+                        feature.remove_listener(feature_listeners[i])
+
                     # Disconnecting from the device.
                     if 'AI_console' in locals():
                         AI_console.remove_listener(AI_msg_listener)
+
+                    device.remove_listener(node_listener)
+                    manager.remove_listener(manager_listener)
+
                     print('\nDisconnecting from %s...' % (device.get_name()))
                     device.disconnect()
                     print('Disconnection done.')
-                    device.remove_listener(node_listener)
+                    
                     print('\nDevice is rebooting...\n')
                     time.sleep(1)
 
@@ -411,12 +436,13 @@ def main(argv):
                 # Disabling notifications.
                 device.disable_notifications(feature)
                 feature.remove_listener(feature_listener)
+                device.remove_listener(node_listener)
 
                 # Disconnecting from the device.
                 print('\nDisconnecting from %s...' % (device.get_name()))
                 device.disconnect()
                 print('Disconnection done.\n')
-                device.remove_listener(node_listener)
+                #device.remove_listener(node_listener)
 
     except KeyboardInterrupt:
         try:

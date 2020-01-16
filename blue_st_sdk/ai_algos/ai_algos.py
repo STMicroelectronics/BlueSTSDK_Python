@@ -131,7 +131,7 @@ class AIAlgos(object):
     def getAvailableCmds(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("help             ", 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("help", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
         return True
@@ -163,13 +163,16 @@ class AIAlgos(object):
     def setAIAlgo(self, algo_no=1, _har_algo='gmp', start_algo='asc'):
         self._set_listener(AIAlgosDebugConsoleListener(self))        
         try:
-            self._debug_console_listener.send_message(bytearray("har stop ign_wsdm",  'utf-8'))
-            self._debug_console_listener.send_message(bytearray("asc stop         ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("har stop "+str(self._har_algo), 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("asc stop", 'utf-8'))
             self._algo = algo_no
             self._har_algo = _har_algo
-            self._debug_console_listener.send_message(bytearray("setAIAlgo "+str(algo_no)+"     ",  'utf-8'))
-            self._debug_console_listener.send_message(bytearray("asc start        ",  'utf-8'))
-            self._debug_console_listener.send_message(bytearray("har start "+str(_har_algo)+"     ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("setAIAlgo "+str(self._algo), 'utf-8'))
+            time.sleep(1)
+            self._debug_console_listener.send_message(bytearray("asc start", 'utf-8'))
+            time.sleep(1)
+            self._debug_console_listener.send_message(bytearray("har start "+str(self._har_algo), 'utf-8'))
+            time.sleep(1)
         except (OSError, ValueError) as e:
             raise e
         return True
@@ -177,10 +180,8 @@ class AIAlgos(object):
     def stopAlgos(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("har stop ign_wsdm",  'utf-8'))
-            time.sleep(1)
-            self._debug_console_listener.send_message(bytearray("asc stop         ",  'utf-8'))
-            time.sleep(1)            
+            self._debug_console_listener.send_message(bytearray("har stop "+str(self._har_algo), 'utf-8'))
+            self._debug_console_listener.send_message(bytearray("asc stop", 'utf-8'))
         except (OSError, ValueError) as e:
             raise e
         return True
@@ -188,10 +189,10 @@ class AIAlgos(object):
     def startAlgos(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:            
-            self._debug_console_listener.send_message(bytearray("asc start        ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("asc start", 'utf-8'))
             time.sleep(1)
-            self._debug_console_listener.send_message(bytearray("har start "+str(self._har_algo)+"     ",  'utf-8'))
-            time.sleep(1)                     
+            self._debug_console_listener.send_message(bytearray("har start "+str(self._har_algo), 'utf-8'))
+            time.sleep(1)
         except (OSError, ValueError) as e:
             raise e
         return True
@@ -199,10 +200,10 @@ class AIAlgos(object):
     def startHARAlgo(self, har_algo='gmp'):        
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("har stop "+str(har_algo)+"     ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("har stop "+str(self._har_algo), 'utf-8'))
             time.sleep(1)
             self._har_algo = har_algo
-            self._debug_console_listener.send_message(bytearray("har start "+str(har_algo)+"     ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("har start "+str(har_algo), 'utf-8'))
             time.sleep(1)
         except (OSError, ValueError) as e:
             raise e
@@ -211,9 +212,9 @@ class AIAlgos(object):
     def startASCAlgo(self):
         self._set_listener(AIAlgosDebugConsoleListener(self))
         try:
-            self._debug_console_listener.send_message(bytearray("asc stop         ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("asc stop", 'utf-8'))
             time.sleep(1)
-            self._debug_console_listener.send_message(bytearray("asc start        ",  'utf-8'))
+            self._debug_console_listener.send_message(bytearray("asc start", 'utf-8'))
             time.sleep(1)
         except (OSError, ValueError) as e:
             raise e
