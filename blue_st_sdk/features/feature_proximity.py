@@ -203,8 +203,7 @@ class FeatureProximity(Feature):
         Return:
             str: A string representing the last sample.
         """
-        with lock(self):
-            sample = self._last_sample
+        sample = self._last_sample
 
         if sample is None:
             return self._name + ': Unknown'
@@ -212,7 +211,7 @@ class FeatureProximity(Feature):
             return self._name + ': Unknown'
 
         if len(sample._data) == 1:
-            distance = get_proximity_distance(sample)
+            distance = self.get_proximity_distance(sample)
             if distance != self.OUT_OF_RANGE_VALUE:
                 result = '%s(%d): %s %s' \
                     % (self._name,
