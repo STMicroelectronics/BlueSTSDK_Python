@@ -61,7 +61,7 @@ Other application examples can be found within the [EdgeST SDK](https://github.c
 
 
 ## Running the application examples
-By default, on Linux, the Bluetooth protocol stack needs special privileges to interact with. Hence, run the application examples as super-user by following the steps  here below:
+By default, on Linux, the Bluetooth protocol stack needs special privileges to interact with. Hence, run the application examples as super-user by following the steps here below:
  1. Install the BlueST SDK as described by the [Installation](https://github.com/STMicroelectronics/BlueSTSDK_Python#installation) chapter.
  2. Clone the BlueST SDK git repository to download the application examples:
     ```Shell
